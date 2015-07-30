@@ -93,6 +93,15 @@ function buildBundles(src, development) {
       browserifyEach(file, development);
     });
   });
+  copyScripts();
+}
+
+function copyScripts(){
+  var vendorScripts = [
+    'node_modules/zepto/zepto.min.js'
+  ];
+  return gulp.src(vendorScripts)
+    .pipe(gulp.dest(dest))
 }
 
 gulp.task('scripts', function() {
