@@ -40,11 +40,16 @@
     }
   ],
   "permissions": [
-    "system.storage",
+    "storage",
+    "unlimitedStorage",
+    "notifications",
     "tabs",
+    "idle",
+    "management",
+    "contextMenus",
+    "webNavigation",
     "webRequest",
     "webRequestBlocking",
-    "http://*/*",
-    "https://*/*"
+    "<all_urls>"
   ]
 }
