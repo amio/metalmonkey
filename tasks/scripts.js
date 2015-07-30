@@ -11,6 +11,7 @@ var source = require('vinyl-source-stream');
 var stylish = require('jshint-stylish');
 var uglify = require('gulp-uglify');
 var watchify = require('watchify');
+var babelify = require('babelify');
 // var reactify = require('reactify');
 
 /***********************************************************
@@ -64,7 +65,7 @@ function browserifyEach(baseFilePath, development) {
     packageCache: {},
     fullPaths: development
 
-  });
+  }).transform(babelify);
 
   if (development) {
 
