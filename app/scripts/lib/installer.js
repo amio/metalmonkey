@@ -1,4 +1,5 @@
-import { parseHTML } from './dom-helper'
+const usp = require('userscript-parser')
+const reg = require('./registry')
 
 export function installer () {
   const installerFilter = {
@@ -10,20 +11,20 @@ export function installer () {
     const isFromExtension = details.tabId === -1
     if (!isUserJS || isFromExtension) return
 
-    setTimeout(function(){
-    fetch(details.url)
-      .then(function(response){
-        return response.text()
-      })
-      .then(function(text){
-        let newItem = {}
-        newItem[details.url] = text
-        chrome.storage.local.set(newItem)
+    setTimeout(function () {
+      fetch(details.url)
+        .then(function (response) {
+          return response.text()
+        })
+        .then(function (text) {
+          let newItem = {}
+          newItem[details.url] = text
+          chrome.storage.local.set(newItem)
 
-        mmRegistry.add(details.url, text)
-      })
+          mmRegistry.add(details.url, text)
+        })
 
-    },2000)
+    }, 2000)
 
     console.log(isUserJS, isFromExtension, details)
 
@@ -34,14 +35,4 @@ export function installer () {
 
   chrome.webRequest.onBeforeRequest.addListener(installerAgent, installerFilter)
 
-}
-
-let mmRegistry = {
-  set: log,
-  add: log,
-  match: log,
-}
-
-function log(x){
-  console.log(x)
 }
