@@ -1,9 +1,9 @@
 import { log } from './dev-helper'
 
-module.exports = {
-  set: log,
-  add: add,
-  match: log,
+export {
+  log as set,
+  add,
+  match,
 }
 
 /**
@@ -19,6 +19,6 @@ function add (url, content) {
 }
 
 /**
- * Get registry item that match the url.
+ * Get registry items that match the url.
  */
 function match (url) {}
