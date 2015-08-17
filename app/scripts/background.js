@@ -1,13 +1,14 @@
-import { installer as initInstallerAgent } from './lib/installer'
+import { log } from './lib/dev-helper'
+import { initInstallerAgent } from './lib/installer'
 
 chrome.runtime.onInstalled.addListener(function(details) {
-  console.log('previousVersion', details.previousVersion);
+  log('previousVersion', details.previousVersion);
 });
 
 chrome.browserAction.setBadgeText({
   text: '\'Allo'
 });
 
-console.log('\'Allo \'Allo! Event Page for Browser Action');
+log('\'Allo \'Allo! Event Page for Browser Action');
 
 initInstallerAgent()

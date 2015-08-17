@@ -1,8 +1,8 @@
 const usp = require('userscript-parser')
 const reg = require('./registry')
-import * as dev from './dev-helper.js'
+import { log } from './dev-helper.js'
 
-export function installer () {
+export function initInstallerAgent () {
   //
   chrome.webRequest.onBeforeRequest.addListener(
     installerAgent,
@@ -16,7 +16,7 @@ function installerAgent (details) {
   // Only deal with userscripts request from webpage
   const isUserJS = /\.user\.js$/.test(details.url)
   const isFromExtension = details.tabId === -1
-  dev.log(isUserJS, isFromExtension, details)
+  log('[Installer] isUserJS:%s, isFromExtension:%s, detail:', isUserJS, isFromExtension, details)
 
   if (!isUserJS || isFromExtension) return
 
@@ -25,10 +25,7 @@ function installerAgent (details) {
       return response.text()
     })
     .then(function (text) {
-      let newItem = {}
-      newItem[details.url] = text
-      chrome.storage.local.set(newItem)
-      reg.add(details.url, text)
+      return reg.add(details.url, text)
     })
 
   return {
