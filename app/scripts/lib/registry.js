@@ -21,8 +21,10 @@ function registerUserscript (url, content) {
 
   chrome.storage.sync.set({
     [usid]: {
+      usid: usid,
       include: [].concat(us.include || [], us.match || []),
-      exclude: [].concat(us.exclude || [])
+      exclude: [].concat(us.exclude || []),
+      runAt: us['run-at'] && us['run-at'][0] || 'document-end'
     }
   })
 
@@ -42,7 +44,7 @@ function getMatchedUserscripts (url, cb) {
     chrome.storage.sync.get(null, function (syncConfig) {
       Object.keys(syncConfig).map((k) => {
         if (isUsMatchURL(syncConfig[k], url)) {
-          matched.push(k)
+          matched.push(syncConfig[k])
         }
       })
       if (typeof cb === 'function') cb(matched)
@@ -55,5 +57,5 @@ function isUsMatchURL (usPatterns, url) {
   const match = (patterns) => new crxp.MatchPattern(patterns).match(url)
   if (usPatterns.exclude.some(match)) return false
   if (usPatterns.include.some(match)) return true
-  return true
+  return false
 }
