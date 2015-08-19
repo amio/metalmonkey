@@ -1,0 +1,56 @@
+
+.main-wrapper {
+  margin: 0 auto;
+  width: 1200px;
+  height: 100%;
+  padding: -20px 0;
+  background-color: #FFF;
+  border-radius: 5px;
+  box-shadow: 0 0 5px 1px #BBB;
+  overflow: hidden;
+}
+
+.main-wrapper {
+  display: flex;
+
+  .sidebar {
+    flex: none;
+    width: 300px;
+
+    background-color: #313540;
+    color: #EEE;
+
+    li {
+
+      a {
+        display: block;
+        padding-left: 60px;
+        line-height: 80px;
+        font-size: 18px;
+        font-weight: 200;
+        color: #89A;
+        letter-spacing: 0.2em;
+      }
+
+      a:hover, &.current a {
+        background-color: #1F222E;
+        color: #DDD;
+      }
+    }
+  }
+
+  .content {
+    flex: 1
+  }
+}
+
+.logo {
+  height: 120px;
+  background-color: #EB5A5A;
+  color: #EEE;
+  text-align: center;
+  line-height: 120px;
+  font-size: 20px;
+  font-family: "PT Sans", monospace;
+  letter-spacing: 0.2em;
+}
