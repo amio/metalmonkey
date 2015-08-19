@@ -1,22 +1,7 @@
-import { installer as initScriptInstaller } from './lib/installer'
+import { log } from './lib/dev-helper'
 
-() => {
-
-  // const PAGETYPE_JSFILE = 'jsfile'
-  // const PAGETYPE_USFILE = 'usfile'
-  //
-  // const pageType = () => {
-  //   if (window.location.href.match(/\.js$/))
-  //     return PAGETYPE_JSFILE
-  //   if (window.location.href.match(/\.user\.js$/))
-  //     return PAGETYPE_USFILE
-  // }()
-  //
-  // switch (pageType) {
-  //   case PAGETYPE_JSFILE:
-  //   case PAGETYPE_USFILE:
-  //     initScriptInstaller()
-  //     break
-  // }
-
-}()
+chrome.runtime.sendMessage({title: 'runmyscripts'})
+chrome.runtime.sendMessage({title: 'whoami'}, function (res) {
+  log('tabid:', res)
+})
+log(11)
