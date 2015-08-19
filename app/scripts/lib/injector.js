@@ -4,14 +4,9 @@ import { getMatchedUserscripts } from './registry'
 export { initInjectorListener }
 
 function initInjectorListener () {
-  chrome.tabs.onCreated.addListener(function (tab) {
-    // log('Create->', tab)
-    if (tab.url) usInjector(tab)
-  })
-
   chrome.tabs.onUpdated.addListener(function (tabId, changed, tab) {
     // log('Update->', changed, tab)
-    if (changed.url) usInjector(tab)
+    if (changed.status === 'loading') usInjector(tab)
   })
 }
 
@@ -22,7 +17,7 @@ function usInjector (tab) {
         chrome.storage.local.get(us.usid, function (script) {
           const cfg = {
             code: script[us.usid],
-            runAt: 'document_start'
+            runAt: (script.runAt || 'document_end').replace('-', '_')
           }
           chrome.tabs.executeScript(tab.id, cfg)
         })

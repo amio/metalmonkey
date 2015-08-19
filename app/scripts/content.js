@@ -1,5 +1,6 @@
-// import { log } from './lib/dev-helper'
-//
-// chrome.runtime.sendMessage({title: 'whoami'}, function (res) {
-//   log('tabid:', res)
-// })
+import { log } from './lib/dev-helper'
+
+chrome.runtime.sendMessage({title: 'whoami'}, function (res) {
+  log('tabid:', res.id)
+})
+log('document_start')

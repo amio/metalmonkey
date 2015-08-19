@@ -2,10 +2,6 @@ import { log } from './lib/dev-helper'
 import { initInstallerAgent } from './lib/installer'
 import { initInjectorListener } from './lib/injector'
 
-chrome.browserAction.setBadgeText({
-  text: 'M,M'
-})
-
 versionCheck()
 initInjectorListener()
 initInstallerAgent()
