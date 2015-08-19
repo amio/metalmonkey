@@ -1,31 +1,27 @@
-var browserify = require('browserify');
-var buffer = require('vinyl-buffer');
-var glob = require('glob');
-var gulp = require('gulp');
-var gulpif = require('gulp-if');
-var gutil = require('gulp-util');
-var jshint = require('gulp-jshint');
-var livereload = require('gulp-livereload');
-var path = require('path');
-var source = require('vinyl-source-stream');
-var stylish = require('jshint-stylish');
-var uglify = require('gulp-uglify');
-var watchify = require('watchify');
-var babelify = require('babelify');
-// var reactify = require('reactify');
+var browserify = require('browserify')
+var buffer = require('vinyl-buffer')
+var glob = require('glob')
+var gulp = require('gulp')
+var gulpif = require('gulp-if')
+var gutil = require('gulp-util')
+var livereload = require('gulp-livereload')
+var path = require('path')
+var source = require('vinyl-source-stream')
+var uglify = require('gulp-uglify')
+var watchify = require('watchify')
+var babelify = require('babelify')
+// var reactify = require('reactify')
 
-/***********************************************************
+/*
  * Configue
- ***********************************************************/
-var src = 'app/scripts/*.js';
-var dest = 'dist/scripts';
+ */
+var src = 'app/scripts/*.js'
+var dest = 'dist/scripts'
 
-/***********************************************************
+/*
  * Watch
- ***********************************************************/
-
-
-function bundle(b, filename, development) {
+ */
+function bundle (b, filename, development) {
   return b.bundle()
 
     // log errors if they happen
@@ -42,18 +38,16 @@ function bundle(b, filename, development) {
     .pipe(gulp.dest(dest))
 
     // Trigger livereload
-    .pipe(gulpif(development, livereload()));
+    .pipe(gulpif(development, livereload()))
 
 }
 
-function browserifyEach(baseFilePath, development) {
-
+function browserifyEach (baseFilePath, development) {
   // Get the filename
-  var filename = path.basename(baseFilePath);
+  var filename = path.basename(baseFilePath)
 
   // Configure browserify
   var b = browserify({
-
     // Select bundle
     entries: './' + baseFilePath,
 
@@ -65,50 +59,51 @@ function browserifyEach(baseFilePath, development) {
     packageCache: {},
     fullPaths: development
 
-  }).transform(babelify);
+  }).transform(babelify)
 
   if (development) {
-
     // Watch files
-    b = watchify(b);
+    b = watchify(b)
 
     // Rebundle on filechange
-    b.on('update', function(file) {
-      gutil.log(filename, 'changed');
-      bundle(b, filename, development);
-    });
+    b.on('update', function (file) {
+      gutil.log(filename, 'changed')
+      bundle(b, filename, development)
+    })
 
   }
 
   // Add transforms here
-  // b.transform(reactify);
+  // b.transform(reactify)
 
-  bundle(b, filename, development);
+  bundle(b, filename, development)
 
 }
 
-function buildBundles(src, development) {
-  glob(src, function(err, files) {
-    files.forEach(function(file) {
-      browserifyEach(file, development);
-    });
-  });
-  copyScripts();
+function buildBundles (src, development) {
+  glob(src, function (err, files) {
+    if (err) console.log(err)
+    files.forEach(function (file) {
+      browserifyEach(file, development)
+    })
+  })
+  copyScripts()
 }
 
-function copyScripts(){
+function copyScripts () {
   var vendorScripts = [
-    'node_modules/zepto/zepto.min.js'
-  ];
+    'node_modules/zepto/zepto.min.js',
+    'node_modules/react/dist/react.js'
+  ]
   return gulp.src(vendorScripts)
     .pipe(gulp.dest(dest))
 }
 
-gulp.task('scripts', function() {
-  buildBundles(src);
-});
+gulp.task('scripts', function () {
+  buildBundles(src)
+})
 
-gulp.task('scripts:dev', function() {
-  livereload.listen();
-  buildBundles(src, true);
-});
+gulp.task('scripts:dev', function () {
+  livereload.listen()
+  buildBundles(src, true)
+})
