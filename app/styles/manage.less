@@ -48,7 +48,7 @@
 
   .navs {
     flex: 1;
-    padding-top: 60px;
+    padding-top: 40px;
     overflow-y: auto;
   }
 
@@ -75,7 +75,7 @@
       content: "";
       display: block;
       position: absolute;
-      right: 3px;
+      right: 6px;
       top: 5px;
       height: 70px;
       width: 3px;
@@ -84,25 +84,89 @@
   }
 
   .etc {
-    height: 140px;
+    height: 120px;
   }
 }
 
 // Styles inside [.content]
-.content {
-  .header {
-    height: 120px;
-    background-color: #FAF9F3;
-    border-bottom: 1px solid #DDD;
 
-    .page-title {
-      line-height: 120px;
-      font-size: 26px;
-      color: #888;
-      margin: 0;
-      font-weight: normal;
-      padding-left: 80px;
-      text-transform: capitalize;
+.content {
+  display: flex;
+  flex-direction: column;
+
+  .content-header {
+    height: 120px;
+  }
+
+  .content-body {
+    flex: 1;
+    padding: 60px 80px;
+  }
+}
+
+.content-header {
+  background-color: #FAF9F3;
+  border-bottom: 1px solid #DDD;
+
+  .page-title {
+    line-height: 120px;
+    font-size: 26px;
+    color: #888;
+    margin: 0;
+    font-weight: normal;
+    font-style: italic;
+    letter-spacing: 1px;
+    padding-left: 80px;
+    text-transform: capitalize;
+  }
+}
+
+.us-list {
+  .item {
+    border-width: 1px 0;
+    border-style: solid;
+    border-color: #EEE;
+    margin-bottom: -1px;
+    height: 50px;
+    line-height: 52px;
+    font-size: 15px;
+    color: #777;
+    display: flex;
+
+    .item-status {
+      width: 50px;
+    }
+    .item-name {
+      flex: 1;
+      padding-right: 5px;
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      font-family: "PT Sans", sans-serif;
+    }
+    .item-version {
+      width: 50px;
+    }
+    .item-links {
+      width: 60px;
+    }
+    .item-actions {
+      width: 160px;
+      color: #DDD;
+    }
+
+    a {
+      color: #777;
+      padding: 0 2px;
+      margin: 0 3px;
+
+      &:hover {
+        color: #4A90E2;
+      }
+    }
+
+    &:hover {
+      background-color: rgba(200,200,200, 0.1);
     }
   }
 }
