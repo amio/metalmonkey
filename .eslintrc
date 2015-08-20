@@ -1,5 +1,6 @@
 {
   "ecmaFeatures": {
+    "jsx": true,
     "modules": true,
     "experimentalObjectRestSpread": true
   },
@@ -15,7 +16,8 @@
     "navigator": false,
     "window": false,
     "chrome": true,
-    "fetch": true
+    "fetch": true,
+    "React": true
   },
 
   "rules": {
