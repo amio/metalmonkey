@@ -130,7 +130,7 @@
     height: 50px;
     line-height: 52px;
     font-size: 15px;
-    color: #777;
+    color: #888;
     display: flex;
 
     .item-status {
@@ -156,12 +156,17 @@
     }
 
     a {
-      color: #777;
+      color: #888;
       padding: 0 2px;
       margin: 0 3px;
 
       &:hover {
         color: #4A90E2;
+        text-decoration: underline;
+      }
+
+      &.delete:hover {
+        color: #EB5A5A;
       }
     }
 
