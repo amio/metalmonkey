@@ -29,8 +29,9 @@ function registerUserscript (url, content) {
       name: us.name[0],
       version: us.version[0],
       enabled: true,
-      include: [].concat(us.include || [], us.match || []),
-      exclude: [].concat(us.exclude || []),
+      matches: us.match || [],
+      includes: us.include || [],
+      excludes: us.exclude || [],
       runAt: us['run-at'] && us['run-at'][0] || 'document-end'
     }
   })
@@ -51,16 +52,36 @@ function getMatchedUserscripts (url, cb) {
       return matched
     })
     .catch(function (err) {
-      log('Registry Error:')(err)
+      log('[Registry]:', err)
       return []
     })
 }
 
 function isUsMatchURL (us, url) {
-  const match = (patterns) => new crxp.MatchPattern(patterns).match(url)
-  if (us.exclude.some(match)) return false
-  if (us.include.some(match)) return true
+  const match = (pattern) => new crxp.MatchPattern(pattern).match(url)
+  const matchGM = (pattern) => new MatchPatternGM(pattern).test(url)
+  if (us.excludes.some(matchGM)) return false
+  if (us.includes.some(matchGM)) return true
+  if (us.matches.some(match)) return true
   return false
+}
+
+/**
+ * MatchPattern for Greasemonkey '@include' & '@exclude'
+ */
+class MatchPatternGM {
+  constructor (url_pattern) {
+    let regStr = url_pattern
+      .replace('*', '.*')
+      .replace(/[?:()\[\]^$]/g, function (x) {
+        return '\\' + x
+      })
+    this.reg = new RegExp('^' + regStr + '$')
+  }
+
+  test (url) {
+    return this.reg.test(url)
+  }
 }
 
 function getUserscriptList (cb) {
