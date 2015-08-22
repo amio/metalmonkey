@@ -41,7 +41,7 @@
     color: #EEE;
     text-align: center;
     line-height: 120px;
-    font-size: 26px;
+    font-size: 30px;
     font-style: italic;
     letter-spacing: 2px;
   }
@@ -110,7 +110,7 @@
 
   .page-title {
     line-height: 120px;
-    font-size: 26px;
+    font-size: 30px;
     color: #888;
     margin: 0;
     font-weight: normal;
@@ -129,13 +129,20 @@
     margin-bottom: -1px;
     height: 50px;
     line-height: 52px;
-    font-size: 15px;
+    font-size: 16px;
     color: #888;
     display: flex;
 
     .item-status {
       width: 50px;
       text-align: center;
+
+      input {
+        font-size: 1.2em;
+        transform: scale(1.2);
+        -webkit-filter: hue-rotate(260deg);
+        opacity: 0.7;
+      }
     }
     .item-name {
       flex: 1;

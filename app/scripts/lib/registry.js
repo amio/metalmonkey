@@ -2,7 +2,11 @@ import { log } from './dev-helper'
 import usp from 'userscript-parser'
 import crxp from 'crx-patterns'
 
-export { registerUserscript, getMatchedUserscripts }
+export {
+  registerUserscript,
+  getMatchedUserscripts,
+  getUserscriptList
+}
 
 const USID_PREFIX = 'USID::'
 
@@ -22,6 +26,9 @@ function registerUserscript (url, content) {
   chrome.storage.sync.set({
     [usid]: {
       usid: usid,
+      name: us.name[0],
+      version: us.version[0],
+      enabled: true,
       include: [].concat(us.include || [], us.match || []),
       exclude: [].concat(us.exclude || []),
       runAt: us['run-at'] && us['run-at'][0] || 'document-end'
@@ -37,25 +44,39 @@ function registerUserscript (url, content) {
  * Get registry items that match the url.
  */
 function getMatchedUserscripts (url, cb) {
-  return new Promise(function (resolve, reject) {
-    if (chrome.runtime.lastError) reject(chrome.runtime.lastError)
-
-    let matched = []
-    chrome.storage.sync.get(null, function (syncConfig) {
-      Object.keys(syncConfig).map((k) => {
-        if (isUsMatchURL(syncConfig[k], url)) {
-          matched.push(syncConfig[k])
-        }
-      })
+  return getUserscriptList()
+    .then(function (scripts) {
+      let matched = scripts.filter(us => isUsMatchURL(us, url))
       if (typeof cb === 'function') cb(matched)
-      resolve(matched)
+      return matched
     })
-  })
+    .catch(function (err) {
+      log('Registry Error:')(err)
+      return []
+    })
 }
 
-function isUsMatchURL (usPatterns, url) {
+function isUsMatchURL (us, url) {
   const match = (patterns) => new crxp.MatchPattern(patterns).match(url)
-  if (usPatterns.exclude.some(match)) return false
-  if (usPatterns.include.some(match)) return true
+  if (us.exclude.some(match)) return false
+  if (us.include.some(match)) return true
   return false
+}
+
+function getUserscriptList (cb) {
+  const ret = new Promise(function (res, rej) {
+    chrome.storage.sync.get(null, (items) => {
+      if (chrome.runtime.lastError) {
+        rej(chrome.runtime.lastError)
+      } else {
+        let usMetaArray = []
+        Object.keys(items).forEach(k => {
+          if (items[k].usid.indexOf(USID_PREFIX) === 0) usMetaArray.push(items[k])
+        })
+        res(usMetaArray)
+      }
+    })
+  })
+  if (typeof cb === 'function') ret.then(cb)
+  return ret
 }

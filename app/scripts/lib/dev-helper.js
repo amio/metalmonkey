@@ -2,6 +2,7 @@ export { env, log }
 
 const env = 'dev'
 
-function log () {
-  console.log.apply(console, [].slice.call(arguments))
+function log (...args) {
+  console.log.apply(console, args)
+  return (...more) => log(args.concat(more))
 }
