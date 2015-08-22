@@ -1,9 +1,10 @@
-import { log } from './dev-helper'
+import { log, promisifyChromeExtensionApi } from './dev-helper'
 import usp from 'userscript-parser'
 import crxp from 'crx-patterns'
 
 export {
   registerUserscript,
+  removeUserscript,
   getMatchedUserscripts,
   getUserscriptList
 }
@@ -41,14 +42,29 @@ function registerUserscript (url, content) {
   return content
 }
 
+function removeUserscript (usid) {
+
+  const syncRemove = promisifyChromeExtensionApi(
+    chrome.storage.sync.remove,
+    chrome.storage.sync
+  )
+  const localRemove = promisifyChromeExtensionApi(
+    chrome.storage.local.remove,
+    chrome.storage.local
+  )
+  return Promise.all([
+    syncRemove(usid),
+    localRemove(usid)
+  ])
+}
+
 /**
  * Get registry items that match the url.
  */
-function getMatchedUserscripts (url, cb) {
+function getMatchedUserscripts (url) {
   return getUserscriptList()
     .then(function (scripts) {
       let matched = scripts.filter(us => isUsMatchURL(us, url))
-      if (typeof cb === 'function') cb(matched)
       return matched
     })
     .catch(function (err) {
@@ -84,7 +100,7 @@ class MatchPatternGM {
   }
 }
 
-function getUserscriptList (cb) {
+function getUserscriptList () {
   const ret = new Promise(function (res, rej) {
     chrome.storage.sync.get(null, (items) => {
       if (chrome.runtime.lastError) {
@@ -98,6 +114,5 @@ function getUserscriptList (cb) {
       }
     })
   })
-  if (typeof cb === 'function') ret.then(cb)
   return ret
 }
