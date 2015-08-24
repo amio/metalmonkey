@@ -1,6 +1,6 @@
 import classnames from 'classnames'
 
-export default function (React) {
+export default function () {
   const Sidebar = React.createClass({
     render: function () {
       const navClasses = (route) => classnames({

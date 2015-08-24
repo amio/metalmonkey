@@ -2,7 +2,7 @@
 import { getUserscriptList, removeUserscript } from '../lib/registry'
 import classnames from 'classnames'
 
-export default function (React) {
+export default function () {
 
   const Userscript = React.createClass({
     render: function () {

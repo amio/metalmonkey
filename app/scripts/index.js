@@ -1,38 +1,27 @@
 // import { log } from './lib/dev-helper'
+import { route, run } from './lib/router'
 import genSidebar from './comp/sidebar'
 import genManager from './comp/manager'
 import genInstaller from './comp/installer'
 
-const Sidebar = genSidebar(React)
+const Sidebar = genSidebar()
+const Manager = genManager()
+const Installer = genInstaller()
 
 const App = React.createClass({
   render: function () {
+    const router = this.router(this.props.route)
     return (
       <div className="main-wrapper">
-        <Sidebar route={this.props.route}/>
-        { this.routeComponents() }
+        <Sidebar route={router.route}/>
+        { router.subComponent() }
       </div>
     )
   },
-  routeComponents: function () {
-    // Lazy execute
-    const createComponent = (generator) => React.createElement(
-      generator(React), { route: this.props.route }
-    )
-    switch (this.props.route) {
-      case 'manage':
-        return createComponent(genManager)
-      case 'install':
-        return createComponent(genInstaller)
-      default:
-        return createComponent(genManager)
-    }
-  }
+  router: route({
+    'manage': Manager,
+    'install': Installer
+  }, 'manage')
 })
 
-function mainRender () {
-  const route = window.location.hash.substr(1) || 'manage'
-  React.render(<App route={route} />, document.body)
-}
-window.addEventListener('hashchange', mainRender)
-mainRender()
+run(App, document.body)

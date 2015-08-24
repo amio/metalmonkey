@@ -1,5 +1,5 @@
 
-export default function (React) {
+export default function () {
   const Installer = React.createClass({
     render: function () {
       return (
