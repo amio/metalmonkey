@@ -1,6 +1,6 @@
 // import { log } from './lib/dev-helper'
 import genSidebar from './comp/sidebar'
-import genManage from './comp/manage'
+import genManager from './comp/manager'
 import genInstaller from './comp/installer'
 
 const Sidebar = genSidebar(React)
@@ -21,17 +21,17 @@ const App = React.createClass({
     )
     switch (this.props.route) {
       case 'manage':
-        return createComponent(genManage)
+        return createComponent(genManager)
       case 'install':
         return createComponent(genInstaller)
       default:
-        return createComponent(genManage)
+        return createComponent(genManager)
     }
   }
 })
 
 function mainRender () {
-  const route = window.location.hash.substr(1)
+  const route = window.location.hash.substr(1) || 'manage'
   React.render(<App route={route} />, document.body)
 }
 window.addEventListener('hashchange', mainRender)

@@ -5,7 +5,7 @@ export default function (React) {
     render: function () {
       const navClasses = (route) => classnames({
         'sidebar-nav': true,
-        'current': this.props.route === route
+        'current': route === this.props.route
       })
       return (
         <div className="sidebar">

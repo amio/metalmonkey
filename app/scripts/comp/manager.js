@@ -47,12 +47,14 @@ export default function (React) {
     }
   })
 
-  const UserscriptList = React.createClass({
+  const ManagePanel = React.createClass({
     render: function () {
       return (
         <div className="content">
           <div className="content-header">
-            <h2 className="page-title">Manage scripts</h2>
+            <div className="page-title">
+              <h2>Manage scripts</h2>
+            </div>
           </div>
           <div className="content-body">
             <ul className="us-list">
@@ -86,5 +88,5 @@ export default function (React) {
     }
   })
 
-  return UserscriptList
+  return ManagePanel
 }
