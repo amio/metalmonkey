@@ -46,6 +46,7 @@
     "eslint-plugin-react": "^3.2.3",
     "react": "^0.13.3",
     "react-router": "^0.13.3",
+    "userscript-parser": "^0.1.1",
     "zepto": "0.0.4"
   }
 }
