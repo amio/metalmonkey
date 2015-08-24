@@ -1,7 +1,7 @@
 // import { log } from './lib/dev-helper'
-import genUserscriptList from './comp/us-list'
-import genInstaller from './comp/installer'
 import genSidebar from './comp/sidebar'
+import genManage from './comp/manage'
+import genInstaller from './comp/installer'
 
 const Sidebar = genSidebar(React)
 
@@ -10,14 +10,7 @@ const App = React.createClass({
     return (
       <div className="main-wrapper">
         <Sidebar route={this.props.route}/>
-        <div className="content">
-          <div className="content-header">
-            <h2 className="page-title">Manage scripts</h2>
-          </div>
-          <div className="content-body">
-            { this.routeComponents() }
-          </div>
-        </div>
+        { this.routeComponents() }
       </div>
     )
   },
@@ -28,11 +21,11 @@ const App = React.createClass({
     )
     switch (this.props.route) {
       case 'manage':
-        return createComponent(genUserscriptList)
+        return createComponent(genManage)
       case 'install':
         return createComponent(genInstaller)
       default:
-        return createComponent(genUserscriptList)
+        return createComponent(genManage)
     }
   }
 })

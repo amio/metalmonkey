@@ -50,15 +50,22 @@ export default function (React) {
   const UserscriptList = React.createClass({
     render: function () {
       return (
-      <ul className="us-list">
-        { this.state.items.map((us) => {
-          return React.createElement(Userscript, {
-            key: us.usid,
-            meta: us,
-            onRemove: this.updateList
-          })
-        }) }
-      </ul>
+        <div className="content">
+          <div className="content-header">
+            <h2 className="page-title">Manage scripts</h2>
+          </div>
+          <div className="content-body">
+            <ul className="us-list">
+              { this.state.items.map((us) => {
+                return React.createElement(Userscript, {
+                  key: us.usid,
+                  meta: us,
+                  onRemove: this.updateList
+                })
+              }) }
+            </ul>
+          </div>
+        </div>
       )
     },
     getInitialState: function () {

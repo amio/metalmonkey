@@ -22,7 +22,7 @@
     "default_title": "MetalMonkey",
     "default_popup": "popup.html"
   },
-  "options_page": "manage.html",
+  "options_page": "index.html",
   "content_scripts": [
     {
       "matches": [
