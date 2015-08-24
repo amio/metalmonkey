@@ -94,15 +94,23 @@ ul {
       position: relative;
     }
 
-    &.current a:before {
+    a:before {
       content: "";
       display: block;
+      visable: none;
       position: absolute;
       right: 6px;
-      top: 5px;
-      height: 70px;
+      top: 40px;
+      height: 0px;
       width: 3px;
       background-color: #68BCFF;
+    }
+
+    &.current a:before,
+    &:hover a:before {
+      transition: all ease-out 0.2s;
+      top: 5px;
+      height: 70px;
     }
   }
 
