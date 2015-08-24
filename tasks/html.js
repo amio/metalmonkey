@@ -5,8 +5,8 @@ var livereload = require('gulp-livereload');
 /***********************************************************
  * Configue
  ***********************************************************/
-var src = 'app/html/*.html';
-var dest = 'dist/html';
+var src = 'app/*.html';
+var dest = 'dist';
 
 /***********************************************************
  * Build

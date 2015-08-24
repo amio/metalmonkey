@@ -20,9 +20,9 @@
       "38": "images/icon-38.png"
     },
     "default_title": "MetalMonkey",
-    "default_popup": "html/popup.html"
+    "default_popup": "popup.html"
   },
-  "options_page": "html/manage.html",
+  "options_page": "manage.html",
   "content_scripts": [
     {
       "matches": [
