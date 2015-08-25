@@ -1,5 +1,5 @@
 // import { log } from './lib/dev-helper'
-import { route, run } from './lib/router'
+import router from './lib/router'
 import genSidebar from './comp/sidebar'
 import genManager from './comp/manager'
 import genInstaller from './comp/installer'
@@ -7,6 +7,10 @@ import genInstaller from './comp/installer'
 const Sidebar = genSidebar()
 const Manager = genManager()
 const Installer = genInstaller()
+const appRouter = router.route({
+  '/manage': Manager,
+  '/install': Installer
+}, '/manage')
 
 const App = React.createClass({
   render: function () {
@@ -18,10 +22,7 @@ const App = React.createClass({
       </div>
     )
   },
-  router: route({
-    'manage': Manager,
-    'install': Installer
-  }, 'manage')
+  router: appRouter
 })
 
-run(App, document.body)
+router.init(App, document.body)

@@ -1,20 +1,22 @@
-export function route (handlers, defaultHandler) {
+export default { route, init }
+
+function route (routeMapping, defaultRoute) {
   return function (parentRoute) {
-    const route = handlers.hasOwnProperty(parentRoute)
+    const route = routeMapping.hasOwnProperty(parentRoute)
       ? parentRoute
-      : defaultHandler
+      : defaultRoute
     const subRoute = route
     return {
       route: route,
       subComponent: () => React.createElement(
-        handlers[route],
+        routeMapping[route],
         { route: subRoute }
       )
     }
   }
 }
 
-export function run (App, container) {
+function init (App, container) {
   function mainRender () {
     const route = window.location.hash.substr(1)
     React.render(<App route={route} />, container)
