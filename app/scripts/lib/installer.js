@@ -1,5 +1,3 @@
-import { registerUserscript } from './registry'
-
 export { initInstallerAgent }
 
 function initInstallerAgent () {
@@ -13,19 +11,15 @@ function initInstallerAgent () {
 }
 
 function installerAgent (details) {
-  // Only deal with userscripts request from webpage
-  const isUserJS = /\.user\.js$/.test(details.url)
-  const isFromExtension = details.tabId === -1
+  // Only deal with userscripts request by 'main_frame' request
+  // const isUserJS = /\.user\.js$/.test(details.url)
+  const byUserRequest = details.type === 'main_frame'
 
-  if (!isUserJS || isFromExtension) return
+  if (!byUserRequest) return
 
-  fetch(details.url)
-    .then(function (response) {
-      return response.text()
-    })
-    .then(function (text) {
-      return registerUserscript(details.url, text)
-    })
+  const indexURL = chrome.extension.getURL('index.html')
+  const installURL = indexURL + '#/install/' + encodeURIComponent(details.url)
+  chrome.tabs.create({'url': installURL})
 
   return {
     redirectUrl: 'javascript:history.back()'

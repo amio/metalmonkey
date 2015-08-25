@@ -9,7 +9,7 @@ const Manager = genManager()
 const Installer = genInstaller()
 const appRouter = router.route({
   '/manage': Manager,
-  '/install': Installer
+  '/install/:url': Installer
 }, '/manage')
 
 const App = React.createClass({
