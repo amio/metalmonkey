@@ -10,7 +10,7 @@ var livereload = require('gulp-livereload')
  * Configue
  ***********************************************************/
 var src = [
-  'app/styles/*.less',
+  'app/styles/**/*.less'
 ]
 var dest = 'dist/styles'
 
