@@ -4,12 +4,13 @@ import { registerUserscript } from '../lib/registry'
 export default function () {
   const Installer = React.createClass({
     render: function () {
+      const us = this.state.us
       return (
         <div className="content installer">
           <div className="content-header">
             <div className="page-title">
-              <h2>Install: { this.state.us.name || '. . . loading script . . .' }</h2>
-              <span className="title-desc">{ this.state.us.url }</span>
+              <h2>Install: { us.name || '. . . loading script . . .' }</h2>
+              <span className="title-desc">{ us.url }</span>
             </div>
             <div className="actions">
               <a className="install-button" onClick={ this.installUserscript }>install</a>
@@ -20,18 +21,18 @@ export default function () {
             <div className="userscript-meta">
               <table className="info">
                 <tbody>
-                  <tr><th>author</th><td>{ this.state.us.author }</td></tr>
-                  <tr><th>version</th><td>{ this.state.us.version }</td></tr>
-                  <tr><th>description</th><td>{ this.state.us.description }</td></tr>
+                  <tr><th>author</th><td>{ us.author }</td></tr>
+                  <tr><th>version</th><td>{ us.version }</td></tr>
+                  <tr><th>description</th><td>{ us.description }</td></tr>
                 </tbody>
               </table>
               <table className="apply-to">
                 <tbody>
-                  <tr><th>applies to</th><td>{ '' + this.state.us.appliesto }</td></tr>
+                  <tr><th>applies to</th><td>{ us.matches && us.matches.join(' ') }</td></tr>
                 </tbody>
               </table>
             </div>
-            <textarea className="userscript-code" value={ this.state.us.content } onChange={ this.modifyCode }></textarea>
+            <textarea className="userscript-code" value={ us.content } onChange={ this.modifyCode }></textarea>
           </div>
         </div>
       )
@@ -56,7 +57,7 @@ export default function () {
             author: parsed.author[0],
             version: parsed.version[0],
             description: parsed.description[0],
-            appliesto: parsed.include,
+            matches: [].concat(parsed.match, parsed.include),
             content: parsed.content
           }
           this.setState(this.state)

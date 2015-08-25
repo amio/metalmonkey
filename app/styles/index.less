@@ -123,6 +123,7 @@
 
     .handle-with-chrome {
       // font-family: 'PT Sans', sans-serif;
+      display: none;
       line-height: 37px;
       font-size: 14px;
       color: #888;
@@ -178,5 +179,36 @@
     box-shadow: inset 0 0 6px #EEE;
     padding: 10px;
     color: #666;
+  }
+}
+
+// InstallerHome
+
+.installer-home {
+  font-family: "PT Sans", sans-serif;
+  font-size: 20px;
+
+  .links {
+    padding-top: 50px;
+    text-align: center;
+
+    a {
+      display: inline-block;
+      margin: 40px;
+      width: 240px;
+      height: 240px;
+      line-height: 240px;
+      font-size: 24px;
+      letter-spacing: 1px;
+      border: 1px solid #EEE;
+      background-color: #F9FAF6;
+      box-shadow: 0 0 9px 0 #DDD;
+      border-radius: 5px;
+
+      &:hover {
+        background-color: #4A90E2;
+        color: #FFF;
+      }
+    }
   }
 }
