@@ -1,4 +1,4 @@
-import { log } from './dev-helper'
+import { log } from './helper'
 import { getMatchedUserscripts } from './registry'
 
 export { initInjectorListener }

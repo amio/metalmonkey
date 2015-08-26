@@ -1,4 +1,4 @@
-// import { log } from './lib/dev-helper'
+// import { log } from './lib/helper'
 import router from './lib/router'
 import genSidebar from './comp/sidebar'
 import genManager from './comp/manager'

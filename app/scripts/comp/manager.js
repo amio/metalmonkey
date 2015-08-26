@@ -42,7 +42,7 @@ export default function () {
       )
     },
     removeScript: function () {
-      removeUserscript(this.props.us.usid)
+      removeUserscript(this.props.meta.usid)
         .then(this.props.onRemove)
     }
   })

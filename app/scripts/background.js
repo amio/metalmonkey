@@ -1,4 +1,4 @@
-import { log } from './lib/dev-helper'
+import { log } from './lib/helper'
 import { initInstallerAgent } from './lib/installer'
 import { initInjectorListener } from './lib/injector'
 

@@ -1,4 +1,4 @@
-import { log, promisifyChromeExtensionApi } from './dev-helper'
+import { log, promisifyChromeExtensionApi } from './helper'
 import usp from 'userscript-parser'
 import crxp from 'crx-patterns'
 
@@ -15,31 +15,36 @@ const USID_PREFIX = 'USID::'
  * Add a script to metalmonkey registry.
  */
 function registerUserscript (url, content) {
-  let us = usp(content)
-  let usid = USID_PREFIX + url
-
-  us.usid = usid
-
-  chrome.storage.local.set({
-    [usid]: content
-  })
-
-  chrome.storage.sync.set({
+  const us = usp(content)
+  const usid = USID_PREFIX + url
+  const usSyncData = {
     [usid]: {
       usid: usid,
-      name: us.name[0],
-      version: us.version[0],
+      name: us.name && us.name[0] || '',
+      version: us.version && us.version[0] || '0',
       enabled: true,
       matches: us.match || [],
       includes: us.include || [],
       excludes: us.exclude || [],
       runAt: us['run-at'] && us['run-at'][0] || 'document-end'
     }
-  })
+  }
+  const usLocalData = {
+    [usid]: content
+  }
 
-  log('[Registry] new item: %s', url)
-
-  return content
+  const syncSet = promisifyChromeExtensionApi(
+    chrome.storage.sync.set,
+    chrome.storage.sync
+  )
+  const localSet = promisifyChromeExtensionApi(
+    chrome.storage.local.set,
+    chrome.storage.local
+  )
+  return Promise.all([
+    syncSet(usSyncData),
+    localSet(usLocalData)
+  ])
 }
 
 function removeUserscript (usid) {
@@ -94,7 +99,6 @@ class MatchPatternGM {
       })
     this.reg = new RegExp('^' + regStr + '$')
   }
-
   test (url) {
     return this.reg.test(url)
   }

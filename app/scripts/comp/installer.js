@@ -1,3 +1,4 @@
+import { log } from '../lib/helper'
 import usp from 'userscript-parser'
 import { registerUserscript } from '../lib/registry'
 
@@ -50,21 +51,31 @@ export default function () {
           return response.text()
         })
         .then((text) => {
+          this.setState(({
+            us: { content: text }
+          }))
           const parsed = usp(text)
-          this.state.us = {
+          const usData = {
             url: url,
             name: parsed.name[0],
-            author: parsed.author[0],
-            version: parsed.version[0],
-            description: parsed.description[0],
+            author: parsed.author ? parsed.author[0] : '',
+            version: parsed.version ? parsed.version[0] : '',
+            description: parsed.description ? parsed.description[0] : '',
             matches: [].concat(parsed.match, parsed.include),
-            content: parsed.content
+            content: text
           }
-          this.setState(this.state)
+          this.setState({us: usData})
         })
     },
     installUserscript: function () {
       registerUserscript(this.state.us.url, this.state.us.content)
+        .then(function () {
+          window.close()
+        })
+        .catch(function (e) {
+          log(e)
+          window.alert('Ooops, install failed. Please retry.')
+        })
     },
     handleWithChrome: function () {
       console.log('handle with chrome')

@@ -3,7 +3,6 @@ import classnames from 'classnames'
 export default function () {
   const Sidebar = React.createClass({
     render: function () {
-      console.log(this.props.route)
       const navClasses = (route) => classnames({
         'sidebar-nav': true,
         'current': route === this.props.route
