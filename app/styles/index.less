@@ -44,12 +44,18 @@
     .item-actions {
       width: 170px;
       color: #DDD;
+      text-align: right;
+
+      .update,
+      .edit {
+        display: none;
+      }
     }
 
     a {
       color: #888;
       padding: 0 2px;
-      margin: 0 3px;
+      margin: 0 6px;
       cursor: pointer;
 
       &:hover {
@@ -172,6 +178,7 @@
   }
 
   .userscript-code {
+    font-family: 'Menlo', monospace;
     height: 100%;
     width: 100%;
     border-radius: 4px;

@@ -4,6 +4,7 @@ export default function () {
   const Sidebar = React.createClass({
     render: function () {
       const navClasses = (route) => classnames({
+        ['nav-' + route.split('/')[1]]: true,
         'sidebar-nav': true,
         'current': route === this.props.route
       })

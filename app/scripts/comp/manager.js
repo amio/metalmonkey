@@ -21,8 +21,8 @@ export default function () {
             { meta.links && <a href={ meta.links[0] }>HOME</a> }
           </span>
           <span className="item-actions">
-            <a>UPDATE</a>•
-            <a>EDIT</a>•
+            <a className="update">UPDATE</a>
+            <a className="edit">EDIT</a>
             <a className="delete" onClick={ this.removeScript }>DELETE</a>
           </span>
         </li>
