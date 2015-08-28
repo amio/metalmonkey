@@ -3,10 +3,18 @@ import classnames from 'classnames'
 export default function () {
   const Sidebar = React.createClass({
     render: function () {
+      const routeMapping = {
+        '/manage': 'manage',
+        '/editor': 'editor',
+        '/install/:url': 'install',
+        '/install': 'install',
+        '/options': 'options',
+        '/helps': 'helps'
+      }
       const navClasses = (route) => classnames({
-        ['nav-' + route.split('/')[1]]: true,
+        ['nav-' + route]: true,
         'sidebar-nav': true,
-        'current': route === this.props.route
+        'current': route === routeMapping[this.props.route]
       })
       return (
         <div className="sidebar">
@@ -14,10 +22,10 @@ export default function () {
             MetalMonkey
           </div>
           <ul className="navs">
-            <li className={ navClasses('/manage') }><a href="#/manage">manage scripts</a></li>
-            <li className={ navClasses('/editor') }><a href="#/editor">create • edit</a></li>
-            <li className={ navClasses('/install/:url') }><a href="#/install">install</a></li>
-            <li className={ navClasses('/options') }><a href="#/options">options</a></li>
+            <li className={ navClasses('manage') }><a href="#/manage">manage scripts</a></li>
+            <li className={ navClasses('editor') }><a href="#/editor">create • edit</a></li>
+            <li className={ navClasses('install') }><a href="#/install">install</a></li>
+            <li className={ navClasses('options') }><a href="#/options">options</a></li>
           </ul>
           <div className="etc">
             <div className={ navClasses('helps') }>
