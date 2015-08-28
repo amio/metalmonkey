@@ -58,13 +58,17 @@ export default function () {
           </div>
           <div className="content-body">
             <ul className="us-list">
-              { this.state.items.map((us) => {
-                return React.createElement(Userscript, {
-                  key: us.usid,
-                  meta: us,
-                  onRemove: this.updateList
-                })
-              }) }
+              {
+                this.state.items.length ?
+                  this.state.items.map((us) => {
+                    return React.createElement(Userscript, {
+                      key: us.usid,
+                      meta: us,
+                      onRemove: this.updateList
+                    })
+                  })
+                : this.noScript()
+              }
             </ul>
           </div>
         </div>
@@ -77,6 +81,15 @@ export default function () {
     },
     componentWillMount: function () {
       this.updateList()
+    },
+    noScript: function () {
+      return (
+        <li style={{fontFamily: 'PT Sans', textAlign: 'center', padding: '10em'}}>
+          Nothing here. Go to&nbsp;
+          <a href="#/install" style={{color: '#4A90E2'}}>INSTALL</a>
+          &nbsp;some scripts ;-)
+        </li>
+      )
     },
     updateList: function () {
       getUserscriptList()
