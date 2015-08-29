@@ -5,18 +5,21 @@ import genManager from './comp/manager'
 import genInstaller from './comp/installer'
 import genInstallerHome from './comp/installer-home'
 import genOptions from './comp/options'
+import genHelps from './comp/helps'
 
 const Sidebar = genSidebar()
 const Manager = genManager()
 const Installer = genInstaller()
 const InstallerHome = genInstallerHome()
 const Options = genOptions()
+const Helps = genHelps
 
 const appRouter = router.route({
   '/manage': Manager,
   '/install/:url': Installer,
   '/install': InstallerHome,
-  '/options': Options
+  '/options': Options,
+  '/helps': Helps
 }, '/manage')
 
 const App = React.createClass({
