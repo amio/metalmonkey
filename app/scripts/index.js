@@ -1,18 +1,11 @@
 // import { log } from './lib/helper'
 import router from './lib/router'
-import genSidebar from './comp/sidebar'
-import genManager from './comp/manager'
-import genInstaller from './comp/installer'
-import genInstallerHome from './comp/installer-home'
-import genOptions from './comp/options'
-import genHelps from './comp/helps'
-
-const Sidebar = genSidebar()
-const Manager = genManager()
-const Installer = genInstaller()
-const InstallerHome = genInstallerHome()
-const Options = genOptions()
-const Helps = genHelps
+import Sidebar from './comp/sidebar.jsx'
+import Manager from './comp/manager.jsx'
+import Installer from './comp/installer.jsx'
+import InstallerHome from './comp/installer-home.jsx'
+import Options from './comp/options.jsx'
+import Helps from './comp/helps.jsx'
 
 const appRouter = router.route({
   '/manage': Manager,
