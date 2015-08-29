@@ -84,9 +84,9 @@ export default function () {
     },
     noScript: function () {
       return (
-        <li style={{fontFamily: 'PT Sans', textAlign: 'center', padding: '10em'}}>
+        <li style={{fontFamily: 'PT Sans', fontSize: '20px', textAlign: 'center', paddingTop: '8em'}}>
           Nothing here. Go to&nbsp;
-          <a href="#/install" style={{color: '#4A90E2'}}>INSTALL</a>
+          <a href="#/install" style={{color: '#4A90E2'}}>install</a>
           &nbsp;some scripts ;-)
         </li>
       )

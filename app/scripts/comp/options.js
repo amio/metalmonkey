@@ -13,6 +13,17 @@ export default function () {
           <div className="content-body">
             <ul className="option-list">
               <li className="option-group">
+                <h3 className="group-title">APPEARANCE</h3>
+                <div className="group-content">
+                  <div className="option">
+                    <span className="option-desc">Editor Font Size:</span>
+                    <label><input name="editor-font-size" type="radio"></input>SMALL</label>
+                    <label><input name="editor-font-size" type="radio" checked></input>MEDIUM</label>
+                    <label><input name="editor-font-size" type="radio"></input>LARGE</label>
+                  </div>
+                </div>
+              </li>
+              <li className="option-group">
                 <h3 className="group-title">MAINTENANCE</h3>
                 <div className="group-content">
                   <button onClick={ this.clearAllData }>CLEAR ALL DATA</button>
