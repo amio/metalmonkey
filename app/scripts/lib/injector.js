@@ -4,15 +4,26 @@ import { getMatchedUserscripts } from './registry'
 export { initInjectorListener }
 
 function initInjectorListener () {
+  // chrome.tabs.onCreated.addListener(function (tab) {
+  //   usInjector(tab)
+  // })
   chrome.tabs.onUpdated.addListener(function (tabId, changed, tab) {
-    // log('Update->', changed, tab)
-    if (changed.status === 'loading') usInjector(tab)
+    if (changed.status === 'loading') {
+      usInjector(tab)
+    }
   })
 }
 
 function usInjector (tab) {
   getMatchedUserscripts(tab.url)
     .then(function (matchedUss) {
+      // Update badge
+      chrome.browserAction.setBadgeText({
+        tabId: tab.id,
+        text: matchedUss.length.toString()
+      })
+
+      // Inject userscripts
       matchedUss.forEach((us) => {
         chrome.storage.local.get(us.usid, function (script) {
           const cfg = {
