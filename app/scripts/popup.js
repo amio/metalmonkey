@@ -2,7 +2,7 @@ const optionBtn = document.querySelector('#menu-options')
 
 optionBtn.addEventListener('click', function (ev) {
   // chrome.tabs.create({ 'url': 'chrome://extensions/?options=' + chrome.runtime.id })
-  var optionsUrl = chrome.extension.getURL('html/options.html')
+  var optionsUrl = chrome.extension.getURL('index.html')
 
   chrome.tabs.query({url: optionsUrl}, function (tabs) {
     if (tabs.length) {
