@@ -32,7 +32,9 @@ const Installer = React.createClass({
               </tbody>
             </table>
           </div>
-          <textarea className="userscript-code" value={ us.content } onChange={ this.modifyCode }></textarea>
+          <div className="userscript-code" onChange={ this.modifyCode }>
+            <pre>{ us.content }</pre>
+          </div>
         </div>
       </div>
     )
