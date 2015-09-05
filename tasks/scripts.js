@@ -16,6 +16,7 @@ var babelify = require('babelify')
  * Configue
  */
 var src = 'app/scripts/*.js'
+var src_gmapi = 'app/scripts/gm-api/*.js'
 var dest = 'dist/scripts'
 
 /*
@@ -101,9 +102,11 @@ function copyScripts () {
 
 gulp.task('scripts', function () {
   buildBundles(src)
+  buildBundles(src_gmapi)
 })
 
 gulp.task('scripts:dev', function () {
   livereload.listen()
   buildBundles(src, true)
+  buildBundles(src_gmapi, true)
 })

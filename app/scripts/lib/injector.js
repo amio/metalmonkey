@@ -1,38 +1,51 @@
 import { log } from './helper'
 import { getMatchedUserscripts } from './registry'
 
-export { initInjectorListener }
-
 function initInjectorListener () {
   // chrome.tabs.onCreated.addListener(function (tab) {
   //   usInjector(tab)
   // })
   chrome.tabs.onUpdated.addListener(function (tabId, changed, tab) {
     if (changed.status === 'loading') {
-      usInjector(tab)
+      getMatchedUserscripts(tab.url)
+        .then(matched => usInjector(tabId, matched))
+        .catch(log)
     }
   })
 }
 
-function usInjector (tab) {
-  getMatchedUserscripts(tab.url)
-    .then(function (matchedUss) {
-      // Update badge
-      chrome.browserAction.setBadgeText({
-        tabId: tab.id,
-        text: matchedUss.length.toString()
-      })
+function usInjector (tabId, matchedUss) {
+  // Update badge
+  chrome.browserAction.setBadgeText({
+    tabId: tabId,
+    text: matchedUss.length.toString()
+  })
 
-      // Inject userscripts
-      matchedUss.forEach((us) => {
-        chrome.storage.local.get(us.usid, function (script) {
-          const cfg = {
-            code: script[us.usid],
-            runAt: (script.runAt || 'document_end').replace('-', '_')
-          }
-          chrome.tabs.executeScript(tab.id, cfg)
-        })
+  // Inject userscripts
+  matchedUss.forEach((usMeta) => {
+    chrome.storage.local.get(usMeta.usid, function (script) {
+      // Prepare GM_* API
+      injectGMApi(usMeta)
+      // Inject script
+      chrome.tabs.executeScript(tabId, {
+        code: script[usMeta.usid],
+        runAt: (script.runAt || 'document_end').replace('-', '_')
       })
     })
-    .catch(log)
+  })
 }
+
+function injectGMApi (usMeta, tabId) {
+  for (let api of usMeta.grant) {
+    chrome.tabs.executeScript(tabId, {
+      file: 'scripts/' + api + '.js',
+      runAt: 'document_start'
+    }, function () {
+      if (chrome.runtime.lastError) {
+        console.error('Missing api:', api)
+      }
+    })
+  }
+}
+
+export { initInjectorListener }
