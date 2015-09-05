@@ -1,5 +1,5 @@
 // import { log } from './lib/helper'
-import router from './lib/router'
+import router from './comp/router'
 import Sidebar from './comp/sidebar.jsx'
 import Manager from './comp/manager.jsx'
 import Installer from './comp/installer.jsx'
