@@ -146,6 +146,9 @@
     display: flex;
     flex-direction: column;
     overflow: auto;
+    .userscript-meta {
+      flex: 0;
+    }
     .userscript-code {
       flex: 1;
     }
@@ -179,8 +182,6 @@
   }
 
   .userscript-code {
-    height: 100%;
-    width: 100%;
     overflow: auto;
     border-radius: 4px;
     border: 1px solid #EAEAEA;
