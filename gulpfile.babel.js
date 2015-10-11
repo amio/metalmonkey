@@ -1,7 +1,8 @@
-var gulp = require('gulp');
-var requireDir = require('require-dir');
-var runSequence = require('run-sequence');
-var dir = requireDir('./tasks');
+import gulp from 'gulp'
+import requireDir from 'require-dir'
+import runSequence from 'run-sequence'
+
+var dir = requireDir('./tasks')
 
 gulp.task('build', function(callback) {
   runSequence(
