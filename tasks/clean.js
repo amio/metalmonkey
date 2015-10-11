@@ -1,9 +1,9 @@
-var gulp = require('gulp');
-var del = require('del');
+var gulp = require('gulp')
+var del = require('del')
 
-gulp.task('clean', function(cb) {
+gulp.task('clean', function (cb) {
   del([
     'dist/*',
     'temp'
-  ], cb);
-});
+  ]).then(() => cb())
+})
