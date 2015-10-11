@@ -2,9 +2,9 @@ import gulp from 'gulp'
 import requireDir from 'require-dir'
 import runSequence from 'run-sequence'
 
-var dir = requireDir('./tasks')
+requireDir('./tasks')
 
-gulp.task('build', function(callback) {
+gulp.task('build', function (callback) {
   runSequence(
     'clean', [
       'fonts',
@@ -16,17 +16,17 @@ gulp.task('build', function(callback) {
       'styles'
     ],
     'package',
-    callback);
-});
+    callback)
+})
 
-gulp.task('release', function(callback) {
+gulp.task('release', function (callback) {
   runSequence(
     'manifest:incBuildNo',
     'build',
-    callback);
-});
+    callback)
+})
 
-gulp.task('watch', function(callback) {
+gulp.task('watch', function (callback) {
   runSequence(
     [
       'clean'
@@ -39,9 +39,9 @@ gulp.task('watch', function(callback) {
       'scripts:dev',
       'styles:dev'
     ],
-    callback);
-});
+    callback)
+})
 
 gulp.task('default', [
   'build'
-]);
+])
