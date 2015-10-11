@@ -1,3 +1,5 @@
+import ReactDOM from 'react-dom'
+
 export default { route, init }
 
 function route (routeMapping, defaultRoute) {
@@ -18,7 +20,7 @@ function route (routeMapping, defaultRoute) {
 function init (App, container) {
   function mainRender () {
     const route = window.location.hash.substr(1)
-    React.render(<App route={route} />, container)
+    ReactDOM.render(<App route={route} />, container)
   }
   window.addEventListener('hashchange', mainRender)
   mainRender()
