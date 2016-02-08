@@ -21,7 +21,7 @@ const Sidebar = React.createClass({
           MetalMonkey
         </div>
         <ul className="navs">
-          <li className={ navClasses('manage') }><a href="#/manage">manage scripts</a></li>
+          <li className={ navClasses('manage') }><a href="#/manage">manage</a></li>
           <li className={ navClasses('editor') }><a href="#/editor">create • edit</a></li>
           <li className={ navClasses('install') }><a href="#/install">discover</a></li>
           <li className={ navClasses('options') }><a href="#/options">options</a></li>

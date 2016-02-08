@@ -28,4 +28,4 @@ const App = React.createClass({
   router: appRouter
 })
 
-router.init(App, document.body)
+router.init(App, document.querySelector('#app'))
