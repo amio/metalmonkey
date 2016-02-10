@@ -16,7 +16,7 @@ class ScriptStorage {
     return this.storage[name] === undefined ? defaultValue : this.storage[name]
   }
 
-  listValue () {
+  listValues () {
     return Object.keys(this.storage)
   }
 

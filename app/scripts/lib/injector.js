@@ -2,19 +2,16 @@ import { log } from './helper'
 import { getMatchedUserscripts } from './registry'
 
 function initInjectorListener () {
-  // chrome.tabs.onCreated.addListener(function (tab) {
-  //   usInjector(tab)
-  // })
   chrome.tabs.onUpdated.addListener(function (tabId, changed, tab) {
     if (changed.status === 'loading') {
       getMatchedUserscripts(tab.url)
-        .then(matched => usInjector(tabId, matched))
+        .then(matched => userscriptInjector(tabId, matched))
         .catch(log)
     }
   })
 }
 
-function usInjector (tabId, matchedUss) {
+function userscriptInjector (tabId, matchedUss) {
   // Update badge
   chrome.browserAction.setBadgeText({
     tabId: tabId,
@@ -23,8 +20,6 @@ function usInjector (tabId, matchedUss) {
 
   // Inject userscripts
   matchedUss.forEach((userscriptMeta) => {
-    console.log('metas:', userscriptMeta)
-
     // Prepare GM_* api
     chrome.tabs.executeScript(tabId, {
       file: 'scripts/gm-api.js',
