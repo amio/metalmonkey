@@ -1,5 +1,5 @@
-import initScriptStorage from './GM_storage.js'
-import GM_xmlhttpRequest from './GM_xmlhttpRequest.js'
+import initScriptStorage from './gm-api/GM_storage.js'
+import GM_xmlhttpRequest from './gm-api/GM_xmlhttpRequest.js'
 
 window.initGreasemonkeyApi = function (scriptId) {
   scriptId = scriptId || 'debug'
