@@ -1,3 +1,14 @@
-import store from './store.js'
+import initScriptStorage from './GM_storage.js'
 
-window.greasemonkeyApiStore = store
+window.initGreasemonkeyApi = function (scriptId) {
+  scriptId = scriptId || 'debug'
+
+  // Storage Apis
+  const scriptStore = initScriptStorage(scriptId)
+  window.GM_setValue = scriptStore.setValue.bind(scriptStore)
+  window.GM_getValue = scriptStore.getValue.bind(scriptStore)
+  window.GM_listValue = scriptStore.listValue.bind(scriptStore)
+  window.GM_deleteValue = scriptStore.deleteValue.bind(scriptStore)
+
+  // xmlhttpRequest
+}
