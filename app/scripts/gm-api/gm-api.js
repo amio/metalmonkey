@@ -1,4 +1,5 @@
 import initScriptStorage from './GM_storage.js'
+import GM_xmlhttpRequest from './GM_xmlhttpRequest.js'
 
 window.initGreasemonkeyApi = function (scriptId) {
   scriptId = scriptId || 'debug'
@@ -11,4 +12,5 @@ window.initGreasemonkeyApi = function (scriptId) {
   window.GM_deleteValue = scriptStore.deleteValue.bind(scriptStore)
 
   // xmlhttpRequest
+  window.GM_xmlhttpRequest = GM_xmlhttpRequest
 }

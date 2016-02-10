@@ -38,6 +38,10 @@ function userscriptInjector (tabId, matchedUss) {
           chrome.tabs.executeScript(tabId, {
             code: script[userscriptMeta.usid],
             runAt: (script.runAt || 'document_end').replace('-', '_')
+          }, function () {
+            if (chrome.runtime.lastError) {
+              console.error('Error in userscript:', userscriptMeta.usid)
+            }
           })
         })
       })
