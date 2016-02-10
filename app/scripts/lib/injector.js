@@ -29,14 +29,20 @@ function userscriptInjector (tabId, matchedUss) {
         console.error('Error in gm-api.js')
         return
       }
-      // Init GM_* api for this userscript
+      // Init GM_* api env for this userscript
       chrome.tabs.executeScript(tabId, {
-        code: `initGreasemonkeyApi(${userscriptMeta.usid})`
+        code: `initGreasemonkeyApi("${userscriptMeta.usid}")`
       }, function () {
         // inject this userscript
         chrome.storage.local.get(userscriptMeta.usid, function (script) {
+          const iifeWrapped = `(function(){
+            ${userscriptMeta.grant.map(api => {
+              return `var ${api} = window.gmApi["${userscriptMeta.usid}"].${api}`
+            }).join(';')};
+            ${script[userscriptMeta.usid]}
+          })`
           chrome.tabs.executeScript(tabId, {
-            code: script[userscriptMeta.usid],
+            code: iifeWrapped,
             runAt: (script.runAt || 'document_end').replace('-', '_')
           }, function () {
             if (chrome.runtime.lastError) {
