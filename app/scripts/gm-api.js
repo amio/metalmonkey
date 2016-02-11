@@ -1,5 +1,6 @@
 import initScriptStorage from './gm-api/GM_storage.js'
 import GM_xmlhttpRequest from './gm-api/GM_xmlhttpRequest.js'
+import GM_addStyle from './gm-api/GM_addStyle.js'
 
 window.initGreasemonkeyApi = function (scriptId) {
   scriptId = scriptId || 'debug'
@@ -11,6 +12,7 @@ window.initGreasemonkeyApi = function (scriptId) {
     GM_getValue: scriptStore.getValue.bind(scriptStore),
     GM_listValues: scriptStore.listValues.bind(scriptStore),
     GM_deleteValue: scriptStore.deleteValue.bind(scriptStore),
-    GM_xmlhttpRequest: GM_xmlhttpRequest
+    GM_xmlhttpRequest: GM_xmlhttpRequest,
+    GM_addStyle: GM_addStyle
   }
 }
