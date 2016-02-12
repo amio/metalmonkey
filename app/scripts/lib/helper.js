@@ -1,10 +1,15 @@
-export { env, log, promisifyChromeExtensionApi }
+export { env, info, log, promisifyChromeExtensionApi }
 
 const env = 'dev'
 
 function log (...args) {
   console.log.apply(console, args)
   return (...more) => log(args.concat(more))
+}
+
+function info (...args) {
+  env === 'dev' && console.info.apply(console, args)
+  return (...more) => info(args.concat(more))
 }
 
 function promisifyChromeExtensionApi (fn, me) {

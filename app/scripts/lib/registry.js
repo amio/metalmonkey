@@ -1,4 +1,4 @@
-import { log, promisifyChromeExtensionApi } from './helper'
+import { promisifyChromeExtensionApi } from './helper'
 import usp from 'userscript-parser'
 import crxp from 'crx-patterns'
 import initScriptStorage from '../gm-api/GM_storage.js'
@@ -68,8 +68,8 @@ function removeUserscript (usid) {
     chrome.storage.local
   )
   return Promise.all([
-    syncRemove(usid),
-    localRemove(usid)
+    syncRemove(USID_PREFIX + usid),
+    localRemove(USID_PREFIX + usid)
   ])
 }
 
@@ -77,15 +77,13 @@ function removeUserscript (usid) {
  * Get registry items that match the url.
  */
 function getMatchedUserscripts (url) {
-  console.log(url)
   return getUserscriptList()
     .then(function (scripts) {
       let matched = scripts.filter(us => isUsMatchURL(us, url))
-      console.log(scripts, matched)
       return matched
     })
     .catch(function (err) {
-      log('[Registry]:', err)
+      console.error('[MM-Registry] ', err)
       return []
     })
 }
