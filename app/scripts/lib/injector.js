@@ -18,6 +18,11 @@ function userscriptInjector (tabId, matchedUss) {
     text: matchedUss.length.toString()
   })
 
+  // inject debug utillities
+  chrome.tabs.executeScript(tabId, {
+    file: 'scripts/debug.js'
+  })
+
   // Inject userscripts
   matchedUss.forEach((userscriptMeta) => {
     // Prepare GM_* api
