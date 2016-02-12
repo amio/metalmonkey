@@ -71,7 +71,7 @@ const Installer = React.createClass({
   installUserscript: function () {
     registerUserscript(this.state.us.url, this.state.us.content)
       .then(function () {
-        window.close()
+        // window.close()
       })
       .catch(function (e) {
         log(e)

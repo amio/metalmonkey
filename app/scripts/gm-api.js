@@ -12,6 +12,8 @@ window.initGreasemonkeyApi = function (scriptId) {
     GM_getValue: scriptStore.getValue.bind(scriptStore),
     GM_listValues: scriptStore.listValues.bind(scriptStore),
     GM_deleteValue: scriptStore.deleteValue.bind(scriptStore),
+    GM_getResourceURL: scriptStore.getResourceURL.bind(scriptStore),
+    GM_getResourceText: scriptStore.getResourceText.bind(scriptStore),
     GM_xmlhttpRequest: GM_xmlhttpRequest,
     GM_addStyle: GM_addStyle
   }
