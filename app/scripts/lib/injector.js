@@ -1,5 +1,5 @@
 import { info } from './helper'
-import { getMatchedUserscripts } from './registry'
+import { getMatchedUserscripts, getRequires } from './registry'
 
 function initInjectorListener () {
   chrome.tabs.onUpdated.addListener(function (tabId, changed, tab) {
@@ -22,52 +22,79 @@ function userscriptInjector (tabId, matchedUss) {
   // inject debug utillities
   chrome.tabs.executeScript(tabId, {
     file: 'scripts/debug.js'
+  }, function () {
+    if (chrome.runtime.lastError) {
+      console.error('[TAB-%s] Inject debug.js error.', tabId)
+    }
   })
 
   // Inject userscripts
   matchedUss.forEach((userscriptMeta) => {
-    // Prepare GM_* api
+    prepareEnvironment(tabId, userscriptMeta, () => {
+      executeUserscript(tabId, userscriptMeta)
+    })
+  })
+}
+
+function prepareEnvironment (tabId, meta, cb) {
+  // Prepare GM_* api
+  chrome.tabs.executeScript(tabId, {
+    file: 'scripts/gm-api.js',
+    runAt: 'document_start'
+  }, function () {
+    if (chrome.runtime.lastError) {
+      console.error('Error in gm-api.js')
+      return
+    }
+    info('[TAB-%s] <%s> Injected gm-api.js.', tabId, meta.name)
+    // Init GM_* api env for this userscript
     chrome.tabs.executeScript(tabId, {
-      file: 'scripts/gm-api.js',
-      runAt: 'document_start'
+      code: `initGreasemonkeyApi("${meta.usid}")`
     }, function () {
-      if (chrome.runtime.lastError) {
-        console.error('Error in gm-api.js')
-        return
-      }
-      info('[TAB-%s] <%s> Injected gm-api.js.', tabId, userscriptMeta.name)
-      // Init GM_* api env for this userscript
-      chrome.tabs.executeScript(tabId, {
-        code: `initGreasemonkeyApi("${userscriptMeta.usid}")`
-      }, function () {
-        info('[TAB-%s] <%s> Initialized greasemonkey apis.', tabId, userscriptMeta.name)
-        // inject this userscript
-        const USStorageKey = 'USID:' + userscriptMeta.usid
-        chrome.storage.local.get(USStorageKey, function (script) {
-          const iifeWrappedCode = `(function(){
-            ${userscriptMeta.grant.map(api => {
-              return `var ${api} = window.gmApi["${userscriptMeta.usid}"].${api}`
-            }).join(';')};
-            try {
-              ${script[USStorageKey]}
-            } catch (e) {
-              console.error('Error in <%s> :', '${userscriptMeta.name}', e)
-            }
-          })()`
+      info('[TAB-%s] <%s> Initialized greasemonkey apis.', tabId, meta.name)
+      if (meta.require && meta.require.length) {
+        getRequires(meta.usid).then(code => {
+          console.log('[TAB-%s] <%s> Required resource injected.', tabId, meta.name)
           chrome.tabs.executeScript(tabId, {
-            code: iifeWrappedCode,
-            runAt: (script.runAt || 'document_end').replace('-', '_')
+            code: code
           }, function () {
             if (chrome.runtime.lastError) {
-              console.error('Error in userscript:', userscriptMeta.usid)
+              console.error('[TAB-%s] <%s> error load requires.', tabId, meta.name)
+              console.error(code)
             }
-            info('[TAB-%s] <%s> Executed.', tabId, userscriptMeta.name)
-            // console.log(iifeWrappedCode)
+            cb()
           })
         })
-      })
+      } else {
+        cb()
+      }
     })
+  })
+}
 
+function executeUserscript (tabId, meta) {
+  const USStorageKey = 'USID:' + meta.usid
+  chrome.storage.local.get(USStorageKey, function (script) {
+    const iifeWrappedCode = `(function(){
+      ${meta.grant.map(api => {
+        return `var ${api} = window.gmApi["${meta.usid}"].${api}`
+      }).join(';')};
+      try {
+        ${script[USStorageKey]}
+      } catch (e) {
+        console.error('Error in <%s> :', '${meta.name}', e)
+      }
+    })()`
+    chrome.tabs.executeScript(tabId, {
+      code: iifeWrappedCode,
+      runAt: (script.runAt || 'document_end').replace('-', '_')
+    }, function () {
+      if (chrome.runtime.lastError) {
+        console.error('Error in userscript:', meta.usid)
+      }
+      info('[TAB-%s] <%s> Executed.', tabId, meta.name)
+      // console.log(iifeWrappedCode)
+    })
   })
 }
 

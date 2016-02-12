@@ -7,10 +7,12 @@ export {
   registerUserscript,
   removeUserscript,
   getMatchedUserscripts,
-  getUserscriptList
+  getUserscriptList,
+  getRequires
 }
 
 const USID_PREFIX = 'USID:'
+const REQUIRE_PREFIX = 'REQS:'
 
 /**
  * Add a script to metalmonkey registry.
@@ -24,6 +26,12 @@ function registerUserscript (url, content) {
   if (usmeta.resource) {
     const store = initScriptStorage(url)
     store.installResources(usmeta.resource)
+  }
+
+  // fetch & store @require
+  // http://wiki.greasespot.net/Metadata_Block#.40require
+  if (usmeta.require) {
+    installRequires(usid, usmeta.require)
   }
 
   const syncSet = promisifyChromeExtensionApi(
@@ -55,6 +63,29 @@ function registerUserscript (url, content) {
       [USID_PREFIX + usid]: content
     })
   ])
+}
+
+function installRequires (usid, requires) {
+  return Promise.all(requires.map(item => {
+    return fetch(item).then(res => res.text())
+  }))
+    .then(scripts => {
+      chrome.storage.local.set({
+        [REQUIRE_PREFIX + usid]: scripts.join(';')
+      })
+    })
+}
+
+function getRequires (usid) {
+  return new Promise((res, rej) => {
+    chrome.storage.local.get(REQUIRE_PREFIX + usid, (requires) => {
+      if (chrome.runtime.lastError) {
+        rej()
+      } else {
+        res(requires[REQUIRE_PREFIX + usid])
+      }
+    })
+  })
 }
 
 function removeUserscript (usid) {

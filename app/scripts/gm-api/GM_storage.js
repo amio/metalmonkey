@@ -58,7 +58,7 @@ class ScriptStorage {
         .then(res => res.blob())
         .then(blob => {
           const r = new window.FileReader()
-          r.onload = function (e) {
+          r.onload = (e) => {
             this.setValue(RESOURCE_PREFIX + resArr[0], JSON.stringify({
               url: resArr[1],
               base64: e.target.result
