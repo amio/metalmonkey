@@ -12,7 +12,7 @@ function initInjectorListener () {
 }
 
 function userscriptInjector (tabId, matchedUss) {
-  console.info('[TAB-%s] Matched userscripts count:', tabId, matchedUss.length)
+  console.info('[TAB-%s] %i userscripts matched.', tabId, matchedUss.length)
   // Update badge
   chrome.browserAction.setBadgeText({
     tabId: tabId,
@@ -54,7 +54,7 @@ function prepareEnvironment (tabId, meta, cb) {
       info('[TAB-%s] <%s> Initialized greasemonkey apis.', tabId, meta.name)
       if (meta.require && meta.require.length) {
         getRequires(meta.usid).then(code => {
-          console.log('[TAB-%s] <%s> Required resource injected.', tabId, meta.name)
+          info('[TAB-%s] <%s> Required resource injected.', tabId, meta.name)
           chrome.tabs.executeScript(tabId, {
             code: code
           }, function () {
