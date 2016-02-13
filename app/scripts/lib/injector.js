@@ -1,3 +1,5 @@
+// Inject userscripts into webpage.
+
 import { info } from './helper'
 import { getMatchedUserscripts, getRequires } from './registry'
 

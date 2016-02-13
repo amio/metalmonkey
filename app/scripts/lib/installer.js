@@ -17,9 +17,8 @@ function installerAgent (details) {
 
   if (!byUserRequest) return
 
-  const indexURL = chrome.extension.getURL('index.html')
-  const installURL = indexURL + '#/install/' + encodeURIComponent(details.url)
-  chrome.tabs.create({'url': installURL})
+  const indexURL = chrome.extension.getURL('install.html')
+  chrome.tabs.create({'url': `${indexURL}?script=${details.url}`})
 
   return {
     redirectUrl: 'javascript:history.back()'
