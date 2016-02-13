@@ -3,9 +3,12 @@
 import { info } from './helper'
 import { getMatchedUserscripts, getRequires } from './registry'
 
-function initInjectorListener () {
+export default initInjector
+
+function initInjector () {
   chrome.tabs.onUpdated.addListener(function (tabId, changed, tab) {
     if (changed.status === 'loading') {
+      // Inject matched userscript into page.
       getMatchedUserscripts(tab.url)
         .then(matched => userscriptInjector(tabId, matched))
         .catch(e => console.log(e))
@@ -99,5 +102,3 @@ function executeUserscript (tabId, meta) {
     })
   })
 }
-
-export { initInjectorListener }

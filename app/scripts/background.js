@@ -1,24 +1,14 @@
 import { log } from './lib/helper'
-import { initInstallerAgent } from './lib/installer'
-import { initInjectorListener } from './lib/injector'
+import initUserscriptAgent from './lib/agent'
+import initInjector from './lib/injector'
 
 versionCheck()
-initInjectorListener()
-initInstallerAgent()
 
-// Response to messages
-chrome.runtime.onMessage.addListener(function (request, sender, sendResponse) {
-  if (typeof messageHandlers[request.title] === 'function') {
-    messageHandlers[request.title](request, sender, sendResponse)
-  }
-})
+// Intercept *.user.js link click
+initUserscriptAgent()
 
-const messageHandlers = {
-  //
-  'whoami': function (request, sender, sendResponse) {
-    sendResponse(sender.tab)
-  }
-}
+// Listener on every webpage, for injecting userscripts.
+initInjector()
 
 function versionCheck () {
   chrome.runtime.onInstalled.addListener(function (details) {
