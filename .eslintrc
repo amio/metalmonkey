@@ -1,21 +1,22 @@
-{
-  "env": {
-    "es6": true,
-    "browser": true
-  },
-  "globals": {
-    "chrome": true
-  },
-  "extends": ["standard", "standard-react"],
-  "plugins": [
-    "react",
-  ],
-  "rules": {
-    "react/jsx-no-bind": 0,
-    "react/jsx-no-undef": 1,
-    "react/jsx-equals-spacing": [1, "never"],
-    "react/prop-types": [1, {"ignore": ["children"]} ],
-    "arrow-parens": [2, "as-needed"],
-    "camelcase": 2
-  }
-}
+
+---
+env:
+  es6: true
+  browser: true
+
+globals:
+  chrome: true
+
+extends:
+  - standard
+  - standard-react
+
+plugins:
+  - react
+
+rules:
+  react/jsx-no-bind: 0
+  react/jsx-no-undef: 1
+  react/jsx-equals-spacing: 1
+  arrow-parens: [2, "as-needed"]
+  camelcase: 2
