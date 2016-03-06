@@ -40,7 +40,6 @@ function bundle (b, filename, development) {
 
     // Trigger livereload
     .pipe(gulpif(development, livereload()))
-
 }
 
 function browserifyEach (baseFilePath, development) {
@@ -71,14 +70,12 @@ function browserifyEach (baseFilePath, development) {
       gutil.log(filename, 'changed')
       bundle(b, filename, development)
     })
-
   }
 
   // Add transforms here
   // b.transform(reactify)
 
   bundle(b, filename, development)
-
 }
 
 function buildBundles (src, development) {
