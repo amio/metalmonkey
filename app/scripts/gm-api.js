@@ -1,3 +1,4 @@
+/*eslint camelcase:0*/
 import initScriptStorage from './gm-api/GM_storage.js'
 import GM_xmlhttpRequest from './gm-api/GM_xmlhttpRequest.js'
 import GM_addStyle from './gm-api/GM_addStyle.js'
