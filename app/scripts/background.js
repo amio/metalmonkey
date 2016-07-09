@@ -1,14 +1,14 @@
 import { log } from './lib/helper'
-import initUserscriptAgent from './lib/agent'
-import initInjector from './lib/injector'
+import initInstallerAgent from './lib/installerAgent'
+import initInjectorAgent from './lib/injectorAgent'
 
 versionCheck()
 
 // Intercept *.user.js link click
-initUserscriptAgent()
+initInstallerAgent()
 
 // Listener on every webpage, for injecting userscripts.
-initInjector()
+initInjectorAgent()
 
 function versionCheck () {
   chrome.runtime.onInstalled.addListener(function (details) {

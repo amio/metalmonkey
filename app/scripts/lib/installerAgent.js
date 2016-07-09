@@ -1,4 +1,4 @@
-export default function initUserscriptAgent () {
+export default function () {
   // Blocking request for "*.user.js"
   chrome.webRequest.onBeforeRequest.addListener(
     userscriptAgent,
@@ -18,5 +18,4 @@ export default function initUserscriptAgent () {
       redirectUrl: 'javascript:history.back()'
     }
   }
-
 }

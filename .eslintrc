@@ -1,4 +1,3 @@
-
 ---
 env:
   es6: true
@@ -6,6 +5,7 @@ env:
 
 globals:
   chrome: true
+  React: true
 
 extends:
   - standard
