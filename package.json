@@ -17,10 +17,10 @@
   "dependencies": {
     "classnames": "^2.2.0",
     "crx-patterns": "^0.1.0",
-    "react": "^0.14.7",
-    "react-dom": "^0.14.7",
+    "react": "^15.2.1",
+    "react-dom": "^15.2.1",
     "react-router": "^2.0.0",
-    "url-search-params": "^0.3.0",
+    "url-search-params": "^0.5.0",
     "userscript-parser": "^0.3.1"
   },
   "devDependencies": {
@@ -40,7 +40,7 @@
     "gulp": "^3.9.0",
     "gulp-concat": "^2.6.0",
     "gulp-if": "^2.0.0",
-    "gulp-imagemin": "^2.4.0",
+    "gulp-imagemin": "^3.0.1",
     "gulp-json-transform": "^0.2.0",
     "gulp-less": "^3.0.3",
     "gulp-livereload": "^3.0.2",
