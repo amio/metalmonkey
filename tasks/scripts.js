@@ -91,7 +91,8 @@ function buildBundles (src, development) {
 function copyScripts () {
   var vendorScripts = [
     'node_modules/zepto/zepto.min.js',
-    'node_modules/react/dist/react.js'
+    'node_modules/react/dist/react.js',
+    'node_modules/material-design-lite/material.min.js'
   ]
   return gulp.src(vendorScripts)
     .pipe(gulp.dest(dest))

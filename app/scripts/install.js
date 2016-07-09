@@ -2,11 +2,11 @@ import URLSearchParams from 'url-search-params'
 import { registerUserscript } from './lib/registry'
 
 const codeElement = document.querySelector('#code')
-const params = new URLSearchParams(window.location.search.slice(1))
-const script = params.get('script')
+const searchParams = new URLSearchParams(window.location.search.slice(1))
+const scriptURL = searchParams.get('script')
 const decoder = new window.TextDecoder()
 
-fetch(script)
+fetch(scriptURL)
   .then(res => consume(res))
   .then(uso => onScriptLoaded(uso))
   .catch(e => console.error('Something went wrong: ' + e))
@@ -23,7 +23,7 @@ function consume (response) {
       reader.read().then(({done, value}) => {
         if (done) {
           return resolve({
-            url: script,
+            url: scriptURL,
             meta: meta,
             bytes: total,
             content: scriptText
@@ -49,7 +49,7 @@ function parseMeta (metaText) {
 }
 
 function onScriptLoaded (userscriptObject) {
-  console.info('Ready to install %s.', script)
+  console.info('Ready to install %s.', scriptURL)
 
   const installButton = document.querySelector('#installButton')
   installButton.addEventListener('click', () => {
