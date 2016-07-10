@@ -79,23 +79,19 @@ function browserifyEach (baseFilePath, development) {
 }
 
 function buildBundles (src, development) {
+  copyScripts()
   glob(src, function (err, files) {
     if (err) console.log(err)
     files.forEach(function (file) {
       browserifyEach(file, development)
     })
   })
-  copyScripts()
 }
 
 function copyScripts () {
-  var vendorScripts = [
-    'node_modules/zepto/zepto.min.js',
-    'node_modules/react/dist/react.js',
-    'node_modules/material-design-lite/material.min.js'
-  ]
-  return gulp.src(vendorScripts)
-    .pipe(gulp.dest(dest))
+  return gulp.src([
+    'node_modules/react/dist/react.js'
+  ]).pipe(gulp.dest(dest))
 }
 
 gulp.task('scripts', function () {

@@ -26,20 +26,12 @@ var autoprefix = new LessPluginAutoPrefix({
  * Build
  ***********************************************************/
 gulp.task('styles', function () {
-  copyStyles()
   return gulp.src(src)
     .pipe(less({
       plugins: [autoprefix, cleancss]
     }))
     .pipe(gulp.dest(dest))
 })
-
-function copyStyles () {
-  return gulp.src([
-    'node_modules/material-design-lite/material.min.css'
-  ])
-    .pipe(gulp.dest(dest))
-}
 
 /***********************************************************
  * Watch
