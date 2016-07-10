@@ -25,16 +25,16 @@ function userscriptInjector (tabId, matchedUss) {
   })
 
   // inject debug utillities
-  chrome.tabs.executeScript(tabId, {
-    file: 'scripts/debug.js'
-  }, function () {
-    if (chrome.runtime.lastError) {
-      console.error('[TAB-%s] Inject debug.js error.', tabId)
-    }
-  })
+  // chrome.tabs.executeScript(tabId, {
+  //   file: 'scripts/debug.js'
+  // }, function () {
+  //   if (chrome.runtime.lastError) {
+  //     console.error('[TAB-%s] Inject debug.js error.', tabId)
+  //   }
+  // })
 
   // Inject userscripts
-  matchedUss.forEach((userscriptMeta) => {
+  matchedUss.forEach(userscriptMeta => {
     prepareEnvironment(tabId, userscriptMeta, () => {
       executeUserscript(tabId, userscriptMeta)
     })
