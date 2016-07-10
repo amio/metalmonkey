@@ -1,15 +1,20 @@
 <!doctype html>
 <html>
   <head>
-      <link href="../styles/popup.css" rel="stylesheet">
+      <link href="./styles/popup.css" rel="stylesheet">
   </head>
   <body>
-      <h1>'Allo, 'Allo!</h1>
-      <ul class="menu">
-        <li id="menu-options">Options</li>
-      </ul>
+    <div id="app"></div>
+    <ul class="menu">
+      <li class="menu-item" id="menu-manage">Manage installed scripts</li>
+    </ul>
+    <footer>
+      <span class="title">MetalMonkey</span>
+      <span class="version">v0.1.0</span>
+    </footer>
 
-      <script src="../scripts/react.js"></script>
-      <script src="../scripts/popup.js"></script>
+    <script src="./scripts/react.min.js"></script>
+    <script src="./scripts/react-dom.min.js"></script>
+    <script src="./scripts/popup.js"></script>
   </body>
 </html>
