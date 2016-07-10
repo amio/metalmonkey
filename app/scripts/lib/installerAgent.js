@@ -11,8 +11,8 @@ export default function () {
     // (bypass requests for <script />, etc.)
     if (details.type !== 'main_frame') return
 
-    const indexURL = chrome.extension.getURL('install.html')
-    chrome.tabs.create({'url': `${indexURL}?script=${details.url}`})
+    const installerPage = chrome.extension.getURL('installer.html')
+    chrome.tabs.create({'url': `${installerPage}?script=${details.url}`})
 
     return {
       redirectUrl: 'javascript:history.back()'
