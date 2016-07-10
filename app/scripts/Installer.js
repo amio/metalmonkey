@@ -1,5 +1,4 @@
-import React from 'react'
-import ReactDOM from 'react-dom'
+const { React, ReactDOM } = window
 import URLSearchParams from 'url-search-params'
 import { registerUserscript } from './lib/registry'
 
