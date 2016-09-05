@@ -1,5 +1,5 @@
 // http://wiki.greasespot.net/GM_addStyle
-export default function GM_addStyle (cssText) {
+export default function (cssText) {
   try {
     const styleEl = document.createElement('style')
     styleEl.textContent = cssText

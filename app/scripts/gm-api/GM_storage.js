@@ -54,7 +54,7 @@ class ScriptStorage {
   installResources (resources) {
     resources.forEach(resource => {
       const resArr = resource.split(' ')
-      fetch(resArr[1])
+      window.fetch(resArr[1])
         .then(res => res.blob())
         .then(blob => {
           const r = new window.FileReader()

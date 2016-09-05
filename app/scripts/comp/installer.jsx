@@ -1,3 +1,4 @@
+import React from 'react'
 import { log } from '../lib/helper'
 import usp from 'userscript-parser'
 import { registerUserscript } from '../lib/registry'
@@ -6,33 +7,33 @@ const Installer = React.createClass({
   render: function () {
     const us = this.state.us
     return (
-      <div className="content installer">
-        <div className="content-header">
-          <div className="page-title">
+      <div className='content installer'>
+        <div className='content-header'>
+          <div className='page-title'>
             <h2>Install: { us.name || '. . . loading script . . .' }</h2>
-            <span className="title-desc">{ us.url }</span>
+            <span className='title-desc'>{ us.url }</span>
           </div>
-          <div className="actions">
-            <a className="install-button" onClick={ this.installUserscript }>install</a>
-            <a className="handle-with-chrome" onClick={ this.handleWithChrome }>handle with chrome</a>
+          <div className='actions'>
+            <a className='install-button' onClick={this.installUserscript}>install</a>
+            <a className='handle-with-chrome' onClick={this.handleWithChrome}>handle with chrome</a>
           </div>
         </div>
-        <div className="content-body">
-          <div className="userscript-meta">
-            <table className="info">
+        <div className='content-body'>
+          <div className='userscript-meta'>
+            <table className='info'>
               <tbody>
                 <tr><th>author</th><td>{ us.author }</td></tr>
                 <tr><th>version</th><td>{ us.version }</td></tr>
                 <tr><th>description</th><td>{ us.description }</td></tr>
               </tbody>
             </table>
-            <table className="apply-to">
+            <table className='apply-to'>
               <tbody>
                 <tr><th>applies to</th><td>{ us.matches && us.matches.join(' ') }</td></tr>
               </tbody>
             </table>
           </div>
-          <div className="userscript-code" onChange={ this.modifyCode }>
+          <div className='userscript-code' onChange={this.modifyCode}>
             <pre>{ us.content }</pre>
           </div>
         </div>
@@ -47,7 +48,7 @@ const Installer = React.createClass({
   },
   componentWillMount: function () {
     const url = decodeURIComponent(this.props.url)
-    fetch(url)
+    window.fetch(url)
       .then((response) => {
         return response.text()
       })

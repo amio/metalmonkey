@@ -1,3 +1,4 @@
+import React from 'react'
 import classnames from 'classnames'
 
 const Sidebar = React.createClass({
@@ -16,19 +17,19 @@ const Sidebar = React.createClass({
       'current': route === routeMapping[this.props.route]
     })
     return (
-      <div className="sidebar">
-        <div className="logo">
+      <div className='sidebar'>
+        <div className='logo'>
           MetalMonkey
         </div>
-        <ul className="navs">
-          <li className={ navClasses('manage') }><a href="#/manage">manage</a></li>
-          <li className={ navClasses('editor') }><a href="#/editor">create • edit</a></li>
-          <li className={ navClasses('install') }><a href="#/install">discover</a></li>
-          <li className={ navClasses('options') }><a href="#/options">options</a></li>
+        <ul className='navs'>
+          <li className={navClasses('manage')}><a href='#/manage'>manage</a></li>
+          <li className={navClasses('editor')}><a href='#/editor'>create • edit</a></li>
+          <li className={navClasses('install')}><a href='#/install'>discover</a></li>
+          <li className={navClasses('options')}><a href='#/options'>options</a></li>
         </ul>
-        <div className="etc">
-          <div className={ navClasses('helps') }>
-            <a href="#helps">helps</a>
+        <div className='etc'>
+          <div className={navClasses('helps')}>
+            <a href='#helps'>helps</a>
           </div>
         </div>
       </div>

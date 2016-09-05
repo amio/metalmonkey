@@ -15,12 +15,12 @@ function info (...args) {
 function promisifyChromeExtensionApi (fn, me) {
   const self = me || null
   return function (...args) {
-    return new Promise(function (res, rej) {
+    return new Promise(function (resolve, reject) {
       const cb = function (...results) {
         if (chrome.runtime.lastError) {
-          rej(chrome.runtime.lastError)
+          reject(chrome.runtime.lastError)
         } else {
-          res(results)
+          resolve(results)
         }
       }
       fn.apply(self, args.concat(cb))

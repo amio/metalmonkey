@@ -1,6 +1,6 @@
 /* global XMLHttpRequest */
 
-export default function GM_xmlhttpRequest (detail) {
+export default function (detail) {
   // greasify: transform XMLHttpRequest object to GreaseMonkey Response Object.
   // http://wiki.greasespot.net/GM_xmlhttpRequest#Response_Object
   const greasify = function (fn) {

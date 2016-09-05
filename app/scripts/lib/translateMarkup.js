@@ -1,4 +1,4 @@
-'use strict';
+'use strict'
 
 /*
  * Translates each HTML node
@@ -15,11 +15,11 @@
  *      translateMarkup();
  *
  */
-module.exports = function translateMarkup(selector){
-  var tagsToTranslate = document.querySelectorAll(selector || '[data-message]');
-  for (i = 0; i < tagsToTranslate.length; i++) {
+module.exports = function translateMarkup (selector) {
+  var tagsToTranslate = document.querySelectorAll(selector || '[data-message]')
+  for (let i = 0; i < tagsToTranslate.length; i++) {
     if (tagsToTranslate[i].dataset && tagsToTranslate[i].dataset.message) {
-      tagsToTranslate[i].innerHTML = chrome.i18n.getMessage(tagsToTranslate[i].dataset.message);
+      tagsToTranslate[i].innerHTML = chrome.i18n.getMessage(tagsToTranslate[i].dataset.message)
     }
   }
 }

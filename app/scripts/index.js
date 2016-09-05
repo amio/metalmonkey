@@ -1,4 +1,5 @@
 // import { log } from './lib/helper'
+import React from 'react'
 import router from './comp/router'
 import Sidebar from './comp/sidebar.jsx'
 import Manager from './comp/manager.jsx'
@@ -19,8 +20,8 @@ const App = React.createClass({
   render: function () {
     const router = this.router(this.props.route)
     return (
-      <div className="main-wrapper">
-        <Sidebar route={router.route}/>
+      <div className='main-wrapper'>
+        <Sidebar route={router.route} />
         { router.subComponent() }
       </div>
     )

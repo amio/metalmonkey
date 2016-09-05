@@ -1,16 +1,18 @@
+import React from 'react'
+
 const HelpsPanel = React.createClass({
   render: function () {
     return (
-    <div className="content">
-      <div className="content-header">
-        <div className="page-title">
-          <h2>Helps</h2>
+      <div className='content'>
+        <div className='content-header'>
+          <div className='page-title'>
+            <h2>Helps</h2>
+          </div>
+        </div>
+        <div className='content-body'>
+          Hello world!
         </div>
       </div>
-      <div className="content-body">
-        Hello world!
-      </div>
-    </div>
     )
   },
   clearAllData: function () {

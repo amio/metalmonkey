@@ -77,12 +77,12 @@ function installRequires (usid, requires) {
 }
 
 function getRequires (usid) {
-  return new Promise((res, rej) => {
+  return new Promise((resolve, reject) => {
     chrome.storage.local.get(REQUIRE_PREFIX + usid, (requires) => {
       if (chrome.runtime.lastError) {
-        rej()
+        reject()
       } else {
-        res(requires[REQUIRE_PREFIX + usid])
+        resolve(requires[REQUIRE_PREFIX + usid])
       }
     })
   })
@@ -131,8 +131,8 @@ function isUsMatchURL (usmeta, url) {
  * MatchPattern for Greasemonkey '@include' & '@exclude'
  */
 class MatchPatternGM {
-  constructor (url_pattern) {
-    let regStr = url_pattern
+  constructor (urlPattern) {
+    let regStr = urlPattern
       .replace('*', '.*')
       .replace(/[?:()\[\]^$]/g, function (x) {
         return '\\' + x
@@ -145,16 +145,16 @@ class MatchPatternGM {
 }
 
 function getUserscriptList () {
-  const ret = new Promise(function (res, rej) {
+  const ret = new Promise(function (resolve, reject) {
     chrome.storage.sync.get(null, (items) => {
       if (chrome.runtime.lastError) {
-        rej(chrome.runtime.lastError)
+        reject(chrome.runtime.lastError)
       } else {
         let usMetaArray = []
         Object.keys(items).forEach(k => {
           if (k.indexOf(USID_PREFIX) === 0) usMetaArray.push(items[k])
         })
-        res(usMetaArray)
+        resolve(usMetaArray)
       }
     })
   })
