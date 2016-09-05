@@ -1,3 +1,4 @@
+import React from 'react'
 import { getUserscriptList, removeUserscript } from '../lib/registry'
 import classnames from 'classnames'
 
