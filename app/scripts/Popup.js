@@ -13,7 +13,7 @@ const { React, ReactDOM } = window
 const PopupApp = props => {
   return (
     <ul className='menu'>
-      <li className='menu-item' id='menu-options'>{'Create a new script'}</li>
+      <li className='menu-item' id='menu-options'>{'Youtube screenshot button'}</li>
     </ul>
   )
 }
