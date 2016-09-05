@@ -67,7 +67,7 @@ function registerUserscript (url, content) {
 
 function installRequires (usid, requires) {
   return Promise.all(requires.map(item => {
-    return fetch(item).then(res => res.text())
+    return window.fetch(item).then(res => res.text())
   }))
     .then(scripts => {
       chrome.storage.local.set({
@@ -89,7 +89,6 @@ function getRequires (usid) {
 }
 
 function removeUserscript (usid) {
-
   const syncRemove = promisifyChromeExtensionApi(
     chrome.storage.sync.remove,
     chrome.storage.sync

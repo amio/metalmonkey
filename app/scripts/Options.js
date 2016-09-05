@@ -2,8 +2,10 @@ const { React, ReactDOM } = window
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar'
-import IconButton from 'material-ui/IconButton'
-import NavigationClose from 'material-ui/svg-icons/navigation/close'
+// import IconButton from 'material-ui/IconButton'
+// import NavigationClose from 'material-ui/svg-icons/navigation/close'
+
+import { getUserscriptList, removeUserscript } from './lib/registry.js'
 
 class OptionsApp extends React.Component {
   constructor (props) {
@@ -14,14 +16,21 @@ class OptionsApp extends React.Component {
     }
   }
 
+  componentDidMount () {
+    getUserscriptList()
+      .then(scripts => {
+        console.log(scripts, removeUserscript)
+        this.setState({
+          items: scripts
+        })
+      })
+  }
+
   render () {
     return (
       <MuiThemeProvider>
         <div>
-          <AppBar
-            title={<span>MetalMonkey</span>}
-            iconElementLeft={<IconButton><NavigationClose /></IconButton>}
-          />
+          <AppBar title={<span>MetalMonkey</span>} />
           <div style={styles.contentWrapper}>
             <pre id='code'>{this.state.resourceText}</pre>
           </div>
