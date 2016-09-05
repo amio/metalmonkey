@@ -16,7 +16,7 @@ class InstallerApp extends React.Component {
       resourceLoaded: false
     }
 
-    fetch(props.resourceURL)
+    window.fetch(props.resourceURL)
     .then(res => this.consume(res))
     .then(uso => {
       this.setState({ resourceLoaded: true })
