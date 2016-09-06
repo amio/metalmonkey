@@ -13,7 +13,7 @@
   "private": true,
   "license": "MIT",
   "dependencies": {
-    "chrome-promise": "^2.0.0",
+    "chrome-promise": "^2.0.1",
     "classnames": "^2.2.5",
     "crx-patterns": "^0.1.0",
     "material-ui": "^0.15.4",
