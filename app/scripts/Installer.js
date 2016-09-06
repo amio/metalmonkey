@@ -1,4 +1,9 @@
-const { React, ReactDOM } = window
+import React from 'react'
+import ReactDOM from 'react-dom'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+
+injectTapEventPlugin()
+
 import URLSearchParams from 'url-search-params'
 import { registerUserscript } from './lib/registry'
 
@@ -78,7 +83,7 @@ class InstallerApp extends React.Component {
       console.info('Successfully installed %s!', this.props.resourceURL)
       setTimeout(function () {
         window.close()
-      }, 300)
+      }, 200)
     })
   }
 
