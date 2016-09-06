@@ -88,21 +88,6 @@ function getRequires (usid) {
   })
 }
 
-function removeUserscript (usid) {
-  const syncRemove = promisifyChromeExtensionApi(
-    chrome.storage.sync.remove,
-    chrome.storage.sync
-  )
-  const localRemove = promisifyChromeExtensionApi(
-    chrome.storage.local.remove,
-    chrome.storage.local
-  )
-  return Promise.all([
-    syncRemove(USID_PREFIX + usid),
-    localRemove(USID_PREFIX + usid)
-  ])
-}
-
 /**
  * Get registry items that match the url.
  */
@@ -145,7 +130,7 @@ class MatchPatternGM {
 }
 
 function getUserscriptList () {
-  const ret = new Promise(function (resolve, reject) {
+  return new Promise(function (resolve, reject) {
     chrome.storage.sync.get(null, (items) => {
       if (chrome.runtime.lastError) {
         reject(chrome.runtime.lastError)
@@ -158,5 +143,19 @@ function getUserscriptList () {
       }
     })
   })
-  return ret
+}
+
+function removeUserscript (usid) {
+  const syncRemove = promisifyChromeExtensionApi(
+    chrome.storage.sync.remove,
+    chrome.storage.sync
+  )
+  const localRemove = promisifyChromeExtensionApi(
+    chrome.storage.local.remove,
+    chrome.storage.local
+  )
+  return Promise.all([
+    syncRemove(USID_PREFIX + usid),
+    localRemove(USID_PREFIX + usid)
+  ])
 }

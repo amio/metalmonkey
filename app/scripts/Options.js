@@ -1,33 +1,20 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import AppBar from 'material-ui/AppBar'
-// import IconButton from 'material-ui/IconButton'
-// import NavigationClose from 'material-ui/svg-icons/navigation/close'
+import Paper from 'material-ui/Paper'
 
-import { getUserscriptList, removeUserscript } from './lib/registry.js'
+import ScriptsList from './components/scripts-list.js'
 
 class OptionsApp extends React.Component {
   constructor (props) {
-    super()
+    super(props)
     this.state = {
-      resourceText: 'new options page.',
       resourceLoaded: false
     }
-  }
-
-  componentDidMount () {
-    getUserscriptList()
-      .then(scripts => {
-        console.log(scripts, removeUserscript)
-        this.setState({
-          items: scripts
-        })
-      })
   }
 
   render () {
@@ -35,9 +22,9 @@ class OptionsApp extends React.Component {
       <MuiThemeProvider>
         <div>
           <AppBar title={<span>MetalMonkey</span>} />
-          <div style={styles.contentWrapper}>
-            <pre id='code'>{this.state.resourceText}</pre>
-          </div>
+          <Paper style={styles.contentWrapper}>
+            <ScriptsList />
+          </Paper>
         </div>
       </MuiThemeProvider>
     )
@@ -46,9 +33,8 @@ class OptionsApp extends React.Component {
 
 const styles = {
   contentWrapper: {
-    margin: '0 auto',
-    maxWidth: '1200px',
-    padding: '3rem',
+    maxWidth: '1100px',
+    margin: '3rem auto',
     fontSize: '16px'
   }
 }
