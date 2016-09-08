@@ -1,11 +1,9 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import injectTapEventPlugin from 'react-tap-event-plugin'
-
-injectTapEventPlugin()
-
-import URLSearchParams from 'url-search-params'
 import { registerUserscript } from './lib/registry'
+
+import injectTapEventPlugin from 'react-tap-event-plugin'
+injectTapEventPlugin()
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import RaisedButton from 'material-ui/RaisedButton'
@@ -123,7 +121,7 @@ const styles = {
   }
 }
 
-const searchParams = new URLSearchParams(window.location.search.slice(1))
+const searchParams = new URLSearchParams(window.location.search)
 const scriptURL = searchParams.get('script')
 
 ReactDOM.render(<InstallerApp resourceURL={scriptURL} />, document.getElementById('app'))
