@@ -1,43 +1,22 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import injectTapEventPlugin from 'react-tap-event-plugin'
-
-injectTapEventPlugin()
+import { Router, Route, browserHistory } from 'react-router'
+import Manager from './components/options-manager.js'
+import Editor from './components/options-editor.js'
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import AppBar from 'material-ui/AppBar'
-import Paper from 'material-ui/Paper'
+import injectTapEventPlugin from 'react-tap-event-plugin'
+injectTapEventPlugin()
 
-import ScriptsList from './components/scripts-list.js'
-
-class OptionsApp extends React.Component {
-  constructor (props) {
-    super(props)
-    this.state = {
-      resourceLoaded: false
-    }
-  }
-
-  render () {
-    return (
-      <MuiThemeProvider>
-        <div>
-          <AppBar title={<span>MetalMonkey</span>} />
-          <Paper style={styles.contentWrapper}>
-            <ScriptsList />
-          </Paper>
-        </div>
-      </MuiThemeProvider>
-    )
-  }
-}
-
-const styles = {
-  contentWrapper: {
-    maxWidth: '1100px',
-    margin: '3rem auto',
-    fontSize: '16px'
-  }
-}
+const OptionsApp = () => (
+  <MuiThemeProvider>
+    <Router history={browserHistory}>
+      <Route path='/' component={Manager}>
+        <Route path='edit/:usid' component={Editor} />
+        <Route path='*' component={Manager} />
+      </Route>
+    </Router>
+  </MuiThemeProvider>
+)
 
 ReactDOM.render(<OptionsApp />, document.getElementById('app'))
