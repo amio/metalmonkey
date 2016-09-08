@@ -7,7 +7,7 @@ import IconButton from 'material-ui/IconButton'
 import MoreVertIcon from 'material-ui/svg-icons/navigation/more-vert'
 import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
-import { pinkA200, grey400 } from 'material-ui/styles/colors'
+import { grey400 } from 'material-ui/styles/colors'
 
 export default class ScriptsList extends React.Component {
   constructor (props) {
@@ -61,7 +61,7 @@ export default class ScriptsList extends React.Component {
 
             return (
               <ListItem key={item.usid}
-                leftIcon={<ActionGrade color={pinkA200} style={{left: 14}} />}
+                leftIcon={<ActionGrade style={{left: 14}} />}
                 rightIconButton={rightIconMenu}
               >
                 <span>{item.name}</span>
