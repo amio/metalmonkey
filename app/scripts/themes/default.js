@@ -9,7 +9,9 @@ export default getMuiTheme({
   appBar: {
     height: 56,
     titleStyle: {
-      fontSize: 20
+      letterSpacing: '0.5px',
+      fontSize: 16,
+      fontWeight: 200
     }
   }
 })

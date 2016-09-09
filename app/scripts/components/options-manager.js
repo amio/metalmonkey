@@ -7,7 +7,7 @@ import theme from '../themes/default.js'
 export default () => (
   <div style={styles.layout}>
     <AppBar
-      title='MetalMonkey / Manage Scripts'
+      title={<span><b>METALMONKEY</b> Manage Scripts</span>}
       titleStyle={theme.appBar.titleStyle}
       showMenuIconButton={false} />
     <Paper style={styles.contentWrapper}>
