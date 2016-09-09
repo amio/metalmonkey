@@ -1,6 +1,6 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { Router, Route, browserHistory } from 'react-router'
+import { Router, Route, hashHistory } from 'react-router'
 import Manager from './components/options-manager.js'
 import Editor from './components/options-editor.js'
 
@@ -11,11 +11,9 @@ injectTapEventPlugin()
 
 const OptionsApp = () => (
   <MuiThemeProvider muiTheme={theme}>
-    <Router history={browserHistory}>
-      <Route path='/' component={Manager}>
-        <Route path='edit/:usid' component={Editor} />
-        <Route path='*' component={Manager} />
-      </Route>
+    <Router history={hashHistory}>
+      <Route path='edit/:usid' component={Editor} />
+      <Route path='/' component={Manager} />
     </Router>
   </MuiThemeProvider>
 )

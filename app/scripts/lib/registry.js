@@ -8,6 +8,7 @@ export {
   removeUserscript,
   getMatchedUserscripts,
   getUserscriptList,
+  getUserscript,
   getRequires
 }
 
@@ -140,6 +141,19 @@ function getUserscriptList () {
           if (k.indexOf(USID_PREFIX) === 0) usMetaArray.push(items[k])
         })
         resolve(usMetaArray)
+      }
+    })
+  })
+}
+
+function getUserscript (usid) {
+  return new Promise(function (resolve, reject) {
+    const USStorageKey = 'USID:' + usid
+    chrome.storage.local.get(USStorageKey, (item) => {
+      if (chrome.runtime.lastError) {
+        reject(chrome.runtime.lastError)
+      } else {
+        resolve(item[USStorageKey])
       }
     })
   })

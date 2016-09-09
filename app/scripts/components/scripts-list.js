@@ -1,4 +1,5 @@
 import React from 'react'
+import { withRouter } from 'react-router'
 import { getUserscriptList, removeUserscript } from '../lib/registry.js'
 
 import { List, ListItem } from 'material-ui/List'
@@ -9,7 +10,7 @@ import IconMenu from 'material-ui/IconMenu'
 import MenuItem from 'material-ui/MenuItem'
 import { grey400 } from 'material-ui/styles/colors'
 
-export default class ScriptsList extends React.Component {
+class ScriptsList extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
@@ -40,6 +41,11 @@ export default class ScriptsList extends React.Component {
     }
   }
 
+  onItemClick (item, event) {
+    const usid = encodeURIComponent(item.usid)
+    this.props.router.push('edit/' + usid)
+  }
+
   render (props) {
     const rightIconButton = (
       <IconButton touch>
@@ -63,6 +69,7 @@ export default class ScriptsList extends React.Component {
               <ListItem key={item.usid}
                 leftIcon={<ActionGrade style={{left: 14}} />}
                 rightIconButton={rightIconMenu}
+                onClick={this.onItemClick.bind(this, item)}
               >
                 <span>{item.name}</span>
                 <span style={styles.itemVersion}>{item.version}</span>
@@ -83,3 +90,5 @@ const styles = {
     marginLeft: '0.5em'
   }
 }
+
+export default withRouter(ScriptsList)
