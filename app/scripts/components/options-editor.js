@@ -8,7 +8,7 @@ export default class Editor extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
-    this.onChange = (evt) => this.setState({codeText: evt.target.value});
+    this.onChange = (evt) => this.setState({codeText: evt.target.value})
   }
 
   componentDidMount () {
