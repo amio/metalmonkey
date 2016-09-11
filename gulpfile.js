@@ -1,8 +1,6 @@
-import gulp from 'gulp'
-import requireDir from 'require-dir'
-import runSequence from 'run-sequence'
-
-requireDir('./tasks')
+const gulp = require('gulp')
+const runSequence = require('run-sequence')
+require('require-dir')('./tasks')
 
 gulp.task('build', function (callback) {
   runSequence(
