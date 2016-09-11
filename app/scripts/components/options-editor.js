@@ -1,7 +1,8 @@
 import React from 'react'
 import ReactDocumentTitle from 'react-document-title'
 import AppBar from 'material-ui/AppBar'
-import { getUserscript } from '../lib/registry.js'
+import FlatButton from 'material-ui/FlatButton'
+import { getUserscript, registerUserscript } from '../lib/registry.js'
 import theme from '../themes/default.js'
 
 export default class Editor extends React.Component {
@@ -9,6 +10,7 @@ export default class Editor extends React.Component {
     super(props)
     this.state = {}
     this.onChange = (evt) => this.setState({codeText: evt.target.value})
+    this.onSave = () => registerUserscript(this.props.params.usid, this.state.codeText)
   }
 
   componentDidMount () {
@@ -20,16 +22,24 @@ export default class Editor extends React.Component {
   }
 
   render () {
+    const saveButton = this.state.codeText !== this.state.original
+      ? <FlatButton label='Save' onClick={this.onSave} />
+      : undefined
     return (
       <div style={styles.layout}>
         <ReactDocumentTitle title='METALMONKEY Editor' />
         <AppBar
           title={<span><b>METALMONKEY</b> Editor</span>}
           titleStyle={theme.appBar.titleStyle}
-          showMenuIconButton={false} />
+          showMenuIconButton={false}
+          iconElementRight={saveButton} />
         <label style={styles.contentWrapper}>
           <div style={styles.editorWrapper}>
-            <textarea style={styles.editor} value={this.state.codeText} spellCheck={false} onChange={this.onChange} />
+            <textarea
+              spellCheck={false}
+              style={styles.editor}
+              value={this.state.codeText}
+              onChange={this.onChange} />
           </div>
         </label>
       </div>
