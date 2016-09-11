@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { Router, Route, hashHistory } from 'react-router'
+import ReactDocumentTitle from 'react-document-title'
 import Manager from './components/options-manager.js'
 import Editor from './components/options-editor.js'
 
@@ -11,10 +12,12 @@ injectTapEventPlugin()
 
 const OptionsApp = () => (
   <MuiThemeProvider muiTheme={theme}>
-    <Router history={hashHistory}>
-      <Route path='edit/:usid' component={Editor} />
-      <Route path='/' component={Manager} />
-    </Router>
+    <ReactDocumentTitle title='METALMONKEY'>
+      <Router history={hashHistory}>
+        <Route path='edit/:usid' component={Editor} />
+        <Route path='/' component={Manager} />
+      </Router>
+    </ReactDocumentTitle>
   </MuiThemeProvider>
 )
 

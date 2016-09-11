@@ -1,4 +1,5 @@
 import React from 'react'
+import ReactDocumentTitle from 'react-document-title'
 import Paper from 'material-ui/Paper'
 import AppBar from 'material-ui/AppBar'
 import ScriptsList from './scripts-list.js'
@@ -6,6 +7,7 @@ import theme from '../themes/default.js'
 
 export default () => (
   <div style={styles.layout}>
+    <ReactDocumentTitle title='METALMONKEY Manager' />
     <AppBar
       title={<span><b>METALMONKEY</b> Manager</span>}
       titleStyle={theme.appBar.titleStyle}

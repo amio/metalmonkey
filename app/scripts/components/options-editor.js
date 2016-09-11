@@ -1,18 +1,20 @@
 import React from 'react'
-import Paper from 'material-ui/Paper'
+import ReactDocumentTitle from 'react-document-title'
 import AppBar from 'material-ui/AppBar'
-import theme from '../themes/default.js'
 import { getUserscript } from '../lib/registry.js'
+import theme from '../themes/default.js'
 
 export default class Editor extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
+    this.onChange = (evt) => this.setState({codeText: evt.target.value});
   }
 
   componentDidMount () {
     const usid = this.props.params.usid
     getUserscript(usid).then(text => this.setState({
+      original: text,
       codeText: text
     }))
   }
@@ -20,15 +22,16 @@ export default class Editor extends React.Component {
   render () {
     return (
       <div style={styles.layout}>
+        <ReactDocumentTitle title='METALMONKEY Editor' />
         <AppBar
           title={<span><b>METALMONKEY</b> Editor</span>}
           titleStyle={theme.appBar.titleStyle}
           showMenuIconButton={false} />
-        <div style={styles.contentWrapper}>
-          <Paper style={styles.editorWrapper}>
-            <textarea style={styles.editor} value={this.state.codeText} spellCheck={false} />
-          </Paper>
-        </div>
+        <label style={styles.contentWrapper}>
+          <div style={styles.editorWrapper}>
+            <textarea style={styles.editor} value={this.state.codeText} spellCheck={false} onChange={this.onChange} />
+          </div>
+        </label>
       </div>
     )
   }
@@ -41,22 +44,25 @@ const styles = {
     height: '100%'
   },
   contentWrapper: {
-    flex: 1,
-    margin: '0 auto',
-    width: '80%',
-    maxWidth: '1100px'
+    flex: 1
   },
   editorWrapper: {
-    marginTop: '3rem',
-    height: 'calc(100% - 56px - 6rem)'
+    margin: '0 auto',
+    width: '80%',
+    maxWidth: '1200px',
+    marginTop: '1rem',
+    height: 'calc(100% - 56px - 2rem)'
   },
   editor: {
+    backgroundColor: 'transparent',
+    outline: 'none',
     border: 'none',
     width: '100%',
     height: '100%',
     overflow: 'scroll',
     fontFamily: 'monospace',
-    padding: '0.8em 1.2em',
-    fontSize: '14px'
+    padding: '0.8em 1em',
+    fontSize: '14px',
+    resize: 'none'
   }
 }
