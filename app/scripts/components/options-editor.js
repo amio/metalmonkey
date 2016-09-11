@@ -33,6 +33,9 @@ export default class Editor extends React.Component {
           titleStyle={theme.appBar.titleStyle}
           showMenuIconButton={false}
           iconElementRight={saveButton} />
+        <div style={styles.editorBannerWrapper}>
+          <div style={styles.editorBanner}>{this.props.params.usid}</div>
+        </div>
         <label style={styles.contentWrapper}>
           <div style={styles.editorWrapper}>
             <textarea
@@ -56,12 +59,28 @@ const styles = {
   contentWrapper: {
     flex: 1
   },
+  editorBannerWrapper: {
+    height: theme.appBar.height,
+    lineHeight: theme.appBar.height + 'px',
+    fontFamily: 'monospace',
+    fontSize: '14px',
+    color: '#AAA',
+    background: '#FFF',
+    borderBottom: '1px solid #EEE'
+  },
+  editorBanner: {
+    margin: 'auto',
+    width: '80%',
+    maxWidth: '1200px',
+    whiteSpace: 'nowrap',
+    overflow: 'hidden',
+    textOverflow: 'ellipsis'
+  },
   editorWrapper: {
     margin: '0 auto',
     width: '80%',
     maxWidth: '1200px',
-    marginTop: '1rem',
-    height: 'calc(100% - 56px - 2rem)'
+    height: 'calc(100% - 56px - 56px)'
   },
   editor: {
     backgroundColor: 'transparent',
@@ -70,8 +89,8 @@ const styles = {
     width: '100%',
     height: '100%',
     overflow: 'scroll',
+    padding: '1rem 0',
     fontFamily: 'monospace',
-    padding: '0.8em 1em',
     fontSize: '14px',
     resize: 'none'
   }
