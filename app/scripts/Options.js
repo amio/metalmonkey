@@ -15,6 +15,7 @@ const OptionsApp = () => (
     <ReactDocumentTitle title='METALMONKEY'>
       <Router history={hashHistory}>
         <Route path='edit/:usid' component={Editor} />
+        <Route path='create/:url' component={Editor} />
         <Route path='*' component={Manager} />
       </Router>
     </ReactDocumentTitle>

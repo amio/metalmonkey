@@ -5,27 +5,31 @@ import FlatButton from 'material-ui/FlatButton'
 import { getUserscript, registerUserscript } from '../lib/registry.js'
 import theme from '../themes/default.js'
 
-console.log(theme)
-
 export default class Editor extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
+
     this.onChange = (evt) => this.setState({codeText: evt.target.value})
     this.onSave = () => {
-      this.setState({
-        original: this.state.codeText
-      })
+      this.setState({original: this.state.codeText})
       registerUserscript(this.props.params.usid, this.state.codeText)
     }
   }
 
   componentDidMount () {
     const usid = this.props.params.usid
-    getUserscript(usid).then(text => this.setState({
-      original: text,
-      codeText: text
-    }))
+    if (usid) {
+      return getUserscript(usid).then(text => this.setState({
+        original: text,
+        codeText: text
+      }))
+    }
+
+    const url = this.props.params.url
+    if (url) {
+      return
+    }
   }
 
   render () {
@@ -47,7 +51,9 @@ export default class Editor extends React.Component {
           showMenuIconButton={false}
           iconElementRight={saveButton} />
         <div style={styles.editorBannerWrapper}>
-          <div style={styles.editorBanner}>{this.props.params.usid}</div>
+          <div style={styles.editorBanner}>
+            {this.props.params.usid || this.props.params.url}
+          </div>
         </div>
         <label style={styles.contentWrapper}>
           <div style={styles.editorWrapper}>
