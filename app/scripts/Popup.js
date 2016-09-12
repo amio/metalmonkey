@@ -10,16 +10,16 @@ menuManage.addEventListener('click', e => openExtensionPage('options.html', '#ma
 menuCreate.addEventListener('click', e => {
   const host = popupPageState.currentTabURL.match(/\w+:\/\/[^/]+/)
   const newScriptURI = encodeURIComponent(host + '/#' + Date.now() + '.user.js')
-  openExtensionPage('options.html', '#create/' + newScriptURI)
+  openExtensionPage('options.html', '#create/' + newScriptURI, true)
 })
 
 // Open page
-function openExtensionPage (pageName, pageArgs) {
+function openExtensionPage (pageName, pageArgs, force) {
   // page: 'options.html' or 'options.html#create'
   const pageURL = chrome.extension.getURL(pageName)
 
   chrome.tabs.query({url: pageURL}, function (tabs) {
-    if (tabs.length) {
+    if (tabs.length && !force) {
       chrome.tabs.update(tabs[0].id, {active: true})
     } else {
       chrome.tabs.create({url: pageURL + (pageArgs || '')})
