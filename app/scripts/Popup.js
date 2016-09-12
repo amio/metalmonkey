@@ -6,12 +6,18 @@ chrome.tabs.getSelected(null, tab => (popupPageState.currentTabURL = tab.url))
 // Click listeners
 const menuManage = document.getElementById('menu-manage')
 const menuCreate = document.getElementById('menu-create-script')
-menuManage.addEventListener('click', e => openExtensionPage('options.html', '#manage'))
-menuCreate.addEventListener('click', e => {
+menuManage.addEventListener('click', onMenuManage)
+menuCreate.addEventListener('click', onMenuCreate)
+
+function onMenuManage () {
+  openExtensionPage('options.html', '#manage')
+}
+
+function onMenuCreate () {
   const host = popupPageState.currentTabURL.match(/\w+:\/\/[^/]+/)
   const newScriptURI = encodeURIComponent(host + '/#' + Date.now() + '.user.js')
   openExtensionPage('options.html', '#create/' + newScriptURI, true)
-})
+}
 
 // Open page
 function openExtensionPage (pageName, pageArgs, force) {
@@ -31,8 +37,12 @@ function openExtensionPage (pageName, pageArgs, force) {
 const version = require('../../package.json').version
 document.querySelector('.version').innerText = 'v' + version
 
-// Menu items for current page
+/**
+ * App for Current page's matched scripts list
+ */
+
 const { React, ReactDOM } = window
+
 class PopupList extends React.Component {
   constructor (props) {
     super(props)
@@ -47,9 +57,8 @@ class PopupList extends React.Component {
         currentUrl: tab.url
       })
 
-      getMatchedUserscripts(tab.url).then(uss => this.setState({
-        matched: uss
-      }))
+      getMatchedUserscripts(tab.url)
+      .then(uss => this.setState({matched: uss}))
     })
   }
 
@@ -76,4 +85,5 @@ class PopupList extends React.Component {
     ) : null
   }
 }
+
 ReactDOM.render(<PopupList />, document.getElementById('app'))
