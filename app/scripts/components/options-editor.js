@@ -5,12 +5,19 @@ import FlatButton from 'material-ui/FlatButton'
 import { getUserscript, registerUserscript } from '../lib/registry.js'
 import theme from '../themes/default.js'
 
+console.log(theme)
+
 export default class Editor extends React.Component {
   constructor (props) {
     super(props)
     this.state = {}
     this.onChange = (evt) => this.setState({codeText: evt.target.value})
-    this.onSave = () => registerUserscript(this.props.params.usid, this.state.codeText)
+    this.onSave = () => {
+      this.setState({
+        original: this.state.codeText
+      })
+      registerUserscript(this.props.params.usid, this.state.codeText)
+    }
   }
 
   componentDidMount () {
@@ -22,9 +29,15 @@ export default class Editor extends React.Component {
   }
 
   render () {
-    const saveButton = this.state.codeText !== this.state.original
-      ? <FlatButton label='Save' onClick={this.onSave} />
-      : undefined
+    const changed = this.state.codeText !== this.state.original
+    // theme config flatButton.disabledTextColor not working. so hand code it.
+    const saveLabelStyle = changed ? {} : {color: 'rgba(255,255,255, 0.5)'}
+    const saveButton = (
+      <FlatButton label='Save'
+        onClick={this.onSave}
+        disabled={!changed}
+        labelStyle={saveLabelStyle} />
+    )
     return (
       <div style={styles.layout}>
         <ReactDocumentTitle title='METALMONKEY Editor' />
