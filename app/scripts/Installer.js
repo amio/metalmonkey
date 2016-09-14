@@ -1,6 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 import { registerUserscript } from './lib/registry'
+import Store from './lib/store.js'
 
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
@@ -76,6 +77,7 @@ class InstallerApp extends React.Component {
   }
 
   install () {
+    Store.installAsset(this.props.resourceURL, this.state.resourceText)
     registerUserscript(this.props.resourceURL, this.state.resourceText)
     .then(result => {
       console.info('Successfully installed %s!', this.props.resourceURL)
@@ -121,7 +123,7 @@ const styles = {
   }
 }
 
-const searchParams = new URLSearchParams(window.location.search)
+const searchParams = new window.URLSearchParams(window.location.search)
 const scriptURL = searchParams.get('script')
 
 ReactDOM.render(<InstallerApp resourceURL={scriptURL} />, document.getElementById('app'))
