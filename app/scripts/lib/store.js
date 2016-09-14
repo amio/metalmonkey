@@ -4,11 +4,11 @@ import ChromePromise from 'chrome-promise'
 /**
  * METALMONKEY Store
  *
- * ## What is "User Asset"
+ * ## What is "user-asset"
  *
  *    An user-asset refers to an userscript or userstyle
  *
- * ## chrome.storage.sync (stores config synced across browsers)
+ * ## chrome.storage.sync (Config. The config synced across browsers)
  *
  *    MMAssets: [
  *      'http://example.com/script1.user.js',
@@ -19,7 +19,7 @@ import ChromePromise from 'chrome-promise'
  *
  *    MMConfigVersion: 0
  *
- * ## chrome.storage.local (stores installed user assets content)
+ * ## chrome.storage.local (Registry. All installed user assets content)
  *
  *    'UA^ https://example.com/script1.user.js': {}
  *    'UA^ https://example.com/script2.user.js': {}
@@ -34,10 +34,6 @@ function isUAID (text) {
 function toUAID (url) {
   return USER_ASSET_ID_PREFIX + url
 }
-
-// function fromUAID (uaid) {
-//   return uaid.replace(new RegExp('^' + USER_ASSET_ID_PREFIX), '')
-// }
 
 function formatAssetMeta (codeText) {
   const rawMeta = usp(codeText)
@@ -59,20 +55,25 @@ const cp = new ChromePromise()
 
 class MMStore {
   constructor () {
-    this.registry = {}
+    // local registry cache
+    this._registry = {}
     this.updateRegistry()
+
+    chrome.storage.onChanged.addListener((changes, areaName) => {
+      console.info(areaName, changes)
+    })
   }
 
   updateRegistry () {
-    this.fetchRegistry().then(r => {
-      this.registry = r
+    this.fetchAssetsRegistry().then(r => {
+      this._registry = r
     })
   }
 
   /**
-   *  Get installed user assets from chrome.storage.local
+   *  Fetch installed user-assets from chrome.storage.local
    */
-  fetchRegistry () {
+  fetchAssetsRegistry () {
     return cp.storage.local.get(null).then(storage => {
       const installedAssets = {}
       // filter user assets
@@ -86,7 +87,7 @@ class MMStore {
   }
 
   /**
-   *  Install an asset
+   *  Install an user-asset
    */
   installAsset (url, code) {
     const meta = formatAssetMeta(code)
@@ -94,9 +95,9 @@ class MMStore {
 
     // TODO: use cp.storage.sync.set too
 
+    meta.url = url
     return cp.storage.local.set({
       [uaid]: {
-        url: url,
         meta: meta,
         code: code
       }
@@ -104,17 +105,19 @@ class MMStore {
   }
   removeAsset () {}
   getAsset () {}
-  getAllAssets () {}
+
   getMatchedAssets () {}
 
   /**
    *  Clean up chrome.storage.local
+   *
+   *  @return undefined
    */
   cleanup (doit) {
     cp.storage.local.get(null)
     .then(storage => {
       if (doit) {
-        //
+        chrome.storage.local.clear()
       } else {
         // for debugging
         Object.keys(storage).forEach(x => console.log(x))

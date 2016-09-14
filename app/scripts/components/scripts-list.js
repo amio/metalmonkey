@@ -1,6 +1,7 @@
 import React from 'react'
 import { withRouter } from 'react-router'
-import { getUserscriptList, removeUserscript } from '../lib/registry.js'
+import { removeUserscript } from '../lib/registry.js'
+import Store from '../lib/store.js'
 
 import { List, ListItem } from 'material-ui/List'
 import ActionGrade from 'material-ui/svg-icons/action/grade'
@@ -17,36 +18,41 @@ class ScriptsList extends React.Component {
       scriptsList: []
     }
 
-    this.updateData = this.updateData.bind(this)
+    this.updateDataSource = this.updateDataSource.bind(this)
     this.onMenuClick = this.onMenuClick.bind(this)
   }
 
   componentDidMount () {
-    this.updateData()
+    this.updateDataSource()
   }
 
-  updateData () {
-    return getUserscriptList()
-    .then(scripts => this.setState({
-      scriptsList: scripts
-    }))
+  updateDataSource () {
+    Store.fetchAssetsRegistry().then(registry => {
+      this.setState({
+        scriptsList: Object.values(registry).map(item => item.meta)
+      })
+    })
   }
 
   onMenuClick (event, menuItem) {
-    const { action, usid } = menuItem.props.value
+    const { action, url } = menuItem.props.value
     switch (action) {
       case 'delete':
-        removeUserscript(usid).then(this.updateData)
+        removeUserscript(url).then(this.updateDataSource)
         break
     }
   }
 
   onItemClick (item, event) {
-    const usid = encodeURIComponent(item.usid)
-    this.props.router.push('edit/' + usid)
+    const url = encodeURIComponent(item.url)
+    this.props.router.push('edit/' + url)
   }
 
   render (props) {
+    if (this.state.scriptsList.length === 0) {
+      return <div style={styles.blank}>No Userscript Installed</div>
+    }
+
     const rightIconButton = (
       <IconButton touch>
         <MoreVertIcon color={grey400} />
@@ -59,14 +65,14 @@ class ScriptsList extends React.Component {
             const rightIconMenu = (
               <IconMenu iconButtonElement={rightIconButton}
                 onItemTouchTap={this.onMenuClick} >
-                <MenuItem value={{action: 'delete', usid: item.usid}}>
+                <MenuItem value={{action: 'delete', url: item.url}}>
                   Delete
                 </MenuItem>
               </IconMenu>
             )
 
             return (
-              <ListItem key={item.usid}
+              <ListItem key={item.url}
                 leftIcon={<ActionGrade style={{left: 14}} />}
                 rightIconButton={rightIconMenu}
                 onClick={this.onItemClick.bind(this, item)}
@@ -88,6 +94,10 @@ const styles = {
   itemVersion: {
     color: grey400,
     marginLeft: '0.5em'
+  },
+  blank: {
+    margin: '10rem 0',
+    textAlign: 'center'
   }
 }
 
