@@ -104,7 +104,16 @@ class MMStore {
     })
   }
   removeAsset () {}
-  getAsset () {}
+
+  /**
+   *  Get an installed user-asset from chrome.storage.local
+   */
+  getAsset (url) {
+    const id = toUAID(url)
+    return cp.storage.local.get(id).then(result => {
+      return result[id] || {code: ''} // TODO: result or create with template
+    })
+  }
 
   getMatchedAssets () {}
 

@@ -2,7 +2,7 @@ import React from 'react'
 import ReactDocumentTitle from 'react-document-title'
 import AppBar from 'material-ui/AppBar'
 import FlatButton from 'material-ui/FlatButton'
-import { getUserscript, registerUserscript } from '../lib/registry.js'
+import Store from '../lib/store.js'
 import theme from '../themes/default.js'
 
 export default class Editor extends React.Component {
@@ -13,22 +13,17 @@ export default class Editor extends React.Component {
     this.onChange = (evt) => this.setState({codeText: evt.target.value})
     this.onSave = () => {
       this.setState({original: this.state.codeText})
-      registerUserscript(this.props.params.usid, this.state.codeText)
+      Store.installAsset(this.props.params.url, this.state.codeText)
     }
   }
 
   componentDidMount () {
-    const usid = this.props.params.usid
-    if (usid) {
-      return getUserscript(usid).then(text => this.setState({
-        original: text,
-        codeText: text
-      }))
-    }
-
     const url = this.props.params.url
     if (url) {
-      return
+      Store.getAsset(url).then(asset => this.setState({
+        original: asset.code,
+        codeText: asset.code
+      }))
     }
   }
 
@@ -52,7 +47,7 @@ export default class Editor extends React.Component {
           iconElementRight={saveButton} />
         <div style={styles.editorBannerWrapper}>
           <div style={styles.editorBanner}>
-            {this.props.params.usid || this.props.params.url}
+            {this.props.params.url}
           </div>
         </div>
         <label style={styles.contentWrapper}>
@@ -96,10 +91,11 @@ const styles = {
     textOverflow: 'ellipsis'
   },
   editorWrapper: {
+    flex: 1,
     margin: '0 auto',
     width: '80%',
     maxWidth: '1200px',
-    height: 'calc(100% - 56px - 56px)'
+    height: 'calc(100% - 56px - 56px - 1px)'
   },
   editor: {
     backgroundColor: 'transparent',
