@@ -1,12 +1,12 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import { registerUserscript } from './lib/registry'
 import Store from './lib/store.js'
 
+import theme from './themes/default.js'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
-import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import RaisedButton from 'material-ui/RaisedButton'
 import AppBar from 'material-ui/AppBar'
 import IconButton from 'material-ui/IconButton'
@@ -78,7 +78,6 @@ class InstallerApp extends React.Component {
 
   install () {
     Store.installAsset(this.props.resourceURL, this.state.resourceText)
-    registerUserscript(this.props.resourceURL, this.state.resourceText)
     .then(result => {
       console.info('Successfully installed %s!', this.props.resourceURL)
       setTimeout(function () {
@@ -89,10 +88,11 @@ class InstallerApp extends React.Component {
 
   render () {
     return (
-      <MuiThemeProvider>
+      <MuiThemeProvider muiTheme={theme}>
         <div>
           <AppBar
-            title={<span style={styles.title}>Install Userscript</span>}
+            title={<span><b>METALMONKEY</b> Install</span>}
+            titleStyle={theme.appBar.titleStyle}
             iconElementLeft={<IconButton><NavigationClose /></IconButton>}
           />
           <div style={styles.contentWrapper}>

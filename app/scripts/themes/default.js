@@ -13,7 +13,7 @@ export default getMuiTheme({
     height: 56,
     titleStyle: {
       letterSpacing: '0.5px',
-      fontSize: 16,
+      fontSize: 17,
       fontWeight: 200
     }
   }
