@@ -3,6 +3,7 @@ import { withRouter } from 'react-router'
 import { removeUserscript } from '../lib/registry.js'
 import Store from '../lib/store.js'
 
+import Paper from 'material-ui/Paper'
 import { List, ListItem } from 'material-ui/List'
 import ActionGrade from 'material-ui/svg-icons/action/grade'
 import IconButton from 'material-ui/IconButton'
@@ -50,7 +51,7 @@ class ScriptsList extends React.Component {
 
   render (props) {
     if (this.state.scriptsList.length === 0) {
-      return <div style={styles.blank}>No Userscript Installed</div>
+      return <div style={styles.blank}>Nothing Installed</div>
     }
 
     const rightIconButton = (
@@ -59,31 +60,33 @@ class ScriptsList extends React.Component {
       </IconButton>
     )
     return (
-      <List style={styles.wrapper}>
-        {
-          this.state.scriptsList.map((item, index) => {
-            const rightIconMenu = (
-              <IconMenu iconButtonElement={rightIconButton}
-                onItemTouchTap={this.onMenuClick} >
-                <MenuItem value={{action: 'delete', url: item.url}}>
-                  Delete
-                </MenuItem>
-              </IconMenu>
-            )
+      <Paper>
+        <List style={styles.wrapper}>
+          {
+            this.state.scriptsList.map((item, index) => {
+              const rightIconMenu = (
+                <IconMenu iconButtonElement={rightIconButton}
+                  onItemTouchTap={this.onMenuClick} >
+                  <MenuItem value={{action: 'delete', url: item.url}}>
+                    Delete
+                  </MenuItem>
+                </IconMenu>
+              )
 
-            return (
-              <ListItem key={item.url}
-                leftIcon={<ActionGrade style={{left: 14}} />}
-                rightIconButton={rightIconMenu}
-                onClick={this.onItemClick.bind(this, item)}
-              >
-                <span>{item.name}</span>
-                <span style={styles.itemVersion}>{item.version}</span>
-              </ListItem>
-            )
-          })
-        }
-      </List>
+              return (
+                <ListItem key={item.url}
+                  leftIcon={<ActionGrade style={{left: 14}} />}
+                  rightIconButton={rightIconMenu}
+                  onClick={this.onItemClick.bind(this, item)}
+                >
+                  <span>{item.name}</span>
+                  <span style={styles.itemVersion}>{item.version}</span>
+                </ListItem>
+              )
+            })
+          }
+        </List>
+      </Paper>
     )
   }
 }
@@ -96,7 +99,7 @@ const styles = {
     marginLeft: '0.5em'
   },
   blank: {
-    margin: '10rem 0',
+    margin: '8rem 0',
     textAlign: 'center'
   }
 }
