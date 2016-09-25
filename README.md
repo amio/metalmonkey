@@ -1,12 +1,4 @@
-# MetalMonkey [WIP]
-
-Yet another userscripts manager for Chrome.
-
-## Install
-
-Run:
-
-    $ npm install
+# METALMONKEY [WIP]
 
 ## Build
 
