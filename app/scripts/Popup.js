@@ -20,15 +20,15 @@ function onMenuCreate () {
 }
 
 // Open page
-function openExtensionPage (pageName, pageArgs, force) {
+function openExtensionPage (pageName, pageArgs = '', force = false) {
   // page: 'options.html' or 'options.html#create'
-  const pageURL = chrome.extension.getURL(pageName)
+  const pageURL = chrome.extension.getURL(pageName) + pageArgs
 
   chrome.tabs.query({url: pageURL}, function (tabs) {
     if (tabs.length && !force) {
       chrome.tabs.update(tabs[0].id, {active: true})
     } else {
-      chrome.tabs.create({url: pageURL + (pageArgs || '')})
+      chrome.tabs.create({url: pageURL})
     }
   })
 }
