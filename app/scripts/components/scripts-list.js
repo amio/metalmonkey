@@ -49,41 +49,41 @@ class ScriptsList extends React.Component {
     this.props.router.push('edit/' + url)
   }
 
+  createRightIconMenu (item) {
+    const menuIconButton = (
+      <IconButton onClick={e => e.stopPropagation()}>
+        <MoreVertIcon color={grey400} />
+      </IconButton>
+    )
+    return (
+      <IconMenu
+        iconButtonElement={menuIconButton}
+        onItemTouchTap={this.onMenuClick} >
+        <MenuItem value={{action: 'delete', url: item.url}}>
+          Delete
+        </MenuItem>
+      </IconMenu>
+    )
+  }
+
   render (props) {
     if (this.state.scriptsList.length === 0) {
       return <div style={styles.blank}>Nothing Installed</div>
     }
 
-    const rightIconButton = (
-      <IconButton touch>
-        <MoreVertIcon color={grey400} />
-      </IconButton>
-    )
     return (
       <Paper>
         <List style={styles.wrapper}>
           {
-            this.state.scriptsList.map((item, index) => {
-              const rightIconMenu = (
-                <IconMenu iconButtonElement={rightIconButton}
-                  onItemTouchTap={this.onMenuClick} >
-                  <MenuItem value={{action: 'delete', url: item.url}}>
-                    Delete
-                  </MenuItem>
-                </IconMenu>
-              )
-
-              return (
-                <ListItem key={item.url}
-                  leftIcon={<ActionGrade style={{left: 14}} />}
-                  rightIconButton={rightIconMenu}
-                  onClick={this.onItemClick.bind(this, item)}
-                >
-                  <span>{item.name}</span>
-                  <span style={styles.itemVersion}>{item.version}</span>
-                </ListItem>
-              )
-            })
+            this.state.scriptsList.map((item, index) => (
+              <ListItem key={item.url}
+                leftIcon={<ActionGrade style={{left: 14}} />}
+                rightIconButton={this.createRightIconMenu(item)}
+                onClick={this.onItemClick.bind(this, item)} >
+                <span>{item.name}</span>
+                <span style={styles.itemVersion}>{item.version}</span>
+              </ListItem>
+            ))
           }
         </List>
       </Paper>
