@@ -10,6 +10,8 @@ import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 import injectTapEventPlugin from 'react-tap-event-plugin'
 injectTapEventPlugin()
 
+import 'react-mdl/extra/material.js'
+
 const OptionsApp = () => (
   <MuiThemeProvider muiTheme={theme}>
     <ReactDocumentTitle title='METALMONKEY'>
