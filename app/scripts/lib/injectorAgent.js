@@ -1,7 +1,8 @@
 // Inject userscripts into webpage.
 
 import { info } from './helper'
-import { getMatchedUserscripts, getRequires } from './registry'
+import { getRequires } from './registry'
+import Store from './store'
 
 export default initInjector
 
@@ -9,19 +10,19 @@ function initInjector () {
   chrome.tabs.onUpdated.addListener(function (tabId, changed, tab) {
     if (changed.status === 'loading') {
       // Inject matched userscript into page.
-      getMatchedUserscripts(tab.url)
+      Store.getMatchedAssets(tab.url)
         .then(matched => userscriptInjector(tabId, matched))
         .catch(e => console.log(e))
     }
   })
 }
 
-function userscriptInjector (tabId, matchedUss) {
-  console.info('[TAB-%s] %i userscripts matched.', tabId, matchedUss.length)
+function userscriptInjector (tabId, matchedAssets) {
+  console.info('[TAB-%s] %i userscripts matched.', tabId, matchedAssets.length)
   // Update badge
   chrome.browserAction.setBadgeText({
     tabId: tabId,
-    text: matchedUss.length.toString()
+    text: matchedAssets.length.toString()
   })
 
   // inject debug utillities
@@ -34,14 +35,15 @@ function userscriptInjector (tabId, matchedUss) {
   // })
 
   // Inject userscripts
-  matchedUss.forEach(userscriptMeta => {
-    prepareEnvironment(tabId, userscriptMeta, () => {
-      executeUserscript(tabId, userscriptMeta)
+  matchedAssets.forEach(asset => {
+    prepareEnvironment(tabId, asset, () => {
+      executeUserscript(tabId, asset)
     })
   })
 }
 
-function prepareEnvironment (tabId, meta, cb) {
+function prepareEnvironment (tabId, asset, cb) {
+  const meta = asset.meta
   // Prepare GM_* api
   chrome.tabs.executeScript(tabId, {
     file: 'scripts/gm-api.js',
@@ -77,28 +79,22 @@ function prepareEnvironment (tabId, meta, cb) {
   })
 }
 
-function executeUserscript (tabId, meta) {
-  const USStorageKey = 'USID:' + meta.usid
-  chrome.storage.local.get(USStorageKey, function (script) {
-    const iifeWrappedCode = `(function(){
-      ${meta.grant.map(api => {
-        return `var ${api} = window.gmApi["${meta.usid}"].${api}`
-      }).join(';')};
-      try {
-        ${script[USStorageKey]}
-      } catch (e) {
-        console.error('Error in <%s> :', '${meta.name}', e)
-      }
-    })()`
-    chrome.tabs.executeScript(tabId, {
-      code: iifeWrappedCode,
-      runAt: (script.runAt || 'document_end').replace('-', '_')
-    }, function () {
-      if (chrome.runtime.lastError) {
-        console.error('Error in userscript:', meta.usid)
-      }
-      info('[TAB-%s] <%s> Executed.', tabId, meta.name)
-      // console.log(iifeWrappedCode)
-    })
+function executeUserscript (tabId, asset) {
+  const iifeWrappedCode = `(function(){
+    try {
+      ${asset.code}
+    } catch (e) {
+      console.error('Error in <%s> :', '${asset.meta.name}', e)
+    }
+  })()`
+  chrome.tabs.executeScript(tabId, {
+    code: iifeWrappedCode,
+    runAt: (asset.meta.runAt || 'document_end').replace('-', '_')
+  }, function () {
+    if (chrome.runtime.lastError) {
+      console.error('Error in userscript:', asset.meta.usid)
+    }
+    info('[TAB-%s] <%s> Executed.', tabId, asset.meta.name)
+    // console.log(iifeWrappedCode)
   })
 }

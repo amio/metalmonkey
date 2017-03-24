@@ -1,5 +1,8 @@
 import usp from 'userscript-parser'
+import crxp from 'crx-patterns'
 import ChromePromise from 'chrome-promise'
+
+const cp = new ChromePromise()
 
 /**
  * METALMONKEY Store
@@ -21,8 +24,8 @@ import ChromePromise from 'chrome-promise'
  *
  * ## chrome.storage.local (Registry. All installed user assets content)
  *
- *    'UA^ https://example.com/script1.user.js': {}
- *    'UA^ https://example.com/script2.user.js': {}
+ *    'UA^https://example.com/script1.user.js': {}
+ *    'UA^https://example.com/script2.user.js': {}
  */
 
 const USER_ASSET_ID_PREFIX = 'UA^'
@@ -51,7 +54,31 @@ function formatAssetMeta (codeText) {
   }
 }
 
-const cp = new ChromePromise()
+function isAssetMatchURL (asset, url) {
+  const match = (pattern) => new crxp.MatchPattern(pattern).match(url)
+  const matchGM = (pattern) => new MatchPatternGM(pattern).test(url)
+  if (asset.meta.excludes.some(matchGM)) return false
+  if (asset.meta.includes.some(matchGM)) return true
+  if (asset.meta.matches.some(match)) return true
+  return false
+}
+
+/**
+ * MatchPattern for Greasemonkey '@include' & '@exclude'
+ */
+class MatchPatternGM {
+  constructor (urlPattern) {
+    let regStr = urlPattern
+      .replace('*', '.*')
+      .replace(/[?:()\[\]^$]/g, function (x) {
+        return '\\' + x
+      })
+    this.reg = new RegExp('^' + regStr + '$')
+  }
+  test (url) {
+    return this.reg.test(url)
+  }
+}
 
 class MMStore {
   constructor () {
@@ -76,7 +103,7 @@ class MMStore {
   fetchAssetsRegistry () {
     return cp.storage.local.get(null).then(storage => {
       const installedAssets = {}
-      // filter user assets
+      // filter: user assets only
       Object.keys(storage).forEach(key => {
         if (isUAID(key)) {
           installedAssets[key] = storage[key]
@@ -115,17 +142,21 @@ class MMStore {
     })
   }
 
-  getMatchedAssets () {}
+  getMatchedAssets (url) {
+    return this.fetchAssetsRegistry()
+    .then(reg => Object.values(reg))
+    .then(assets => assets.filter(asset => isAssetMatchURL(asset, url)))
+  }
 
   /**
    *  Clean up chrome.storage.local
    *
    *  @return undefined
    */
-  cleanup (doit) {
+  cleanup (yesdoit) {
     cp.storage.local.get(null)
     .then(storage => {
-      if (doit) {
+      if (yesdoit) {
         chrome.storage.local.clear()
       } else {
         // for debugging
