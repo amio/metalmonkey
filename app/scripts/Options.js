@@ -7,8 +7,6 @@ import Editor from './components/options-editor.js'
 
 import theme from './themes/default.js'
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
-import injectTapEventPlugin from 'react-tap-event-plugin'
-injectTapEventPlugin()
 
 import 'react-mdl/extra/material.js'
 

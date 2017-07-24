@@ -86,5 +86,4 @@ gulp.task('generate:lang', function () {
     gutil.log('Generating: ', langCode)
     stream.pipe(gulp.dest(target))
   })
-
 })
