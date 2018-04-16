@@ -1,0 +1,45 @@
+{
+  "manifest_version": 2,
+  "name": "MetalMonkey",
+  "version": "0.1.0",
+  "description": "Modern userscript manager.",
+  "icons": {
+    "64": "icon.png"
+  },
+  "options_ui": {
+    "page": "options.html"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://*/*"],
+      "js": ["content.js"],
+      "run_at": "document_start",
+      "all_frames": false
+    }
+  ],
+  "browser_action": {
+    "default_title": "MetalMonkey",
+    "default_popup": "popup.html",
+    "default_icon": {
+      "64": "icon.png"
+    }
+  },
+  "background": {
+    "scripts": [
+      "background.js"
+    ]
+  },
+  "permissions": [
+    "storage",
+    "unlimitedStorage",
+    "notifications",
+    "tabs",
+    "idle",
+    "management",
+    "contextMenus",
+    "webNavigation",
+    "webRequest",
+    "webRequestBlocking",
+    "<all_urls>"
+  ]
+}
