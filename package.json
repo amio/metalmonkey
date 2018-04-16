@@ -4,21 +4,25 @@
   "description": "Modern userscripts manager.",
   "main": "index.js",
   "scripts": {
-    "prepare-assets": "rimraf dist && cp -r assets dist",
-    "prebuild": "npm run prepare-assets",
-    "predev": "npm run prepare-assets",
-    "build": "microbundle -i src/**/*.js -o dist -f cjs",
-    "dev": "microbundle watch -i src/**/*.js -o dist -f cjs"
+    "build-manifest": "rimraf dist/* && cpr app/manifest.json dist/manifest.json",
+    "build-pages": "next build app && next export app -o dist",
+    "dev-pages": "next app",
+    "prebuild": "npm run build-manifest && npm run build-pages",
+    "predev": "npm run build-manifest && npm run build-pages",
+    "build": "microbundle -i app/scripts/**/*.js -o dist -f cjs",
+    "dev": "microbundle watch -i app/scripts/**/*.js -o dist -f cjs"
   },
   "author": "Amio <amio.cn@gmail.com>",
   "license": "MIT",
   "private": true,
   "dependencies": {
+    "next": "^5.1.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
     "webextension-polyfill": "^0.2.1"
   },
   "devDependencies": {
+    "cpr": "^3.0.1",
     "microbundle": "^0.4.4",
     "rimraf": "^2.6.2"
   }

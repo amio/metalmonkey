@@ -7,7 +7,7 @@
     "64": "icon.png"
   },
   "options_ui": {
-    "page": "options.html"
+    "page": "options/index.html"
   },
   "content_scripts": [
     {
@@ -19,7 +19,7 @@
   ],
   "browser_action": {
     "default_title": "MetalMonkey",
-    "default_popup": "popup.html",
+    "default_popup": "popup/index.html",
     "default_icon": {
       "64": "icon.png"
     }
