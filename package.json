@@ -7,8 +7,8 @@
     "prepare-assets": "rimraf dist && cp -r app dist",
     "prebuild": "npm run prepare-assets",
     "predev": "npm run prepare-assets",
-    "build": "microbundle -i app/**/*.js -o dist -f cjs",
-    "dev": "microbundle watch -i app/**/*.js -o dist -f cjs"
+    "build": "microbundle -i app/**/*.js -o dist -f cjs --jsx React.createElement",
+    "dev": "microbundle watch -i app/**/*.js -o dist -f cjs --jsx React.createElement"
   },
   "author": "Amio <amio.cn@gmail.com>",
   "license": "MIT",
