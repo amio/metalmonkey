@@ -8,13 +8,12 @@
   },
   "browser_action": {
     "default_title": "MetalMonkey",
-    "default_popup": "popup.html",
     "default_icon": {
       "64": "images/icon.png"
     }
   },
   "options_ui": {
-    "page": "options.html"
+    "page": "main.html"
   },
   "background": {
     "page": "background.html"
