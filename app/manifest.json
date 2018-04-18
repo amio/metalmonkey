@@ -6,9 +6,6 @@
   "icons": {
     "64": "images/icon.png"
   },
-  "options_ui": {
-    "page": "options.html"
-  },
   "browser_action": {
     "default_title": "MetalMonkey",
     "default_popup": "popup.html",
@@ -16,18 +13,11 @@
       "64": "images/icon.png"
     }
   },
-  "content_scripts": [
-    {
-      "matches": ["*://*/*"],
-      "js": ["content.js"],
-      "run_at": "document_start",
-      "all_frames": false
-    }
-  ],
+  "options_ui": {
+    "page": "options.html"
+  },
   "background": {
-    "scripts": [
-      "background.js"
-    ]
+    "page": "background.html"
   },
   "permissions": [
     "storage",
