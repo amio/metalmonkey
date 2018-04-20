@@ -14,13 +14,11 @@ module.exports = env => {
       filename: '[name].js'
     },
     module: {
-      rules: [
-        {
-          test: /\.jsx?$/,
-          exclude: /node_modules/,
-          use: { loader: 'babel-loader' }
-        }
-      ]
+      rules: [{
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        use: { loader: 'babel-loader' }
+      }]
     },
     devtool: 'inline-cheap-source-map',
     performance: { hints: false }
