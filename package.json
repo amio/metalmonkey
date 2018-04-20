@@ -7,8 +7,8 @@
     "prepare-assets": "rimraf dist && cp -r app dist",
     "prebuild": "npm run prepare-assets",
     "predev": "npm run prepare-assets",
-    "build": "microbundle -i app/**/*.js -o dist -f cjs --jsx React.createElement",
-    "dev": "microbundle watch -i app/**/*.js -o dist -f cjs --jsx React.createElement"
+    "build": "webpack --config webpack.config.js --env.prod --progress",
+    "dev": "webpack --config webpack.config.js --env.dev --progress"
   },
   "author": "Amio <amio.cn@gmail.com>",
   "license": "MIT",
@@ -21,7 +21,13 @@
     "webextension-polyfill": "^0.2.1"
   },
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.6.1",
+    "babel-preset-react": "^6.24.1",
     "microbundle": "^0.4.4",
-    "rimraf": "^2.6.2"
+    "rimraf": "^2.6.2",
+    "webpack": "^4.6.0",
+    "webpack-cli": "^2.0.14"
   }
 }
