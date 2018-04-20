@@ -1,8 +1,8 @@
 import React from 'react'
+import Button from 'material-ui/Button'
 
 export default () => {
-  console.log(1)
   return (
-    <div>Main Index</div>
+    <div>Main Index<Button>as</Button></div>
   )
 }
