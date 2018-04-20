@@ -4,6 +4,7 @@
   "description": "Modern userscripts manager.",
   "main": "index.js",
   "scripts": {
+    "lint": "standard",
     "prepare-assets": "rimraf dist && cp -r app dist",
     "prebuild": "npm run prepare-assets",
     "predev": "npm run prepare-assets",
@@ -27,6 +28,7 @@
     "babel-preset-react": "^6.24.1",
     "microbundle": "^0.4.4",
     "rimraf": "^2.6.2",
+    "standard": "^11.0.1",
     "webpack": "^4.6.0",
     "webpack-cli": "^2.0.14"
   }
