@@ -1,3 +1,7 @@
 {
-  "presets": ["react"]
+  "presets": ["react"],
+  "plugins": [
+    "react-require",
+    "styled-jsx/babel"
+  ]
 }
