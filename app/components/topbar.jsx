@@ -1,11 +1,12 @@
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Typography from 'material-ui/Typography'
-import Button from 'material-ui/Button'
 import IconButton from 'material-ui/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 
-export default () => {
+import { version } from '../../package.json'
+
+export default ({title}) => {
   return (
     <AppBar position='static'>
       <Toolbar>
@@ -13,9 +14,9 @@ export default () => {
           <MenuIcon />
         </IconButton>
         <Typography variant='title' color='inherit' style={{flex: 1}}>
-          <em>METALMONKEY</em><span>Manager</span>
+          <em>METALMONKEY</em><span>{title}</span>
         </Typography>
-        <Button color='inherit'>Login</Button>
+        <i>v{version}</i>
       </Toolbar>
       <style jsx>{`
         em, span {
@@ -23,6 +24,7 @@ export default () => {
         }
         em {
           margin: 0 0.2em;
+          font-style: normal;
           font-weight: 600;
         }
         span {
