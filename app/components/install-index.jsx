@@ -5,6 +5,7 @@ import Snackbar from 'material-ui/Snackbar'
 import Layout from './layout.jsx'
 import Topbar from './topbar.jsx'
 import { installAsset } from '../libs/store.js'
+import readTextStream from '../libs/read-text-stream.js'
 
 export default class InstallIndex extends React.Component {
 
@@ -17,7 +18,14 @@ export default class InstallIndex extends React.Component {
     }
 
     window.fetch(props.url)
-      .then(res => this.consume(res))
+      .then(async res => {
+        const total = res.headers.get('Content-Length') || 'unknown'
+        let gotBytes = 0
+        return readTextStream(res.body, (partial, bytes) => {
+          console.info(`Got ${gotBytes += bytes} of ${total} bytes ...`)
+          this.setState({ resourceText: this.state.resourceText + partial })
+        })
+      })
       .then(uso => {
         this.setState({ resourceLoaded: true })
         console.info('Ready to install %s.', props.url)
@@ -25,37 +33,6 @@ export default class InstallIndex extends React.Component {
       .catch(e => console.error(e))
 
     this.install = this.install.bind(this)
-  }
-
-  consume (response) {
-    const decoder = new window.TextDecoder()
-    const reader = response.body.getReader()
-    const length = response.headers.get('Content-Length') || 'unknown'
-
-    const that = this
-    let loadedBytes = 0
-    return new Promise((resolve, reject) => {
-      (function pump () {
-        reader.read().then(({done, value}) => {
-          if (done) {
-            return resolve({
-              url: that.props.scriptURL,
-              bytes: loadedBytes,
-              content: that.state.resourceText
-            })
-          }
-
-          console.log(`Got ${loadedBytes += value.byteLength} of ${length} bytes ...`)
-          const partial = decoder.decode(value || new Uint8Array(), {
-            stream: !done
-          })
-          that.setState({
-            resourceText: that.state.resourceText + partial
-          })
-          return pump()
-        }).catch(reject)
-      })()
-    })
   }
 
   install () {
