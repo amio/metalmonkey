@@ -1,5 +1,5 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
-import MainIndex from './components/main-index.jsx'
+import MainRouter from './components/main-router.jsx'
 
-ReactDOM.render(<MainIndex />, document.getElementById('app'))
+ReactDOM.render(<MainRouter />, document.getElementById('app'))
