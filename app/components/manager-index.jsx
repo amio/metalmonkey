@@ -1,7 +1,10 @@
+import Layout from './layout.jsx'
 import Topbar from './topbar.jsx'
 
 export default () => {
   return (
-    <Topbar title='Manager' />
+    <Layout>
+      <Topbar title='Manager' />
+    </Layout>
   )
 }

@@ -16,7 +16,7 @@ export default ({title}) => {
         <Typography variant='title' color='inherit' style={{flex: 1}}>
           <em>METALMONKEY</em><span>{title}</span>
         </Typography>
-        <i>v{version}</i>
+        <i>{version}</i>
       </Toolbar>
       <style jsx>{`
         em, span {
@@ -29,6 +29,11 @@ export default ({title}) => {
         }
         span {
           font-weight: 300;
+        }
+        i {
+          font-style: normal;
+          font-size: 14px;
+          opacity: 0.6;
         }
       `}</style>
     </AppBar>
