@@ -1,7 +1,10 @@
 import React from 'react'
 import Button from 'material-ui/Button'
+import Snackbar from 'material-ui/Snackbar'
+
 import Layout from './layout.jsx'
 import Topbar from './topbar.jsx'
+import { installAsset } from '../libs/store.js'
 
 export default class InstallIndex extends React.Component {
 
@@ -9,7 +12,8 @@ export default class InstallIndex extends React.Component {
     super()
     this.state = {
       resourceText: '',
-      resourceLoaded: false
+      resourceLoaded: false,
+      notify: ''
     }
 
     window.fetch(props.url)
@@ -28,10 +32,10 @@ export default class InstallIndex extends React.Component {
     const reader = response.body.getReader()
     const length = response.headers.get('Content-Length') || 'unknown'
 
+    const that = this
     let loadedBytes = 0
     return new Promise((resolve, reject) => {
-      const that = this
-      ;(function pump () {
+      (function pump () {
         reader.read().then(({done, value}) => {
           if (done) {
             return resolve({
@@ -54,33 +58,23 @@ export default class InstallIndex extends React.Component {
     })
   }
 
-  parseMeta (metaText) {
-    if (metaText.split('// ==/UserScript==').length > 1) {
-      return {} // TODO: return meta object.
-    }
-  }
-
-  onScriptLoaded (userscriptObject) {
-    console.info('Ready to install %s.', scriptURL)
-
-    const installButton = document.querySelector('#installButton')
-
-    installButton.disabled = false
-  }
-
   install () {
-    // Store.installAsset(this.props.resourceURL, this.state.resourceText)
-    // .then(result => {
-    //   console.info('Successfully installed %s!', this.props.resourceURL)
-    //   setTimeout(function () {
-    //     window.close()
-    //   }, 200)
-    // })
+    const { url } = this.props
+    const { resourceText } = this.state
+
+    installAsset(url, resourceText).then(result => {
+      console.info('Successfully installed %s!', url)
+      this.setState({ notify: 'Successfully instaled.'})
+      setTimeout(() => {
+        this.setState({ notify: '' })
+        window.close()
+      }, 2000)
+    })
   }
 
   render () {
     const { url } = this.props
-    const { resourceLoaded, resourceText } = this.state
+    const { resourceLoaded, resourceText, notify } = this.state
     return (
       <Layout>
         <Topbar title='Install' />
@@ -96,6 +90,12 @@ export default class InstallIndex extends React.Component {
               onClick={this.install}>
               Install
             </Button>
+            { !resourceLoaded && <div className='info'>...loading...</div> }
+            <Snackbar
+              open={notify !== ''}
+              SnackbarContentProps={{ 'aria-describedby': 'message-id' }}
+              message={<span id='message-id'>{notify}</span>}
+            />
           </div>
           <pre className='code'>{resourceText}</pre>
         </div>
@@ -120,6 +120,11 @@ export default class InstallIndex extends React.Component {
             margin: 1rem 0;
             font-size: 14px;
             color: #222;
+          }
+          .info {
+            color: #AAA;
+            margin: 5px 0;
+            text-align: center;
           }
         `}</style>
       </Layout>
