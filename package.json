@@ -20,6 +20,7 @@
     "query-string": "^6.0.0",
     "react": "^16.3.1",
     "react-dom": "^16.3.1",
+    "read-text-stream": "^0.1.0",
     "styled-jsx": "^2.2.6",
     "webextension-polyfill": "^0.2.1"
   },
