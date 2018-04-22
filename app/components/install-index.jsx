@@ -5,7 +5,7 @@ import Snackbar from 'material-ui/Snackbar'
 import Layout from './layout.jsx'
 import Topbar from './topbar.jsx'
 import { installAsset } from '../libs/store.js'
-import readTextStream from '../libs/read-text-stream.js'
+import readTextStream from 'read-text-stream'
 
 export default class InstallIndex extends React.Component {
 
