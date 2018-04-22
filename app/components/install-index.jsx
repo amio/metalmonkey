@@ -8,44 +8,40 @@ import { installAsset } from '../libs/store.js'
 import readTextStream from 'read-text-stream'
 
 export default class InstallIndex extends React.Component {
+  state = {
+    resourceText: '',
+    resourceLoaded: false,
+    notify: ''
+  }
 
-  constructor (props) {
-    super()
-    this.state = {
-      resourceText: '',
-      resourceLoaded: false,
-      notify: ''
-    }
+  componentDidMount () {
+    this.loadResource()
+  }
 
-    window.fetch(props.url)
+  loadResource = () => {
+    window.fetch(this.props.url)
       .then(async res => {
-        const total = res.headers.get('Content-Length') || 'unknown'
-        let gotBytes = 0
+        const total = res.headers.get('Content-Length') || '[unknown total]'
+        // let gotBytes = 0
         return readTextStream(res.body, (partial, bytes) => {
-          console.info(`Got ${gotBytes += bytes} of ${total} bytes ...`)
+          // console.info(`Got ${gotBytes += bytes} of ${total} bytes ...`)
           this.setState({ resourceText: this.state.resourceText + partial })
         })
       })
-      .then(uso => {
+      .then(() => {
         this.setState({ resourceLoaded: true })
-        console.info('Ready to install %s.', props.url)
+        // console.info('Ready to install %s.', props.url)
       })
       .catch(e => console.error(e))
-
-    this.install = this.install.bind(this)
   }
 
-  install () {
+  install = () => {
     const { url } = this.props
     const { resourceText } = this.state
 
     installAsset(url, resourceText).then(result => {
-      console.info('Successfully installed %s!', url)
+      // console.info('Successfully installed %s!', url)
       this.setState({ notify: 'Successfully instaled.'})
-      setTimeout(() => {
-        this.setState({ notify: '' })
-        window.close()
-      }, 2000)
     })
   }
 
@@ -70,6 +66,8 @@ export default class InstallIndex extends React.Component {
             { !resourceLoaded && <div className='info'>...loading...</div> }
             <Snackbar
               open={notify !== ''}
+              autoHideDuration={1200}
+              onClose={() => this.setState({ notify: '' }, window.close())}
               SnackbarContentProps={{ 'aria-describedby': 'message-id' }}
               message={<span id='message-id'>{notify}</span>}
             />
