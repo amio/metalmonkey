@@ -5417,6 +5417,12 @@ urix@^0.1.0:
   version "0.1.0"
   resolved "https://registry.yarnpkg.com/urix/-/urix-0.1.0.tgz#da937f7a62e21fec1fd18d49b35c2935067a6c72"
 
+url-match-patterns@^0.2.0:
+  version "0.2.0"
+  resolved "https://registry.yarnpkg.com/url-match-patterns/-/url-match-patterns-0.2.0.tgz#a688f68b0aff990c6df3c99ec208a8d410f1cb8c"
+  dependencies:
+    lodash "^4.3.0"
+
 url-parse-lax@^1.0.0:
   version "1.0.0"
   resolved "https://registry.yarnpkg.com/url-parse-lax/-/url-parse-lax-1.0.0.tgz#7af8f303645e9bd79a272e7a14ac68bc0609da73"

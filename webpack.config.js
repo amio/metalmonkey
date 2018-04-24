@@ -7,7 +7,8 @@ module.exports = env => {
     target: 'web',
     entry: {
       main: './app/main.js',
-      background: './app/background.js'
+      background: './app/background.js',
+      content: './app/content.js'
     },
     output: {
       path: path.resolve(__dirname, 'dist'),

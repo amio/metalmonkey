@@ -16,8 +16,12 @@
     "page": "main.html"
   },
   "background": {
-    "page": "background.html"
+    "scripts": ["background.js"]
   },
+  "content_scripts": [{
+    "matches": ["<all_urls>"],
+    "js": ["content.js"]
+  }],
   "permissions": [
     "storage",
     "unlimitedStorage",
