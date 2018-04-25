@@ -5,6 +5,8 @@ export const options = {
 }
 
 export default function insertUserjsInstallButton () {
+  if (!hasUserjsKeyword()) return
+
   const npmi = document.querySelector('[class*=package__install]')
   const pkgname = window.location.pathname.replace(/^\/package\//, '')
   const userjsBtn = `
@@ -25,3 +27,8 @@ export const styles = `
   text-transform: uppercase;
   text-decoration: none;
 `
+
+function hasUserjsKeyword () {
+  // TODO: better detection
+  return !!document.querySelector('a[href*=userjs]')
+}
