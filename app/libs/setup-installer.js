@@ -14,7 +14,7 @@ export default function setupInstaller () {
 
 function userjsRequestListener (details) {
   const isUserjs = details.responseHeaders.find(header => {
-    return header.name === 'content-type' && /javascript/.test(header.value)
+    return header.name.toLowerCase() === 'content-type' && /javascript/.test(header.value)
   })
 
   if (isUserjs) {
