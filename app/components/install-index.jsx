@@ -20,19 +20,12 @@ export default class InstallIndex extends React.Component {
 
   loadResource = () => {
     window.fetch(this.props.url)
-      .then(async res => {
-        const total = res.headers.get('Content-Length') || '[unknown total]'
-        // let gotBytes = 0
-        return readTextStream(res.body, (partial, bytes) => {
-          // console.info(`Got ${gotBytes += bytes} of ${total} bytes ...`)
-          this.setState({ resourceText: this.state.resourceText + partial })
-        })
-      })
+      .then(async res => readTextStream(res.body, (partial, bytes) => {
+        this.setState({ resourceText: this.state.resourceText + partial })
+      }))
       .then(() => {
         this.setState({ resourceLoaded: true })
-        // console.info('Ready to install %s.', props.url)
-      })
-      .catch(e => console.error(e))
+      }, e => console.error(e))
   }
 
   install = () => {

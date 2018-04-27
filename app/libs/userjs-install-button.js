@@ -17,6 +17,11 @@ export default function insertUserjsInstallButton () {
   npmi.insertAdjacentHTML('beforebegin', userjsBtn)
 }
 
+function hasUserjsKeyword () {
+  // TODO: better detection
+  return !!document.querySelector('a[href*=userjs]')
+}
+
 export const styles = `
   display: block;
   border-radius: 5px;
@@ -27,8 +32,3 @@ export const styles = `
   text-transform: uppercase;
   text-decoration: none;
 `
-
-function hasUserjsKeyword () {
-  // TODO: better detection
-  return !!document.querySelector('a[href*=userjs]')
-}
