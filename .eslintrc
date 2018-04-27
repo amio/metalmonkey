@@ -2,3 +2,4 @@
   parser: babel-eslint
   env:
     browser: true
+    webextensions: true
