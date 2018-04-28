@@ -6,6 +6,7 @@ import Layout from './layout.jsx'
 import Topbar from './topbar.jsx'
 import { installAsset } from '../libs/store.js'
 import readTextStream from 'read-text-stream'
+import requireCJSString from '../../../require-cjs-string'
 
 export default class InstallIndex extends React.Component {
   state = {
@@ -16,6 +17,7 @@ export default class InstallIndex extends React.Component {
 
   componentDidMount () {
     this.loadResource()
+    console.log(requireCJSString('module.exports = 666'))
   }
 
   loadResource = () => {
