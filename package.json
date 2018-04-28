@@ -2,6 +2,10 @@
   "name": "Metalmonkey",
   "version": "0.1.0",
   "description": "Modern userscripts manager.",
+  "repository": "amio/metalmonkey",
+  "author": "Amio <amio.cn@gmail.com>",
+  "license": "MIT",
+  "private": true,
   "main": "index.js",
   "scripts": {
     "lint": "standard",
@@ -11,9 +15,9 @@
     "build": "webpack --config webpack.config.js --env.prod --progress",
     "dev": "webpack --config webpack.config.js --env.dev --progress"
   },
-  "author": "Amio <amio.cn@gmail.com>",
-  "license": "MIT",
-  "private": true,
+  "standard": {
+    "parser": "babel-eslint"
+  },
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.42",
     "material-ui": "^1.0.0-beta.42",
