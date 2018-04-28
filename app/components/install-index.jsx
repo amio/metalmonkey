@@ -33,8 +33,7 @@ export default class InstallIndex extends React.Component {
     const { resourceText } = this.state
 
     installAsset(url, resourceText).then(result => {
-      // console.info('Successfully installed %s!', url)
-      this.setState({ notify: 'Successfully instaled.'})
+      this.setState({ notify: 'Successfully instaled.' })
     })
   }
 

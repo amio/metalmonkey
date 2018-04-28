@@ -1,14 +1,17 @@
 import browser from 'webextension-polyfill'
 
 async function installAsset (url, code) {
-  // const { META } = await import(url)
-  // console.log(META)
-  const id = url
+  const key = url
   return browser.storage.local.set({
-    [id]: { url, code }
+    [key]: { url, code }
   })
 }
 
+async function listAssets (keys) {
+  return browser.storage.local.get(keys)
+}
+
 export {
-  installAsset
+  installAsset,
+  listAssets
 }

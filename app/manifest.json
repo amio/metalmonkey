@@ -26,6 +26,7 @@
     "storage",
     "unlimitedStorage",
     "notifications",
+    "activeTab",
     "tabs",
     "idle",
     "management",
