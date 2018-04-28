@@ -45,50 +45,42 @@ export default class InstallIndex extends React.Component {
     return (
       <Layout>
         <Topbar title='Install' />
-        <div className='url'>
-          <div className='content-wrapper'>{url}</div>
+        <div className='url'>{url}</div>
+        <div className='ops'>
+          <Button
+            variant='raised'
+            color='secondary'
+            disabled={!resourceLoaded}
+            onClick={this.install}>
+            Install
+          </Button>
+          { !resourceLoaded && <div className='info'>...loading...</div> }
+          <Snackbar
+            open={notify !== ''}
+            autoHideDuration={1200}
+            onClose={() => this.setState({ notify: '' }, window.close())}
+            SnackbarContentProps={{ 'aria-describedby': 'message-id' }}
+            message={<span id='message-id'>{notify}</span>}
+          />
         </div>
-        <div className='content-wrapper'>
-          <div className='ops'>
-            <Button
-              variant='raised'
-              color='secondary'
-              disabled={!resourceLoaded}
-              onClick={this.install}>
-              Install
-            </Button>
-            { !resourceLoaded && <div className='info'>...loading...</div> }
-            <Snackbar
-              open={notify !== ''}
-              autoHideDuration={1200}
-              onClose={() => this.setState({ notify: '' }, window.close())}
-              SnackbarContentProps={{ 'aria-describedby': 'message-id' }}
-              message={<span id='message-id'>{notify}</span>}
-            />
-          </div>
-          <pre className='code'>{resourceText}</pre>
-        </div>
+        <pre className='code'>{resourceText}</pre>
         <style jsx>{`
           .url {
             background-color: #FFF;
-            height: 3rem;
-            line-height: 3rem;
+            padding: 1rem;
             color: #666;
-            font: 14px/3rem Courier, monospace;
+            font: 14px/1.4rem Courier, monospace;
             border-bottom: 1px solid #EEE;
-          }
-          .content-wrapper {
-            margin: 0 auto;
-            padding: 0 1em;
-            max-width: 1200px;
           }
           .ops {
             float: right;
+            margin: 1rem;
           }
           .code {
-            margin: 1rem 0;
+            margin: 1rem;
             font-size: 14px;
             color: #222;
+            white-space: pre-wrap;
           }
           .info {
             color: #AAA;
