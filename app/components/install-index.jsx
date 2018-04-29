@@ -6,7 +6,7 @@ import Layout from './layout.jsx'
 import Topbar from './topbar.jsx'
 import { installAsset } from '../libs/store.js'
 import readTextStream from 'read-text-stream'
-import requireCJSString from '../../../require-cjs-string'
+import requireCJSString from 'require-cjs-string'
 
 export default class InstallIndex extends React.Component {
   state = {
@@ -17,7 +17,6 @@ export default class InstallIndex extends React.Component {
 
   componentDidMount () {
     this.loadResource()
-    console.log(requireCJSString('module.exports = 666'))
   }
 
   loadResource = () => {
@@ -30,12 +29,27 @@ export default class InstallIndex extends React.Component {
       }, e => console.error(e))
   }
 
-  install = () => {
+  parseMeta = async (src) => {
+    try {
+      return { meta: requireCJSString(src).meta }
+    } catch (error) {
+      return { error }
+    }
+  }
+
+  install = async () => {
     const { url } = this.props
     const { resourceText } = this.state
+    const { error, meta } = await this.parseMeta(resourceText)
 
-    installAsset(url, resourceText).then(result => {
+    if (error) {
+      return this.setState({ notify: `ERROR: ${error.message}` })
+    }
+
+    installAsset(url, meta, resourceText).then(result => {
       this.setState({ notify: 'Successfully instaled.' })
+    }, e => {
+      this.setState({ notify: `ERROR: ${e.message}` })
     })
   }
 

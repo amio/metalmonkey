@@ -1,9 +1,9 @@
 import browser from 'webextension-polyfill'
 
-async function installAsset (url, code) {
+async function installAsset (url, meta, code) {
   const key = url
   return browser.storage.local.set({
-    [key]: { url, code }
+    [key]: { url, meta, code }
   })
 }
 
