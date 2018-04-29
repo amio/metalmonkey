@@ -22,7 +22,7 @@
     "matches": ["<all_urls>"],
     "js": ["content.js"]
   }],
-  "content_security_policy": "script-src 'self' 'unsafe-eval'",
+  "content_security_policy": "default-src 'self' 'unsafe-eval'",
   "permissions": [
     "storage",
     "unlimitedStorage",
