@@ -1,4 +1,6 @@
 const path = require('path')
+const GenerateJsonFile = require('generate-json-file-webpack-plugin')
+const { description, version, author } = require('./package.json')
 
 module.exports = env => {
   return {
@@ -21,6 +23,13 @@ module.exports = env => {
         use: { loader: 'babel-loader' }
       }]
     },
+    plugins: [
+      new GenerateJsonFile({
+        jsonFile: './app/manifest.json',
+        filename: 'manifest.json',
+        value: { description, version, author }
+      })
+    ],
     devtool: 'inline-cheap-source-map',
     performance: { hints: false }
   }
