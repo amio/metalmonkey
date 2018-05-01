@@ -1,16 +1,12 @@
 import browser from 'webextension-polyfill'
 import setupInstaller from './libs/setup-installer.js'
 import setupInjector from './libs/setup-injector.js'
-import setupMessageHandler from './libs/setup-message-handler.js'
 
 // Intercept *.user.js url opening
 setupInstaller()
 
 // Listener on every webpage, for injecting userscripts.
 setupInjector()
-
-// Listen messages from extension pages
-setupMessageHandler()
 
 // TODO: Wait for chrome to support `browser.contentScripts` api
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/contentScripts
