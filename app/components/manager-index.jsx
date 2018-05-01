@@ -11,7 +11,11 @@ export default class ManagerIndex extends React.Component {
     installedAssets: []
   }
 
-  async componentDidMount () {
+  componentDidMount () {
+    this.updateAssetsList()
+  }
+
+  updateAssetsList = async () => {
     const assets = await listAssets()
     this.setState({
       installedAssets: Object.values(assets)
@@ -26,7 +30,7 @@ export default class ManagerIndex extends React.Component {
         <Topbar title='Manager' />
         <div className='main'>
           <Paper>
-            <AssetsList assets={installedAssets} />
+            <AssetsList assets={installedAssets} onChange={this.updateAssetsList} />
           </Paper>
         </div>
         <style jsx>{`

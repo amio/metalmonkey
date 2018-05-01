@@ -27,6 +27,7 @@
     "react-dom": "^16.3.2",
     "read-text-stream": "^0.1.0",
     "require-cjs-string": "^0.1.0",
+    "unstated": "^2.0.2",
     "url-match-patterns": "^0.2.0",
     "webextension-polyfill": "^0.2.1"
   },

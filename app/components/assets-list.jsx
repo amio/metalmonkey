@@ -11,11 +11,11 @@ import IconButton from 'material-ui/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import StarIcon from '@material-ui/icons/Star'
 
-const AssetsList = ({ assets }) => (
+const AssetsList = ({ assets, onChange = () => {} }) => (
   <List>
     {
       assets.map(asset => (
-        <AssetsListItem key={asset.url} {...asset} />
+        <AssetsListItem key={asset.url} {...asset} onChange={onChange} />
       ))
     }
   </List>
@@ -23,8 +23,8 @@ const AssetsList = ({ assets }) => (
 
 class AssetsListItem extends React.Component {
   deleteAsset = () => {
-    const { url } = this.props
-    removeAsset(url).then(console.log, console.error)
+    const { url, onChange } = this.props
+    removeAsset(url).then(onChange, console.error)
   }
 
   render () {
