@@ -25,10 +25,26 @@ function injectAssets (tabId, assets) {
 }
 
 function execAsset (tabId, asset) {
-  browser.tabs.executeScript(tabId, {
-    code: autoExecWrapper(asset.code),
-    runAt: 'document_idle'
-  })
+  const { src, css, runAt } = asset
+  const soonest = [
+    'document_start',
+    'document_idle',
+    'document_end'
+  ].includes(runAt) && runAt
+
+  if (src) {
+    browser.tabs.executeScript(tabId, {
+      code: autoExecWrapper(src),
+      runAt: soonest || 'document_idle'
+    })
+  }
+
+  if (css) {
+    browser.tabs.insertCSS(tabId, {
+      code: css,
+      runAt: soonest || 'document_start'
+    })
+  }
 }
 
 const autoExecWrapper = (src) => `

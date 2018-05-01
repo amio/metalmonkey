@@ -1,10 +1,11 @@
 import browser from 'webextension-polyfill'
 import match from 'url-match-patterns'
 
-async function installAsset (url, meta, code) {
+async function installAsset (url, src, parsed) {
   const key = url
+  const { meta, css } = parsed
   return browser.storage.local.set({
-    [key]: { url, meta, code }
+    [key]: { url, src, meta, css }
   })
 }
 

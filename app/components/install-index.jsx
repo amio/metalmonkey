@@ -31,7 +31,7 @@ export default class InstallIndex extends React.Component {
 
   parseMeta = async (src) => {
     try {
-      return { meta: requireCJSString(src).meta }
+      return { parsed: requireCJSString(src) }
     } catch (error) {
       return { error }
     }
@@ -40,13 +40,13 @@ export default class InstallIndex extends React.Component {
   install = async () => {
     const { url } = this.props
     const { resourceText } = this.state
-    const { error, meta } = await this.parseMeta(resourceText)
+    const { error, parsed } = await this.parseMeta(resourceText)
 
     if (error) {
       return this.setState({ notify: `ERROR: ${error.message}` })
     }
 
-    installAsset(url, meta, resourceText).then(result => {
+    installAsset(url, resourceText, parsed).then(result => {
       this.setState({ notify: 'Successfully instaled.' })
     }, e => {
       this.setState({ notify: `ERROR: ${e.message}` })
