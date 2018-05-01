@@ -14,5 +14,27 @@ function setupUserjsInjector () {
 }
 
 function injectAssets (tabId, assets) {
-  console.info(`[TAB-${tabId}] ${assets.length} userscripts matched.`)
+  // Set icon text to matched userjs count
+  browser.browserAction.setBadgeText({
+    tabId,
+    text: assets.length.toString()
+  })
+
+  // Execute userjs
+  assets.map(asset => execAsset(tabId, asset))
 }
+
+function execAsset (tabId, asset) {
+  browser.tabs.executeScript(tabId, {
+    code: autoExecWrapper(asset.code),
+    runAt: 'document_idle'
+  })
+}
+
+const autoExecWrapper = (src) => `
+  const module = { exports: {} }
+  const exports = module.exports
+  ${src}
+  const userjs_main = module.exports['default'] || module.exports
+  if (typeof userjs_main === 'function') userjs_main()
+`
