@@ -21,10 +21,10 @@
   "dependencies": {
     "@material-ui/icons": "^1.0.0-beta.42",
     "generate-json-file-webpack-plugin": "0.0.3",
-    "material-ui": "^1.0.0-beta.42",
+    "material-ui": "^1.0.0-beta.44",
     "query-string": "^6.0.0",
-    "react": "^16.3.1",
-    "react-dom": "^16.3.1",
+    "react": "^16.3.2",
+    "react-dom": "^16.3.2",
     "read-text-stream": "^0.1.0",
     "require-cjs-string": "^0.1.0",
     "styled-jsx": "^2.2.6",
@@ -40,6 +40,6 @@
     "rimraf": "^2.6.2",
     "standard": "^11.0.1",
     "webpack": "^4.6.0",
-    "webpack-cli": "^2.0.14"
+    "webpack-cli": "^2.1.2"
   }
 }
