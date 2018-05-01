@@ -9,6 +9,10 @@ async function installAsset (url, src, parsed) {
   })
 }
 
+async function removeAsset (url) {
+  return browser.storage.local.remove(url)
+}
+
 async function listAssets (keys) {
   return browser.storage.local.get(keys)
 }
@@ -23,6 +27,7 @@ async function matchAssetsByURL (url) {
 
 export {
   installAsset,
+  removeAsset,
   listAssets,
   matchAssetsByURL
 }
