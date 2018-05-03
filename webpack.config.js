@@ -2,7 +2,12 @@ const path = require('path')
 const GenerateJsonFile = require('generate-json-file-webpack-plugin')
 const { description, version, author } = require('./package.json')
 
-module.exports = env => {
+const env = {
+  prod: process.env.NODE_ENV === 'prod',
+  dev: process.env.NODE_ENV === 'dev'
+}
+
+module.exports = () => {
   return {
     mode: env.prod ? 'production' : 'development',
     watch: env.dev,
