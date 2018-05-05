@@ -13,7 +13,7 @@
     "prebuild": "npm run prepare-assets",
     "predev": "npm run prepare-assets",
     "build": "NODE_ENV=prod webpack --config webpack.config.js",
-    "dev": "NODE_ENV=dev webpack --config webpack.config.js"
+    "start": "NODE_ENV=dev webpack --config webpack.config.js"
   },
   "standard": {
     "parser": "babel-eslint"
