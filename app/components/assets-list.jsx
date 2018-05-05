@@ -15,7 +15,7 @@ const AssetsList = ({ assets, onChange = () => {} }) => (
   <List>
     {
       assets.map(asset => (
-        <AssetsListItem key={asset.url} {...asset} onChange={onChange} />
+        <AssetsListItem key={asset.from} {...asset} onChange={onChange} />
       ))
     }
   </List>

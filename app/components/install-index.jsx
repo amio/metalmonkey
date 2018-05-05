@@ -1,12 +1,11 @@
 import React from 'react'
 import Button from 'material-ui/Button'
 import Snackbar from 'material-ui/Snackbar'
+import readTextStream from 'read-text-stream'
 
 import Layout from './layout.jsx'
 import Topbar from './topbar.jsx'
 import { installAsset } from '../libs/store.js'
-import readTextStream from 'read-text-stream'
-import requireCJSString from 'require-cjs-string'
 
 export default class InstallIndex extends React.Component {
   state = {
@@ -29,28 +28,21 @@ export default class InstallIndex extends React.Component {
       }, e => console.error(e))
   }
 
-  parseMeta = async (src) => {
-    try {
-      return { parsed: requireCJSString(src) }
-    } catch (error) {
-      return { error }
-    }
-  }
-
   install = async () => {
     const { url } = this.props
     const { resourceText } = this.state
-    const { error, parsed } = await this.parseMeta(resourceText)
 
-    if (error) {
-      return this.setState({ notify: `ERROR: ${error.message}` })
-    }
-
-    installAsset(url, resourceText, parsed).then(result => {
+    installAsset(url, resourceText).then(result => {
       this.setState({ notify: 'Successfully instaled.' })
     }, e => {
       this.setState({ notify: `ERROR: ${e.message}` })
     })
+  }
+
+  onNotifyClose = () => {
+    if (!this.state.notify.match(/ERROR/)) {
+      window.close()
+    }
   }
 
   render () {
@@ -72,7 +64,7 @@ export default class InstallIndex extends React.Component {
           <Snackbar
             open={notify !== ''}
             autoHideDuration={1200}
-            onClose={() => this.setState({ notify: '' }, window.close())}
+            onClose={this.onNotifyClose}
             SnackbarContentProps={{ 'aria-describedby': 'message-id' }}
             message={<span id='message-id'>{notify}</span>}
           />

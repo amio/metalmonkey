@@ -1,12 +1,19 @@
 import browser from 'webextension-polyfill'
 import match from 'url-match-patterns'
+import parseMeta from './parse-meta.js'
 
-async function installAsset (url, src, parsed) {
+async function installAsset (url, src) {
   const key = url
-  const { meta, css } = parsed
-  return browser.storage.local.set({
-    [key]: { url, src, meta, css }
-  })
+  const { error, parsed, type } = parseMeta(src)
+
+  if (error) {
+    throw error
+  } else {
+    const { meta, css } = parsed
+    return browser.storage.local.set({
+      [key]: { from: url, src, meta, css, type }
+    })
+  }
 }
 
 async function removeAsset (url) {

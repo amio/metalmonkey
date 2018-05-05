@@ -29,6 +29,7 @@
     "require-cjs-string": "^0.1.0",
     "unstated": "^2.0.3",
     "url-match-patterns": "^0.2.0",
+    "userscript-parser": "^2.0.0",
     "webextension-polyfill": "^0.2.1"
   },
   "devDependencies": {
