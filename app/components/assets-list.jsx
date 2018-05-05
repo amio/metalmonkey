@@ -23,12 +23,12 @@ const AssetsList = ({ assets, onChange = () => {} }) => (
 
 class AssetsListItem extends React.Component {
   deleteAsset = () => {
-    const { url, onChange } = this.props
-    removeAsset(url).then(onChange, console.error)
+    const { from, onChange } = this.props
+    removeAsset(from).then(onChange, console.error)
   }
 
   render () {
-    const { meta = {}, url } = this.props
+    const { meta = {} } = this.props
     const { name, version, author } = meta
     console.log(this.props)
 
@@ -37,7 +37,7 @@ class AssetsListItem extends React.Component {
         <ListItemIcon>
           <StarIcon />
         </ListItemIcon>
-        <ListItemText secondary={author || url}>
+        <ListItemText secondary={author}>
           <span>{name || 'Anoymous'} <sup>{version}</sup></span>
         </ListItemText>
         <ListItemSecondaryAction style={{ margin: '0 0.5rem' }}>

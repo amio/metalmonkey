@@ -3,7 +3,7 @@ import legacyParser from 'userscript-parser'
 
 export default function parseMeta (src) {
   try {
-    let type = 'npm'
+    let type = 'cjs'
     let parsed = _parseAsCjs(src)
 
     if (!parsed) {
