@@ -1,5 +1,5 @@
 import browser from 'webextension-polyfill'
-import { matchAssetsByURL } from './store.js'
+import { matchAssetsByURL, getAssetCode } from './store.js'
 
 export default setupUserjsInjector
 
@@ -24,13 +24,17 @@ function injectAssets (tabId, assets) {
   assets.map(asset => execAsset(tabId, asset))
 }
 
-function execAsset (tabId, asset) {
-  const { src, css, runAt } = asset
+async function execAsset (tabId, asset) {
+  console.info(`TAB[${tabId}] <- ${asset.meta.name}`)
+  const { from, runAt } = asset
   const soonest = [
     'document_start',
     'document_idle',
     'document_end'
   ].includes(runAt) && runAt
+
+  const { src, css } = await getAssetCode(from)
+  console.log(src, css)
 
   if (src) {
     browser.tabs.executeScript(tabId, {

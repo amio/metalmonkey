@@ -8,6 +8,9 @@ setupInstaller()
 // Listener on every webpage, for injecting userscripts.
 setupInjector()
 
+// Debugging
+window.b = browser
+
 // TODO: Wait for chrome to support `browser.contentScripts` api
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/contentScripts
 //

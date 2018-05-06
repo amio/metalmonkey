@@ -16,9 +16,8 @@ export default class ManagerIndex extends React.Component {
   }
 
   updateAssetsList = async () => {
-    const assets = await listAssets()
     this.setState({
-      installedAssets: Object.values(assets)
+      installedAssets: await listAssets()
     })
   }
 

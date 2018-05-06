@@ -3,25 +3,35 @@ import match from 'url-match-patterns'
 import parseMeta from './parse-meta.js'
 
 async function installAsset (url, src) {
-  const key = url
   const { error, parsed, type } = parseMeta(src)
 
   if (error) {
     throw error
   } else {
+    const key = url
     const { meta, css } = parsed
-    return browser.storage.local.set({
-      [key]: { from: url, src, meta, css, type }
+    await browser.storage.local.set({
+      [url]: { src, css }
+    })
+    return browser.storage.sync.set({
+      [key]: { type, meta, from: url }
     })
   }
 }
 
 async function removeAsset (url) {
-  return browser.storage.local.remove(url)
+  // await browser.storage.local.clear()
+  // await browser.storage.sync.clear()
+  await browser.storage.local.remove(url)
+  return browser.storage.sync.remove(url)
 }
 
 async function listAssets (keys) {
-  return browser.storage.local.get(keys)
+  return Object.values(await browser.storage.sync.get(keys))
+}
+
+async function getAssetCode (key) {
+  return (await browser.storage.local.get(key))[key]
 }
 
 async function matchAssetsByURL (url) {
@@ -36,5 +46,6 @@ export {
   installAsset,
   removeAsset,
   listAssets,
+  getAssetCode,
   matchAssetsByURL
 }
