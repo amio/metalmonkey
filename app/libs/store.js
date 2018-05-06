@@ -13,9 +13,10 @@ async function installAsset (url, src) {
     await browser.storage.local.set({
       [url]: { src, css }
     })
-    return browser.storage.sync.set({
+    await browser.storage.sync.set({
       [key]: { type, meta, from: url }
     })
+    return { url, type, meta, src, css }
   }
 }
 
@@ -31,7 +32,14 @@ async function listAssets (keys) {
 }
 
 async function getAssetCode (key) {
-  return (await browser.storage.local.get(key))[key]
+  const cached = await browser.storage.local.get(key)
+  if (cached) {
+    return cached[key]
+  } else {
+    const src = await window.fetch(key).then(res => res.text())
+    const { css } = await installAsset(key, src)
+    return { src, css }
+  }
 }
 
 async function matchAssetsByURL (url) {

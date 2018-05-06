@@ -34,7 +34,6 @@ async function execAsset (tabId, asset) {
   ].includes(runAt) && runAt
 
   const { src, css } = await getAssetCode(from)
-  console.log(src, css)
 
   if (src) {
     browser.tabs.executeScript(tabId, {
