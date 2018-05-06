@@ -50,10 +50,10 @@ async function execAsset (tabId, asset) {
   }
 }
 
-const autoExecWrapper = (src) => `
+const autoExecWrapper = (src) => `{
   const module = { exports: {} }
   const exports = module.exports
   ${src}
   const userjs_main = module.exports['default'] || module.exports
   if (typeof userjs_main === 'function') userjs_main()
-`
+}`
