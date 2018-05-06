@@ -34,7 +34,7 @@ export default class ManagerIndex extends React.Component {
         </div>
         <style jsx>{`
           .main {
-            max-width: 800px;
+            max-width: 960px;
             margin: 0 auto;
             padding: 2rem;
           }

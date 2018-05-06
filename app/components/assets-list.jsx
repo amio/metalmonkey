@@ -27,13 +27,18 @@ class AssetsListItem extends React.Component {
     removeAsset(from).then(onChange, console.error)
   }
 
+  editAsset = () => {
+    const { from } = this.props
+    window.location.href = `/main.html?edit=${from}`
+  }
+
   render () {
     const { meta = {} } = this.props
     const { name, version, author } = meta
-    console.log(this.props)
+    console.log(name, this.props)
 
     return (
-      <ListItem button>
+      <ListItem button onClick={this.editAsset}>
         <ListItemIcon>
           <StarIcon />
         </ListItemIcon>
