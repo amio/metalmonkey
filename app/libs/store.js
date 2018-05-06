@@ -1,5 +1,6 @@
 import browser from 'webextension-polyfill'
 import match from 'url-match-patterns'
+import { sha256 } from 'crypto-hash'
 import parseMeta from './parse-meta.js'
 
 async function installAsset (url, src) {
@@ -8,21 +9,23 @@ async function installAsset (url, src) {
   if (error) {
     throw error
   } else {
-    const key = url
+    const key = await _keygen(url)
     const { meta, css } = parsed
-    await browser.storage.local.set({
-      [url]: { src, css }
-    })
-    await browser.storage.sync.set({
-      [key]: { type, meta, from: url }
-    })
+
+    await Promise.all([
+      browser.storage.local.set({
+        [url]: { src, css }
+      }),
+      browser.storage.sync.set({
+        [url]: { key, type, meta, from: url }
+      })
+    ])
+
     return { url, type, meta, src, css }
   }
 }
 
 async function removeAsset (url) {
-  // await browser.storage.local.clear()
-  // await browser.storage.sync.clear()
   await browser.storage.local.remove(url)
   return browser.storage.sync.remove(url)
 }
@@ -48,6 +51,16 @@ async function matchAssetsByURL (url) {
     const patterns = entry.meta && entry.meta.matches && entry.meta.matches
     return patterns && patterns.find(p => match(p, url))
   })
+}
+
+async function _keygen (url) {
+  const unpkg = url.match(/https:\/\/unpkg.com\/(.+)@([\d.]+)/)
+
+  if (unpkg) {
+    return `npm:${unpkg[1]}`
+  } else {
+    return sha256(url)
+  }
 }
 
 export {
