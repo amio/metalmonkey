@@ -1,4 +1,5 @@
 import browser from 'webextension-polyfill'
+import { genId } from './store.js'
 
 export default function setupInstaller () {
   // Blocking requests for "*.user.js"
@@ -19,7 +20,7 @@ function userjsRequestListener (details) {
 
   if (isUserjs) {
     browser.tabs.create({
-      'url': browser.extension.getURL(`main.html?install=${details.url}`)
+      'url': browser.extension.getURL(`main.html#/install/${genId(details.url)}`)
     })
     return { redirectUrl: 'javascript:history.back()' }
   } else {

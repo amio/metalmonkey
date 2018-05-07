@@ -1,6 +1,6 @@
 import browser from 'webextension-polyfill'
 import match from 'url-match-patterns'
-import { sha256 } from 'crypto-hash'
+// import { sha256 } from 'crypto-hash'
 import parseMeta from './parse-meta.js'
 
 async function installAsset (url, src) {
@@ -9,7 +9,7 @@ async function installAsset (url, src) {
   if (error) {
     throw error
   } else {
-    const key = await _keygen(url)
+    const key = genId(url)
     const { meta, css } = parsed
 
     await Promise.all([
@@ -53,14 +53,18 @@ async function matchAssetsByURL (url) {
   })
 }
 
-async function _keygen (url) {
+function genId (url) {
   const unpkg = url.match(/https:\/\/unpkg.com\/(.+)@([\d.]+)/)
 
   if (unpkg) {
     return `npm:${unpkg[1]}`
   } else {
-    return sha256(url)
+    return window.btoa(url)
   }
+}
+
+function parseId (id) {
+  // todo: Parse id to installable url
 }
 
 export {
@@ -68,5 +72,7 @@ export {
   removeAsset,
   listAssets,
   getAssetCode,
-  matchAssetsByURL
+  matchAssetsByURL,
+  genId,
+  parseId
 }

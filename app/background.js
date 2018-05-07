@@ -9,7 +9,7 @@ setupInstaller()
 setupInjector()
 
 // Debugging
-window.b = browser
+window.browser = browser
 
 // TODO: Wait for chrome to support `browser.contentScripts` api
 // https://developer.mozilla.org/en-US/Add-ons/WebExtensions/API/contentScripts
