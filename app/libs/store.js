@@ -54,17 +54,23 @@ async function matchAssetsByURL (url) {
 }
 
 function genId (url) {
-  const unpkg = url.match(/https:\/\/unpkg.com\/(.+)@([\d.]+)/)
+  // const unpkg = url.match(/https:\/\/unpkg.com\/(.+)@([\d.]+)/)
 
-  if (unpkg) {
-    return `npm:${unpkg[1]}`
-  } else {
-    return window.btoa(url)
-  }
+  // if (unpkg) {
+  //   return `npm:${unpkg[1]}`
+  // } else {
+  //   return window.btoa(url)
+  // }
+  return window.btoa(url)
 }
 
 function parseId (id) {
-  // todo: Parse id to installable url
+  const npmPackage = /^npm:(.+)$/.exec(id)
+  if (npmPackage) {
+    return `https://unpkg.com/${npmPackage[1]}`
+  } else {
+    return window.atob(id)
+  }
 }
 
 export {

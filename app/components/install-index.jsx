@@ -5,10 +5,11 @@ import readTextStream from 'read-text-stream'
 
 import Layout from './layout.jsx'
 import Topbar from './topbar.jsx'
-import { installAsset } from '../libs/store.js'
+import { installAsset, parseId } from '../libs/store.js'
 
 export default class InstallIndex extends React.Component {
   state = {
+    resourceURL: parseId(this.props.match.params.id),
     resourceText: '',
     resourceLoaded: false,
     notify: ''
@@ -19,7 +20,7 @@ export default class InstallIndex extends React.Component {
   }
 
   loadResource = () => {
-    window.fetch(this.props.url)
+    window.fetch(this.state.resourceURL)
       .then(async res => readTextStream(res.body, (partial, bytes) => {
         this.setState({ resourceText: this.state.resourceText + partial })
       }))
@@ -29,10 +30,9 @@ export default class InstallIndex extends React.Component {
   }
 
   install = async () => {
-    const { url } = this.props
-    const { resourceText } = this.state
+    const { resourceURL, resourceText } = this.state
 
-    installAsset(url, resourceText).then(result => {
+    installAsset(resourceURL, resourceText).then(result => {
       this.setState({ notify: 'Successfully instaled.' })
     }, e => {
       this.setState({ notify: `ERROR: ${e.message}` })
@@ -46,12 +46,11 @@ export default class InstallIndex extends React.Component {
   }
 
   render () {
-    const { url } = this.props
-    const { resourceLoaded, resourceText, notify } = this.state
+    const { resourceURL, resourceLoaded, resourceText, notify } = this.state
     return (
       <Layout>
         <Topbar title='Install' />
-        <div className='url'>{url}</div>
+        <div className='url'>{resourceURL}</div>
         <div className='ops'>
           <Button
             variant='raised'
