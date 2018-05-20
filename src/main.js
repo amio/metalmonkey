@@ -19,4 +19,5 @@ const routes = (
   </HashRouter>
 )
 
+document.body.insertAdjacentHTML('beforeBegin', '<div id="app"></div>')
 ReactDOM.render(routes, document.getElementById('app'))

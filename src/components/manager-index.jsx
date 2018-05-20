@@ -4,7 +4,7 @@ import Topbar from './topbar.jsx'
 import { listAssets } from '../libs/store.js'
 import AssetsList from './assets-list.jsx'
 
-import Paper from 'material-ui/Paper'
+import Paper from '@material-ui/core/Paper'
 
 export default class ManagerIndex extends React.Component {
   state = {

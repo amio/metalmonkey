@@ -1,13 +1,12 @@
 import React from 'react'
 import { removeAsset } from '../libs/store.js'
 
-import List, {
-  ListItem,
-  ListItemIcon,
-  ListItemText,
-  ListItemSecondaryAction
-} from 'material-ui/List'
-import IconButton from 'material-ui/IconButton'
+import List from '@material-ui/core/List'
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
+import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction'
+import IconButton from '@material-ui/core/IconButton'
 import DeleteIcon from '@material-ui/icons/Delete'
 import StarIcon from '@material-ui/icons/Star'
 
