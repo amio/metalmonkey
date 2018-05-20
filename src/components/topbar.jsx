@@ -1,17 +1,18 @@
+import { withRouter } from 'react-router-dom'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
+import MainIcon from '@material-ui/icons/Grade'
 
 import { version } from '../../package.json'
 
-export default ({title}) => {
+export default withRouter(({title, history}) => {
   return (
     <AppBar position='static'>
       <Toolbar>
-        <IconButton color='inherit'>
-          <MenuIcon />
+        <IconButton color='inherit' onClick={e => history.push('/')}>
+          <MainIcon />
         </IconButton>
         <Typography variant='title' color='inherit' style={{flex: 1}}>
           <em>METALMONKEY</em><span>{title}</span>
@@ -38,4 +39,4 @@ export default ({title}) => {
       `}</style>
     </AppBar>
   )
-}
+})
