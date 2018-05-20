@@ -9,7 +9,7 @@
   "main": "index.js",
   "scripts": {
     "lint": "standard",
-    "prepare-assets": "rimraf dist && cp -r app dist",
+    "prepare-assets": "rimraf dist && cpr artworks dist/artworks",
     "prebuild": "npm run prepare-assets",
     "predev": "npm run prepare-assets",
     "build": "NODE_ENV=prod webpack --config webpack.config.js",
@@ -40,11 +40,13 @@
     "babel-plugin-react-require": "^3.0.0",
     "babel-preset-react": "^6.24.1",
     "babel-preset-stage-2": "^6.24.1",
+    "cpr": "^3.0.1",
     "generate-json-file-webpack-plugin": "0.0.3",
+    "html-webpack-plugin": "^3.2.0",
     "rimraf": "^2.6.2",
     "standard": "^11.0.1",
     "styled-jsx": "^2.2.6",
-    "webpack": "^4.7.0",
-    "webpack-command": "^0.1.1"
+    "webpack": "^4.8.3",
+    "webpack-command": "^0.2.0"
   }
 }

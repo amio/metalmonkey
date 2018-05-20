@@ -1,5 +1,6 @@
 const path = require('path')
 const GenerateJsonFile = require('generate-json-file-webpack-plugin')
+const HtmlWebpackPlugin = require('html-webpack-plugin')
 const { description, version, author } = require('./package.json')
 
 const env = {
@@ -11,11 +12,12 @@ module.exports = () => {
   return {
     mode: env.prod ? 'production' : 'development',
     watch: env.dev,
+    context: path.join(__dirname, 'src'),
     target: 'web',
     entry: {
-      main: './app/main.js',
-      background: './app/background.js',
-      content: './app/content.js'
+      main: './main.js',
+      background: './background.js',
+      content: './content.js'
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
@@ -29,8 +31,13 @@ module.exports = () => {
       }]
     },
     plugins: [
+      new HtmlWebpackPlugin({
+        title: 'METALMONKEY',
+        chunks: ['main'],
+        filename: 'main.html'
+      }),
       new GenerateJsonFile({
-        jsonFile: './app/manifest.json',
+        jsonFile: './src/manifest.json',
         filename: 'manifest.json',
         value: { description, version, author }
       })
