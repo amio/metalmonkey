@@ -3,11 +3,9 @@ import CssBaseline from '@material-ui/core/CssBaseline'
 
 export default ({children, style, className}) => (
   <MuiThemeProvider theme={theme}>
-    <div id='root' className={className} style={style}>
-      { children }
-      <CssBaseline />
-      <style jsx global>{globalStyles}</style>
-    </div>
+    <CssBaseline />
+    <style jsx global>{globalStyles}</style>
+    { children }
   </MuiThemeProvider>
 )
 
@@ -23,6 +21,14 @@ const theme = createMuiTheme({
 })
 
 const globalStyles = `
-  html, body { font-size: 16px; }
-  #root { font-family: Roboto, sans-serif; }
+  html, body {
+    font: 16px/20px Roboto, sans-serif;
+  }
+
+  #app {
+    height: 100vh;
+    display: grid;
+    grid-template-rows: auto 1fr;
+    grid-template-columns: 1fr;
+  }
 `

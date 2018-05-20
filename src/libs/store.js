@@ -61,7 +61,7 @@ function genId (url) {
   // } else {
   //   return window.btoa(url)
   // }
-  return window.btoa(url)
+  return window.btoa(encodeURI(url))
 }
 
 function parseId (id) {
@@ -69,7 +69,7 @@ function parseId (id) {
   if (npmPackage) {
     return `https://unpkg.com/${npmPackage[1]}`
   } else {
-    return window.atob(id)
+    return decodeURI(window.atob(id))
   }
 }
 

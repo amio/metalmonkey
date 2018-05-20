@@ -1,5 +1,6 @@
 import React from 'react'
-import { removeAsset } from '../libs/store.js'
+import { withRouter } from 'react-router-dom'
+import { removeAsset, genId } from '../libs/store.js'
 
 import List from '@material-ui/core/List'
 import ListItem from '@material-ui/core/ListItem'
@@ -14,21 +15,24 @@ const AssetsList = ({ assets, onChange = () => {} }) => (
   <List>
     {
       assets.map(asset => (
-        <AssetsListItem key={asset.from} {...asset} onChange={onChange} />
+        <AssetsListItem
+          {...asset}
+          key={asset.from}
+          onChange={onChange} />
       ))
     }
   </List>
 )
 
-class AssetsListItem extends React.Component {
+const AssetsListItem = withRouter(class extends React.Component {
   deleteAsset = () => {
     const { from, onChange } = this.props
     removeAsset(from).then(onChange, console.error)
   }
 
   editAsset = () => {
-    const { from } = this.props
-    window.location.href = `/main.html?edit=${from}`
+    const { from, history } = this.props
+    history.push(`/edit/${genId(from)}`)
   }
 
   render () {
@@ -52,6 +56,6 @@ class AssetsListItem extends React.Component {
       </ListItem>
     )
   }
-}
+})
 
 export default AssetsList
