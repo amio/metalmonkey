@@ -1,10 +1,12 @@
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles'
 import CssBaseline from '@material-ui/core/CssBaseline'
+import Topbar from './topbar.jsx'
 
-export default ({children, style, className}) => (
+export default ({children, style, className, title}) => (
   <MuiThemeProvider theme={theme}>
     <CssBaseline />
     <style jsx global>{globalStyles}</style>
+    <Topbar title={title} />
     { children }
   </MuiThemeProvider>
 )

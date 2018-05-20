@@ -4,7 +4,6 @@ import Snackbar from '@material-ui/core/Snackbar'
 import readTextStream from 'read-text-stream'
 
 import Layout from './layout.jsx'
-import Topbar from './topbar.jsx'
 import { installAsset, parseId } from '../libs/store.js'
 
 export default class InstallIndex extends React.Component {
@@ -48,8 +47,7 @@ export default class InstallIndex extends React.Component {
   render () {
     const { resourceURL, resourceLoaded, resourceText, notify } = this.state
     return (
-      <Layout>
-        <Topbar title='Install' />
+      <Layout title='Install'>
         <div className='url'>{resourceURL}</div>
         <div className='ops'>
           <Button

@@ -1,7 +1,6 @@
 import React from 'react'
 import { parseId, getAssetCode } from '../libs/store.js'
 import Layout from './layout.jsx'
-import Topbar from './topbar.jsx'
 
 export default class EditorIndex extends React.Component {
   state = {
@@ -20,8 +19,7 @@ export default class EditorIndex extends React.Component {
 
   render () {
     return (
-      <Layout>
-        <Topbar title='Editor' />
+      <Layout title='Editor'>
         <div className='main'>
           <textarea value={this.state.src} />
         </div>

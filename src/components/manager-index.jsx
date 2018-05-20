@@ -1,6 +1,5 @@
 import React from 'react'
 import Layout from './layout.jsx'
-import Topbar from './topbar.jsx'
 import { listAssets } from '../libs/store.js'
 import AssetsList from './assets-list.jsx'
 
@@ -25,8 +24,7 @@ export default class ManagerIndex extends React.Component {
     const { installedAssets } = this.state
 
     return (
-      <Layout>
-        <Topbar title='Manager' />
+      <Layout title='Manager'>
         <div className='main'>
           <Paper>
             <AssetsList assets={installedAssets} onChange={this.updateAssetsList} />
