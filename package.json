@@ -19,16 +19,16 @@
     "parser": "babel-eslint"
   },
   "dependencies": {
-    "@material-ui/core": "^1.0.0",
-    "@material-ui/icons": "^1.0.0",
+    "@material-ui/core": "^1.1.0",
+    "@material-ui/icons": "^1.1.0",
     "crypto-hash": "^0.1.0",
     "query-string": "^6.1.0",
-    "react": "^16.3.2",
-    "react-dom": "^16.3.2",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
     "react-router-dom": "^4.2.2",
     "read-text-stream": "^0.1.0",
     "require-cjs-string": "^0.1.0",
-    "unstated": "^2.1.0",
+    "unstated": "^2.1.1",
     "url-match-patterns": "^0.2.0",
     "userscript-parser": "^2.0.0",
     "webextension-polyfill": "^0.2.1"
@@ -46,7 +46,7 @@
     "rimraf": "^2.6.2",
     "standard": "^11.0.1",
     "styled-jsx": "^2.2.6",
-    "webpack": "^4.8.3",
+    "webpack": "^4.9.1",
     "webpack-command": "^0.2.0"
   }
 }
