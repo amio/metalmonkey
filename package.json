@@ -15,9 +15,6 @@
     "build": "NODE_ENV=prod webpack --config webpack.config.js",
     "start": "NODE_ENV=dev webpack --config webpack.config.js"
   },
-  "standard": {
-    "parser": "babel-eslint"
-  },
   "dependencies": {
     "@material-ui/core": "^1.2.0",
     "@material-ui/icons": "^1.1.0",
@@ -48,5 +45,8 @@
     "styled-jsx": "^2.2.6",
     "webpack": "^4.10.2",
     "webpack-command": "^0.2.0"
+  },
+  "standard": {
+    "parser": "babel-eslint"
   }
 }
