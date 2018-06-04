@@ -62,7 +62,6 @@ export default class InstallIndex extends React.Component {
             open={notify !== ''}
             autoHideDuration={1200}
             onClose={this.onNotifyClose}
-            SnackbarContentProps={{ 'aria-describedby': 'message-id' }}
             message={<span id='message-id'>{notify}</span>}
           />
         </div>
