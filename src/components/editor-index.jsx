@@ -21,17 +21,18 @@ export default class EditorIndex extends React.Component {
     return (
       <Layout title='Editor'>
         <div className='main'>
-          <textarea value={this.state.src} />
+          <textarea readOnly value={this.state.src} />
         </div>
         <style jsx>{`
-          .main {
-            max-width: 800px;
-            padding: 2rem;
-          }
           textarea {
             display: block;
             width: 100%;
             height: 100%;
+            border: none;
+            outline: none;
+            background: none;
+            padding: 1rem;
+            font: 14px/1.2em monospace;
           }
         `}</style>
       </Layout>
