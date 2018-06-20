@@ -12,12 +12,12 @@ module.exports = () => {
   return {
     mode: env.prod ? 'production' : 'development',
     watch: env.dev,
-    context: path.join(__dirname, 'src'),
+    // context: path.join(__dirname, 'src'),
     target: 'web',
     entry: {
-      main: './main.js',
-      background: './background.js',
-      content: './content.js'
+      main: './src/main.js',
+      background: './src/background.js',
+      content: './src/content.js'
     },
     output: {
       path: path.resolve(__dirname, 'dist'),
