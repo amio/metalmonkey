@@ -49,23 +49,25 @@ export default class InstallIndex extends React.Component {
     return (
       <Layout title='Install'>
         <div className='url'>{resourceURL}</div>
-        <div className='ops'>
-          <Button
-            variant='raised'
-            color='secondary'
-            disabled={!resourceLoaded}
-            onClick={this.install}>
-            Install
-          </Button>
-          { !resourceLoaded && <div className='info'>...loading...</div> }
-          <Snackbar
-            open={notify !== ''}
-            autoHideDuration={1200}
-            onClose={this.onNotifyClose}
-            message={<span id='message-id'>{notify}</span>}
-          />
+        <div className='main'>
+          <div className='ops'>
+            <Button
+              variant='raised'
+              color='secondary'
+              disabled={!resourceLoaded}
+              onClick={this.install}>
+              Install
+            </Button>
+            { !resourceLoaded && <div className='info'>...loading...</div> }
+            <Snackbar
+              open={notify !== ''}
+              autoHideDuration={1200}
+              onClose={this.onNotifyClose}
+              message={<span id='message-id'>{notify}</span>}
+            />
+          </div>
+          <pre className='code'>{resourceText}</pre>
         </div>
-        <pre className='code'>{resourceText}</pre>
         <style jsx>{`
           .url {
             background-color: #FFF;

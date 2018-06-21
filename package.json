@@ -16,7 +16,7 @@
     "start": "NODE_ENV=dev webpack --config webpack.config.js --progress"
   },
   "dependencies": {
-    "@material-ui/core": "^1.2.2",
+    "@material-ui/core": "^1.2.3",
     "@material-ui/icons": "^1.1.0",
     "ascjs": "^2.4.0",
     "crypto-hash": "^0.1.0",
