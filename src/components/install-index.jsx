@@ -78,13 +78,14 @@ export default class InstallIndex extends React.Component {
           }
           .ops {
             float: right;
-            margin: 1rem;
+            margin: 0 1rem 1rem 2rem;
           }
           .code {
             margin: 1rem;
             font-size: 14px;
             color: #222;
             white-space: pre-wrap;
+            word-break: break-all;
           }
           .info {
             color: #AAA;

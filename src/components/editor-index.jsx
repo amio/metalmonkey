@@ -24,6 +24,9 @@ export default class EditorIndex extends React.Component {
           <textarea readOnly value={this.state.src} />
         </div>
         <style jsx>{`
+          .main {
+            height: 100%;
+          }
           textarea {
             display: block;
             width: 100%;
