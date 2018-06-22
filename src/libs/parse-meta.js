@@ -9,7 +9,7 @@ export default function parseMeta (src) {
     let type = 'cjs'
     let parsed = requireCJSString(cjs)
 
-    if (!parsed) {
+    if (!parsed.meta) {
       type = 'legacy'
       parsed = legacyParser(src)
     }

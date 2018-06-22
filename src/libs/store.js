@@ -48,7 +48,7 @@ async function getAssetCode (key) {
 async function matchAssetsByURL (url) {
   const entries = await listAssets().then(assets => Object.values(assets))
   return entries.filter(entry => {
-    const patterns = entry.meta && entry.meta.matches && entry.meta.matches
+    const patterns = entry.meta && (entry.meta.match || entry.meta.matches)
     return patterns && patterns.find(p => match(p, url))
   })
 }
