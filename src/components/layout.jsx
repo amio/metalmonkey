@@ -7,7 +7,7 @@ export default ({children, style, className, title}) => (
     <CssBaseline />
     <style jsx global>{globalStyles}</style>
     <Topbar title={title} />
-    <div>{ children }</div>
+    { children }
   </MuiThemeProvider>
 )
 

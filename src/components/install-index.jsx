@@ -48,8 +48,8 @@ export default class InstallIndex extends React.Component {
     const { resourceURL, resourceLoaded, resourceText, notify } = this.state
     return (
       <Layout title='Install'>
-        <div className='url'>{resourceURL}</div>
         <div className='main'>
+          <div className='url'>{resourceURL}</div>
           <div className='ops'>
             <Button
               variant='raised'
@@ -59,15 +59,14 @@ export default class InstallIndex extends React.Component {
               Install
             </Button>
             { !resourceLoaded && <div className='info'>...loading...</div> }
-            <Snackbar
-              open={notify !== ''}
-              autoHideDuration={1200}
-              onClose={this.onNotifyClose}
-              message={<span id='message-id'>{notify}</span>}
-            />
           </div>
           <pre className='code'>{resourceText}</pre>
         </div>
+        <Snackbar
+          open={notify !== ''}
+          autoHideDuration={1600}
+          message={<span id='message-id'>{notify}</span>}
+        />
         <style jsx>{`
           .url {
             background-color: #FFF;
@@ -78,7 +77,7 @@ export default class InstallIndex extends React.Component {
           }
           .ops {
             float: right;
-            margin: 0 1rem 1rem 2rem;
+            margin: 1rem;
           }
           .code {
             margin: 1rem;
