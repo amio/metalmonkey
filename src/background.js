@@ -1,4 +1,5 @@
 import browser from 'webextension-polyfill'
+import { installAsset } from './libs/store.js'
 import setupInstaller from './libs/setup-installer.js'
 import setupInjector from './libs/setup-injector.js'
 
@@ -28,4 +29,11 @@ browser.browserAction.onClicked.addListener(tab => {
   browser.tabs.create({
     url: browser.extension.getURL('main.html')
   })
+})
+
+browser.runtime.onMessage.addListener((message, sender) => {
+  switch (message.type) {
+    case 'install':
+      return installAsset(sender.url, message.content)
+  }
 })
