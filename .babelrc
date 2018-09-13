@@ -1,9 +1,16 @@
 {
   "presets": [
-    "react",
-    "stage-2"
+    "@babel/preset-react",
+    [
+      "@babel/preset-env", {
+        "targets": {
+          "chrome": "69"
+        }
+      }
+    ]
   ],
   "plugins": [
+    "@babel/plugin-proposal-class-properties",
     "react-require",
     "styled-jsx/babel"
   ]
